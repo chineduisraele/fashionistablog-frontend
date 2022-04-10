@@ -1,0 +1,247 @@
+@import "../../globals";
+
+.main-content {
+  grid-template-columns: 2fr 1fr;
+  column-gap: 2rem;
+  align-items: flex-start;
+  margin-top: 2rem;
+  .card-cont {
+    min-height: 50vh;
+    .nav-tabs ul {
+      background-color: $muted1;
+      border-radius: $defaultBorderRadius;
+      margin-bottom: 2rem;
+      overflow: hidden;
+
+      li {
+        &:first-of-type {
+          margin-right: auto;
+          background-color: $green;
+          color: #fff;
+          padding: 0.6rem 2rem;
+          font-size: 12px;
+        }
+
+        display: inline-block;
+        font-weight: 500;
+        padding: 0.6rem 1rem;
+        text-transform: uppercase;
+        font-size: 13px;
+        cursor: pointer;
+
+        &:not(:last-of-type)::after {
+          content: "";
+          display: inline-block;
+          height: 9px;
+          transform: translateX(1rem);
+          border-right: 1px solid $green;
+        }
+      }
+    }
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      .card .text-part {
+        > span {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.side-content {
+  img {
+    width: 100%;
+  }
+  row-gap: 2rem;
+  .purchase-box {
+    border-radius: $defaultBorderRadius;
+    overflow: hidden;
+
+    .overlay {
+      outline: 2px solid $muted;
+      outline-offset: -1rem;
+      background-color: rgba(0, 0, 0, 0.5);
+      top: 0;
+      left: 0;
+      flex-direction: column;
+      row-gap: 0.75rem;
+
+      h3,
+      p {
+        color: #fff;
+        padding: 0 1.5rem;
+        text-align: center;
+        font-weight: 600;
+      }
+      h3 {
+        font-size: 20px;
+        color: $green;
+      }
+      a {
+        margin-top: 0.5rem;
+        font-weight: 700;
+        color: $green;
+        padding: 10px 32px;
+        text-transform: uppercase;
+        font-size: 12px;
+        border: 2px solid $green;
+        border-radius: $defaultBorderRadius;
+      }
+    }
+  }
+
+  .popular-tabs {
+    header.tab-nav {
+      grid-template-columns: repeat(2, 1fr);
+      background-color: $muted1;
+
+      button {
+        padding: 0.6rem;
+        font-size: 13px;
+        text-transform: uppercase;
+        background-color: transparent;
+        color: $black025;
+        font-weight: 600;
+        &:hover {
+          background-color: $green;
+          color: #fff;
+        }
+        &.active {
+          background-color: $green;
+          color: #fff;
+        }
+      }
+    }
+    .mini-card {
+      border-bottom: 1px solid $hoverGray;
+    }
+  }
+
+  .catscont {
+    row-gap: 2rem;
+  }
+}
+
+.follow-tab {
+  ul {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    a {
+      border-radius: $defaultBorderRadius;
+      i.fab {
+        padding: 0.88rem;
+        width: 100%;
+        font-size: 1.25rem;
+        color: #fff;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        border-radius: $defaultBorderRadius;
+        &.fa-facebook {
+          background-color: #2f58a1;
+        }
+        &.fa-twitter {
+          background-color: #069cd5;
+        }
+        &.fa-google-plus {
+          background-color: #ea4335;
+        }
+        &.fa-pinterest {
+          background-color: #da0d32;
+        }
+        &.fa-instagram {
+          background-color: #0076b8;
+        }
+        &.fa-whatsapp {
+          background-color: #4caf50;
+          // #e53935
+        }
+        &.fa-telegram {
+          background-color: #039be5;
+        }
+        &.fa-discord {
+          background-color: #5c6bc0;
+        }
+      }
+    }
+  }
+}
+
+.categories-tab {
+  li {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: $black025;
+    text-transform: uppercase;
+    border-bottom: 1px solid $hoverGray;
+    cursor: pointer;
+    &:hover,
+    &:hover a {
+      color: $green !important;
+      font-weight: 600;
+    }
+    i {
+      color: $green;
+      padding-right: 1rem;
+    }
+    a {
+      font-size: inherit;
+      color: inherit;
+      text-transform: inherit;
+      padding: 0.75rem 0;
+      padding-right: 130px;
+      margin-right: auto;
+    }
+  }
+}
+
+.most-viewed {
+  .inner {
+    div {
+      overflow: hidden;
+      .slide {
+        gap: 0.105rem;
+        transition: transform 0.5s ease-out;
+      }
+    }
+    .controls {
+      width: 100%;
+      top: 50%;
+      left: 0;
+      button {
+        padding: 1rem;
+        border-radius: $defaultBorderRadius;
+        background-color: #ba004a80;
+        &:active {
+          transform: scale(1.05);
+        }
+        i {
+          color: #fff;
+          font-size: 2rem;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}
+
+.featured-posts {
+  .cards {
+    grid-template-columns: 1fr !important;
+    .card {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      row-gap: 0;
+      column-gap: 2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid $hoverGray;
+      .card-img p {
+        right: 0;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

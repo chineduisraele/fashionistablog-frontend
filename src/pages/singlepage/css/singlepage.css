@@ -1,0 +1,344 @@
+.singlepage {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.singlepage .main-content {
+  row-gap: 3rem;
+}
+
+.singlepage .main-content .pagedetailscont {
+  row-gap: 2rem;
+}
+
+.singlepage .main-content .pagedetailscont .postimg img {
+  width: 100%;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  border-radius: 0.5rem;
+}
+
+.singlepage .main-content .pagedetailscont > header {
+  row-gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #8080802f;
+}
+
+.singlepage .main-content .pagedetailscont > header .links {
+  color: #777777;
+  width: 70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.singlepage .main-content .pagedetailscont > header .links a,
+.singlepage .main-content .pagedetailscont > header .links span {
+  text-transform: lowercase;
+  font-size: 13px;
+  color: inherit;
+}
+
+.singlepage .main-content .pagedetailscont > header .links a:hover,
+.singlepage .main-content .pagedetailscont > header .links span:hover {
+  color: #ba004b;
+}
+
+.singlepage .main-content .pagedetailscont > header .links a:first-of-type {
+  text-transform: capitalize;
+}
+
+.singlepage .main-content .pagedetailscont > header .links i {
+  padding-right: 0.75rem;
+  padding-left: 0.25rem;
+  font-size: 13px;
+  font-weight: normal;
+  color: inherit;
+}
+
+.singlepage .main-content .pagedetailscont > header .categories {
+  -webkit-column-gap: 0.5rem;
+          column-gap: 0.5rem;
+}
+
+.singlepage .main-content .pagedetailscont > header .categories button {
+  padding: 4px 12px;
+  background-color: #ba004b;
+  text-transform: uppercase;
+}
+
+.singlepage .main-content .pagedetailscont > header .categories button:first-of-type {
+  background-color: black;
+}
+
+.singlepage .main-content .pagedetailscont > header h2 {
+  font-size: 30px;
+  color: #333333;
+  text-transform: uppercase;
+  padding: 1rem 0 0;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+.singlepage .main-content .pagedetailscont > header .info {
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.singlepage .main-content .pagedetailscont > header .info span {
+  color: #999999;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.singlepage .main-content .pagedetailscont > header .info span i {
+  font-weight: normal;
+}
+
+.singlepage .main-content .pagedetailscont > header .share {
+  -webkit-column-gap: 0.5rem;
+          column-gap: 0.5rem;
+}
+
+.singlepage .main-content .pagedetailscont > header .share span {
+  color: #999999;
+}
+
+.singlepage .main-content .pagedetailscont > header .share .follow-tab header {
+  display: none;
+}
+
+.singlepage .main-content .pagedetailscont > header .share .follow-tab ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.singlepage .main-content .pagedetailscont > header .share .follow-tab ul i {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.singlepage .main-content .pagedetailscont .page-content {
+  gap: 2.5rem;
+}
+
+.singlepage .main-content .pagedetailscont .page-content p {
+  color: #777777;
+  line-height: 1.6rem;
+  text-align: justify;
+}
+
+.singlepage .main-content .pagedetailscont .page-content p a {
+  color: #0000ee;
+}
+
+.singlepage .main-content .pagedetailscont .page-content img {
+  width: 100%;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  border-radius: 0.5rem;
+  margin: 1rem 0 2rem;
+}
+
+.singlepage .main-content .pagedetailscont .tags {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  -webkit-column-gap: 0.5rem;
+          column-gap: 0.5rem;
+}
+
+.singlepage .main-content .pagedetailscont .tags span {
+  color: #999999;
+}
+
+.singlepage .main-content .pagedetailscont .tags div {
+  gap: 0.5rem;
+}
+
+.singlepage .main-content .pagedetailscont .tags div a {
+  padding: 0.3rem 0.75rem;
+  color: #fff;
+  background-color: #777777;
+  border-radius: 0.5rem;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.singlepage .main-content .pagedetailscont .author .comment {
+  background-color: transparent;
+}
+
+.singlepage .main-content .pagedetailscont .author .comment .text-part span {
+  display: none;
+}
+
+.singlepage .main-content .comments {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1 / 3;
+  -ms-grid-columns: 2fr 1fr;
+      grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  margin-bottom: 3rem !important;
+}
+
+.singlepage .main-content .comments .main .inner {
+  gap: 2rem;
+}
+
+.singlepage .main-content .comments .main .inner .comment .text-part .social-links {
+  display: none;
+}
+
+.singlepage .main-content .comments .main .paginate {
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+}
+
+.singlepage .main-content .comments .main .paginate button {
+  border: none;
+  color: #ba004b;
+  font-weight: 700;
+}
+
+.singlepage .main-content .comments aside {
+  padding: 2rem 1rem;
+  background-color: rgba(221, 221, 221, 0.18);
+  background-color: #333333;
+  border-radius: 0.5rem;
+  display: -ms-grid;
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 3rem;
+}
+
+.singlepage .main-content .comments aside p {
+  color: #fff;
+}
+
+.singlepage .main-content .comments aside form {
+  display: -ms-grid;
+  display: grid;
+  gap: 1rem;
+}
+
+.singlepage .main-content .comments aside form input,
+.singlepage .main-content .comments aside form textarea {
+  padding: 0.3rem 1rem;
+  border: 1px solid #8080802f;
+  border-radius: 0.5rem;
+}
+
+.singlepage .main-content .comments aside form input::-webkit-input-placeholder,
+.singlepage .main-content .comments aside form textarea::-webkit-input-placeholder {
+  color: #808080aa;
+  font-weight: 600;
+}
+
+.singlepage .main-content .comments aside form input:-ms-input-placeholder,
+.singlepage .main-content .comments aside form textarea:-ms-input-placeholder {
+  color: #808080aa;
+  font-weight: 600;
+}
+
+.singlepage .main-content .comments aside form input::-ms-input-placeholder,
+.singlepage .main-content .comments aside form textarea::-ms-input-placeholder {
+  color: #808080aa;
+  font-weight: 600;
+}
+
+.singlepage .main-content .comments aside form input::placeholder,
+.singlepage .main-content .comments aside form textarea::placeholder {
+  color: #808080aa;
+  font-weight: 600;
+}
+
+.singlepage .main-content .comments aside form textarea {
+  height: 80px;
+  resize: none;
+}
+
+.singlepage .main-content .comments aside form button {
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #ba004b;
+  color: #fff;
+}
+
+.singlepage .more-content .card-cont {
+  min-height: auto;
+}
+
+.singlepage .more-content .paginate {
+  margin: 0;
+}
+
+.comment {
+  border-radius: 0.5rem;
+  gap: 2rem;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  background-color: rgba(221, 221, 221, 0.18);
+  padding: 1.5rem 1rem;
+  -ms-grid-columns: 70px 20fr;
+      grid-template-columns: 70px 20fr;
+}
+
+.comment .text-part {
+  color: #777777;
+  font-size: 13px;
+}
+
+.comment .text-part .name {
+  text-transform: uppercase;
+  color: #ba004b;
+  font-weight: normal;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.comment .text-part .name span {
+  color: #777777;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.comment .text-part .name span i {
+  font-weight: normal;
+}
+
+.comment .text-part .social-links {
+  margin-top: 0.5rem;
+  -webkit-column-gap: 0.5rem;
+          column-gap: 0.5rem;
+}
+
+.comment .text-part .social-links i {
+  color: #808080aa;
+  font-size: 0.9rem;
+}
+
+.comment img {
+  border-radius: inherit;
+  display: block;
+  width: 70px;
+  border-radius: 0.5rem;
+}
+/*# sourceMappingURL=singlepage.css.map */

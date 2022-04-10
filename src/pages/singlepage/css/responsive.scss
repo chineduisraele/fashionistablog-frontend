@@ -1,0 +1,126 @@
+@import "../../../components/globals";
+
+// all
+@media screen and (max-width: 1210px) {
+  .singlepage {
+    .main-content .pagedetailscont {
+      padding: 0 0 0 0.5rem;
+    }
+  }
+}
+
+// maincontent
+@media (min-width: 875px) and (max-width: 1054px) {
+  .singlepage {
+    .main-content .comments {
+      column-gap: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 875px) {
+  .singlepage {
+    .main-content {
+      .pagedetailscont {
+        padding: 0 0.5rem;
+        order: 1;
+      }
+      .side-content {
+        order: 3;
+      }
+      .comments {
+        order: 2;
+        grid-column: 1 / 2;
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .singlepage .main-content .pagedetailscont > header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+// small screen
+@media screen and (max-width: 600px) {
+  .singlepage {
+    .main-content {
+      .pagedetailscont {
+        header {
+          .links {
+            width: 80%;
+          }
+          .share {
+            display: grid;
+            row-gap: 1rem;
+            ul {
+              display: grid !important;
+              grid-template-columns: repeat(5, 1fr);
+            }
+          }
+        }
+
+        .author {
+          .comment {
+            column-gap: 1rem;
+          }
+        }
+
+        .tags {
+          display: grid;
+          row-gap: 1rem;
+          div {
+            flex-wrap: wrap;
+          }
+        }
+      }
+      .comments {
+        .comment {
+          grid-template-columns: 55px 20fr;
+
+          column-gap: 1rem;
+          img {
+            width: 55px;
+          }
+        }
+        aside {
+          margin: 0 0.5rem;
+        }
+      }
+    }
+  }
+  .comment {
+    padding: {
+      left: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 424px) {
+  .singlepage {
+    .main-content {
+      .pagedetailscont {
+        header {
+          h2 {
+            font-size: 20px;
+          }
+          .info {
+            column-gap: 0.5rem;
+            margin: auto;
+            span {
+              font-size: 10.4px;
+            }
+          }
+          .share {
+            ul i {
+              padding: 0.5rem 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

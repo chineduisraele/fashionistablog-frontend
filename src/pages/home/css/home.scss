@@ -1,0 +1,224 @@
+@import "../../../components/globals";
+.home {
+  max-width: $defaultWidth;
+  margin: auto;
+  .banner {
+    height: 62.5vh;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 60% 0%;
+    }
+    div {
+      row-gap: 1.3rem;
+      background-color: rgba(0, 0, 0, 0.65);
+      // box-shadow: $shadow;
+      margin: {
+        bottom: 2rem;
+        right: 2rem;
+      }
+      padding: 1.8rem;
+      border-radius: $defaultBorderRadius;
+      max-width: 400px;
+      right: 0;
+      bottom: 0;
+      h2 {
+        color: $green;
+        text-transform: capitalize;
+        line-height: 1.6rem;
+        text-align: center;
+      }
+      p {
+        color: #fff;
+        text-align: center;
+      }
+      a {
+        width: 60%;
+        justify-self: center;
+        font-weight: bold;
+        font-size: 1rem;
+        background-color: transparent;
+        color: $green;
+        outline: 3px solid $green;
+        outline-offset: -3px;
+        transition: background-color 0.35s;
+        text-align: center;
+        &:hover {
+          background-color: $green;
+          // border: 2px solid #fff;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.more-content.main-content {
+  aside {
+    // padding: 1rem 0;
+    img {
+      width: 100%;
+    }
+    display: grid;
+    row-gap: 2rem;
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+// media queries banner
+
+// banner
+@media screen and (max-width: 1054px) {
+  .home {
+    .banner {
+      height: auto;
+      div {
+        row-gap: 1rem;
+        width: 380px;
+        margin: {
+          bottom: 1.5rem;
+          right: 1.5rem;
+        }
+        padding: 1.5rem 1.05rem;
+
+        h2 {
+          line-height: 1.5rem;
+          font-size: 22px;
+        }
+        p {
+          font-size: 15px;
+        }
+        a {
+          padding: 0.6rem;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 940px) {
+  .home {
+    .banner {
+      div {
+        padding: 1.5rem 1.05rem;
+        width: 350px;
+        margin: {
+          bottom: 1.1rem;
+          right: 1.1rem;
+        }
+
+        h2 {
+          font-size: 20px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 875px) {
+  .home {
+    .banner {
+      height: 60vh;
+    }
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .home {
+    .banner {
+      height: 50vh !important;
+      div {
+        padding: 1rem 0.5rem;
+        width: 300px;
+        row-gap: 0.75rem;
+        margin: {
+          bottom: 0.75rem;
+          right: 0.75rem;
+        }
+
+        h2 {
+          line-height: 1.1rem;
+          font-size: 16px;
+        }
+        p {
+          font-size: 12px;
+        }
+        a {
+          padding: 0.5rem;
+          font-size: 12px;
+          outline-width: 2px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .home {
+    .banner {
+      height: 43vh !important;
+      div {
+        row-gap: 0.5rem;
+        margin: {
+          bottom: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .home {
+    .banner {
+      height: 40vh !important;
+      div {
+        row-gap: 0.45rem;
+        h2 {
+          line-height: 1rem;
+          font-size: 14px;
+        }
+        p {
+          font-size: 11px;
+        }
+        a {
+          padding: 0.35rem;
+          font-size: 11px;
+          outline-width: 1px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .home {
+    .banner {
+      height: 37.5vh !important;
+      div {
+        // display: none;
+        padding: 1rem 0.5rem;
+        width: 300px;
+        // row-gap: 0.5rem;
+        margin: {
+          bottom: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .home {
+    .banner {
+      height: 34vh !important;
+    }
+  }
+}

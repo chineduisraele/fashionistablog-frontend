@@ -1,0 +1,191 @@
+.home {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.home .banner {
+  height: 62.5vh;
+}
+
+.home .banner img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 60% 0%;
+     object-position: 60% 0%;
+}
+
+.home .banner div {
+  row-gap: 1.3rem;
+  background-color: rgba(0, 0, 0, 0.65);
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+  padding: 1.8rem;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  right: 0;
+  bottom: 0;
+}
+
+.home .banner div h2 {
+  color: #ba004b;
+  text-transform: capitalize;
+  line-height: 1.6rem;
+  text-align: center;
+}
+
+.home .banner div p {
+  color: #fff;
+  text-align: center;
+}
+
+.home .banner div a {
+  width: 60%;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: transparent;
+  color: #ba004b;
+  outline: 3px solid #ba004b;
+  outline-offset: -3px;
+  -webkit-transition: background-color 0.35s;
+  transition: background-color 0.35s;
+  text-align: center;
+}
+
+.home .banner div a:hover {
+  background-color: #ba004b;
+  color: #fff;
+}
+
+.more-content.main-content aside {
+  display: -ms-grid;
+  display: grid;
+  row-gap: 2rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 2rem;
+}
+
+@media screen and (max-width: 1054px) {
+  .home .banner {
+    height: auto;
+  }
+  .home .banner div {
+    row-gap: 1rem;
+    width: 380px;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+    padding: 1.5rem 1.05rem;
+  }
+  .home .banner div h2 {
+    line-height: 1.5rem;
+    font-size: 22px;
+  }
+  .home .banner div p {
+    font-size: 15px;
+  }
+  .home .banner div a {
+    padding: 0.6rem;
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 940px) {
+  .home .banner div {
+    padding: 1.5rem 1.05rem;
+    width: 350px;
+    margin-bottom: 1.1rem;
+    margin-right: 1.1rem;
+  }
+  .home .banner div h2 {
+    font-size: 20px;
+  }
+  .home .banner div p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 875px) {
+  .home .banner {
+    height: 60vh;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .home .banner {
+    height: 50vh !important;
+  }
+  .home .banner div {
+    padding: 1rem 0.5rem;
+    width: 300px;
+    row-gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    margin-right: 0.75rem;
+  }
+  .home .banner div h2 {
+    line-height: 1.1rem;
+    font-size: 16px;
+  }
+  .home .banner div p {
+    font-size: 12px;
+  }
+  .home .banner div a {
+    padding: 0.5rem;
+    font-size: 12px;
+    outline-width: 2px;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .home .banner {
+    height: 43vh !important;
+  }
+  .home .banner div {
+    row-gap: 0.5rem;
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .home .banner {
+    height: 40vh !important;
+  }
+  .home .banner div {
+    row-gap: 0.45rem;
+  }
+  .home .banner div h2 {
+    line-height: 1rem;
+    font-size: 14px;
+  }
+  .home .banner div p {
+    font-size: 11px;
+  }
+  .home .banner div a {
+    padding: 0.35rem;
+    font-size: 11px;
+    outline-width: 1px;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .home .banner {
+    height: 37.5vh !important;
+  }
+  .home .banner div {
+    padding: 1rem 0.5rem;
+    width: 300px;
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .home .banner {
+    height: 34vh !important;
+  }
+}
+/*# sourceMappingURL=home.css.map */

@@ -1,0 +1,106 @@
+@media screen and (max-width: 1210px) {
+  .singlepage .main-content .pagedetailscont {
+    padding: 0 0 0 0.5rem;
+  }
+}
+
+@media (min-width: 875px) and (max-width: 1054px) {
+  .singlepage .main-content .comments {
+    -webkit-column-gap: 1rem;
+            column-gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 875px) {
+  .singlepage .main-content .pagedetailscont {
+    padding: 0 0.5rem;
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+  }
+  .singlepage .main-content .side-content {
+    -webkit-box-ordinal-group: 4;
+        -ms-flex-order: 3;
+            order: 3;
+  }
+  .singlepage .main-content .comments {
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .singlepage .main-content .pagedetailscont > header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .singlepage .main-content .pagedetailscont header .links {
+    width: 80%;
+  }
+  .singlepage .main-content .pagedetailscont header .share {
+    display: -ms-grid;
+    display: grid;
+    row-gap: 1rem;
+  }
+  .singlepage .main-content .pagedetailscont header .share ul {
+    display: -ms-grid !important;
+    display: grid !important;
+    -ms-grid-columns: (1fr)[5];
+        grid-template-columns: repeat(5, 1fr);
+  }
+  .singlepage .main-content .pagedetailscont .author .comment {
+    -webkit-column-gap: 1rem;
+            column-gap: 1rem;
+  }
+  .singlepage .main-content .pagedetailscont .tags {
+    display: -ms-grid;
+    display: grid;
+    row-gap: 1rem;
+  }
+  .singlepage .main-content .pagedetailscont .tags div {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .singlepage .main-content .comments .comment {
+    -ms-grid-columns: 55px 20fr;
+        grid-template-columns: 55px 20fr;
+    -webkit-column-gap: 1rem;
+            column-gap: 1rem;
+  }
+  .singlepage .main-content .comments .comment img {
+    width: 55px;
+  }
+  .singlepage .main-content .comments aside {
+    margin: 0 0.5rem;
+  }
+  .comment {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 424px) {
+  .singlepage .main-content .pagedetailscont header h2 {
+    font-size: 20px;
+  }
+  .singlepage .main-content .pagedetailscont header .info {
+    -webkit-column-gap: 0.5rem;
+            column-gap: 0.5rem;
+    margin: auto;
+  }
+  .singlepage .main-content .pagedetailscont header .info span {
+    font-size: 10.4px;
+  }
+  .singlepage .main-content .pagedetailscont header .share ul i {
+    padding: 0.5rem 0 !important;
+  }
+}
+/*# sourceMappingURL=responsive.css.map */
