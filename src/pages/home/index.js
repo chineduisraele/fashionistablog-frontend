@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -18,9 +18,25 @@ import FacebookLike from "../../images/facebook.webp";
 // home
 const Home = () => {
   const path = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = path.pathname === "/" ? "home" : "search";
+  // for home ... page will be a state
+  // console.log(`http://localhost:3000/?page=1`);
+  // // category home
+  // console.log(`http://localhost:3000/?category=cat&page=1`);
+  // // search
+  // console.log(`http://localhost:3000/search/?search=search`);
+
+  // console.log(`${BASE_URL}/api/post/posts/filter/?category=all&page=1`);
+  // console.log(`${BASE_URL}/api/post/posts/?page=1`);
+  // console.log(path.search.replace("?", "").split("&"));
+
+  // set page type
+  const page = path.search.includes("search") ? "search" : "home";
+
+  // set main post
   const [mainPosts, setMainPosts] = useState(),
+    // category
     [mainPostsCategory, setMainPostsCategory] = useState(
       page === "home"
         ? sessionStorage.getItem(`${page}mainPostsCategory`)
@@ -33,6 +49,10 @@ const Home = () => {
     ),
     [mainPostsLoading, setMainPostsLoading] = useState(true),
     [exploreUrl, setExploreUrl] = useState("");
+
+  useEffect(() => {
+    setSearchParams({ cat: mainPostsCategory, pg: "1" });
+  }, [mainPostsCategory]);
 
   // fetch data
   useEffect(() => {
