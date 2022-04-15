@@ -12,6 +12,7 @@ import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
 import "./css/home.css";
 import "./css/responsive.css";
+import FacebookLike from "../../images/facebook.webp";
 
 // home
 const CategoryPage = () => {
@@ -87,13 +88,13 @@ const CategoryPage = () => {
             <header className="header">
               <h3>RECENT TWEETS</h3>
             </header>
-            <img src="./images/test/facebook-like.jpg" alt="facebooklikes" />
+            <img src={FacebookLike} alt="facebooklikes" />
           </div>
           <div className="fblikes">
             <header className="header">
               <h3>FACEBOOK LIKES</h3>
             </header>
-            <img src="./images/test/facebook-like.jpg" alt="facebooklikes" />
+            <img src={FacebookLike} alt="facebooklikes" />
           </div>
         </aside>
       </section>
