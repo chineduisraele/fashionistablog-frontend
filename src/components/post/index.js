@@ -277,8 +277,11 @@ const MostViewedPosts = ({ query }) => {
       });
   }, [query]);
 
-  return (
+  return mostViewedPosts?.count === 0 ? (
+    <></>
+  ) : (
     <section className="most-viewed">
+      {console.log(mostViewedPosts)}
       <header className="header">
         <h3>Most Viewed</h3>
       </header>
@@ -395,37 +398,42 @@ const SideContent = ({ query, id }) => {
       <FollowTab data={followData} />
 
       {/* popular posts */}
-      {!path.search && (
-        <article className="popular-tabs d-grid" id="popular-tabs">
-          <header className="header">
-            <h3>Popular</h3>
-          </header>
+      {popularPosts?.count !== 0 && (
+        <>
+          {!path.search && (
+            <article className="popular-tabs d-grid" id="popular-tabs">
+              {console.log(popularPosts?.count)}
+              <header className="header">
+                <h3>Popular</h3>
+              </header>
 
-          {popularPosts && (
-            <div className="minicards-cont d-grid">
-              {popularPosts.results.map((i) => {
-                return <MiniCard {...i} />;
-              })}
-            </div>
+              {popularPosts && (
+                <div className="minicards-cont d-grid">
+                  {popularPosts.results.map((i) => {
+                    return <MiniCard {...i} />;
+                  })}
+                </div>
+              )}
+            </article>
           )}
-        </article>
-      )}
 
-      {/* categories tab and archives tab */}
-      <div className="d-grid catscont">
-        <CategoriesTab
-          {...{
-            data: categoriesData,
-            title: "Categories",
-          }}
-        />
-        <CategoriesTab
-          {...{
-            data: archivesData,
-            title: "Archives",
-          }}
-        />
-      </div>
+          {/* categories tab and archives tab */}
+          <div className="d-grid catscont">
+            <CategoriesTab
+              {...{
+                data: categoriesData,
+                title: "Categories",
+              }}
+            />
+            <CategoriesTab
+              {...{
+                data: archivesData,
+                title: "Archives",
+              }}
+            />
+          </div>
+        </>
+      )}
     </aside>
   );
 };
