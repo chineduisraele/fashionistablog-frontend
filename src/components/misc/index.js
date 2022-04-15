@@ -2,7 +2,7 @@ import React from "react";
 import "./css/index.css";
 import Gad from "../../images/add-1.webp";
 
-const BASE_URL = "https://israelefashionistablog.herokuapp.com";
+const BASE_URL = "http://127.0.0.1:8000";
 // No data
 const Empty = ({ text, text1, text2, height }) => {
   return (

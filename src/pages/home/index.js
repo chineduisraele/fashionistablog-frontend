@@ -63,7 +63,7 @@ const Home = () => {
 
           setMainPosts(mainposts.data);
           page === "home" &&
-            setExploreUrl(`/post/${randompost.category}/${randompost.id}`);
+            setExploreUrl(`/post/${randompost?.category}/${randompost?.id}`);
           setMainPostsLoading(false);
         })
         .catch((err) => console.log(err));
