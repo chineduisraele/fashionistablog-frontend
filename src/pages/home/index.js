@@ -44,23 +44,18 @@ const Home = () => {
     // loading
     [mainPostsLoading, setMainPostsLoading] = useState(true),
     // explore url
-    [exploreUrl, setExploreUrl] = useState("");
+    [exploreUrl, setExploreUrl] = useState(`?${searchParams.toString()}`);
 
-  // set States
-  // useEffect(() => {
-  //   const search = searchParams.has("search");
-  //   setMainPostsCategory(search ? null : searchParams.get("cat") || "All");
-  // }, []);
+  // create page link from params
   useEffect(() => {
-    // replace this with page variable
     const search = searchParams.has("search");
     const category = searchParams.has("cat");
 
     setMainPostsUrl(
       search
-        ? `${BASE_URL}/api/post/posts/filter/${path.search}&page=${
-            searchParams.get("pg") || 1
-          }`
+        ? `${BASE_URL}/api/post/posts/filter/search=${searchParams.get(
+            "search"
+          )}&page=${searchParams.get("pg") || 1}`
         : // if search is false
         category
         ? `${BASE_URL}/api/post/posts/filter/?category=${searchParams.get(
@@ -77,21 +72,27 @@ const Home = () => {
   // main
   useEffect(() => {
     setMainPostsLoading(true);
-    axios
-      .get(mainPostsUrl)
-      .then((mainposts) => {
-        const randompost =
-          page === "home" &&
-          mainposts.data.results[
-            Math.floor(Math.random() * mainposts.data.results.length)
-          ];
+    mainPostsUrl &&
+      axios
+        .get(mainPostsUrl)
+        .then((mainposts) => {
+          if (page === "home") {
+            const randompost =
+              mainposts.data.results[
+                Math.floor(Math.random() * mainposts.data.results.length)
+              ];
 
-        setMainPosts(mainposts.data);
-        page === "home" &&
-          setExploreUrl(`/post/${randompost?.category}/${randompost?.id}`);
-        setMainPostsLoading(false);
-      })
-      .catch((err) => console.log(err));
+            setExploreUrl(
+              randompost
+                ? `/post/${randompost?.category}/${randompost?.id}`
+                : `?${searchParams.toString()}`
+            );
+          }
+
+          setMainPosts(mainposts.data);
+          setMainPostsLoading(false);
+        })
+        .catch((err) => console.log(err));
   }, [mainPostsUrl]);
 
   return mainPosts === undefined ? (
