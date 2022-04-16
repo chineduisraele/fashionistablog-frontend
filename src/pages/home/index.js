@@ -19,18 +19,6 @@ import FacebookLike from "../../images/facebook.webp";
 const Home = () => {
   const path = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  // for home ... page will be a state
-  // console.log(`http://localhost:3000/?page=1`);
-  // // category home
-  // console.log(`http://localhost:3000/?category=cat&page=1`);
-  // // search
-  // console.log(`http://localhost:3000/search/?search=search`);
-
-  // console.log(`${BASE_URL}/api/post/posts/filter/?category=all&page=1`);
-  // console.log(`${BASE_URL}/api/post/posts/?page=1`);
-  // console.log(path.search.replace("?", "").split("&"));
-
-  // `${BASE_URL}/api/post/posts/filter/${path.search}`;
 
   // set page type
   const page = searchParams.get("search") || "home";
@@ -53,7 +41,7 @@ const Home = () => {
 
     setMainPostsUrl(
       search
-        ? `${BASE_URL}/api/post/posts/filter/search=${searchParams.get(
+        ? `${BASE_URL}/api/post/posts/filter/?search=${searchParams.get(
             "search"
           )}&page=${searchParams.get("pg") || 1}`
         : // if search is false
@@ -64,10 +52,6 @@ const Home = () => {
         : `${BASE_URL}/api/post/posts/?page=${searchParams.get("pg") || 1}`
     );
   }, [searchParams]);
-
-  // useEffect(() => {
-  //   setSearchParams({ cat: mainPostsCategory, pg: "1" });
-  // }, [mainPostsCategory]);
 
   // main
   useEffect(() => {
@@ -121,21 +105,15 @@ const Home = () => {
         <MainPostComponent
           {...{
             mainPosts,
-            mainPostsCategory,
-            setMainPostsCategory,
             setMainPostsUrl,
             mainPostsLoading,
             navtabsData:
               page === "home"
-                ? ["All", "Design", "Fashion", "Lifestyle", "Talks"]
-                : [
-                    `${path.search
-                      .replace("?search=", "")
-                      .split("&")
-                      .slice(0, 1)}`,
-                  ],
+                ? ["all", "design", "fashion", "lifestyle", "talks"]
+                : [searchParams.get("search")],
             page,
-            path: path.search,
+            searchParams,
+            setSearchParams,
           }}
         />
 
@@ -174,3 +152,5 @@ const Home = () => {
 };
 
 export default Home;
+
+// 162 lines

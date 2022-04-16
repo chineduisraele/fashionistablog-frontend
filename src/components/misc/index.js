@@ -34,6 +34,8 @@ const Loading = () => {
     </p>
   );
 };
+
+// small loading
 const SmallLoading = () => {
   return (
     <p
@@ -68,6 +70,7 @@ const Alerts = ({ message, error, show }) => {
   );
 };
 
+// GoogleAds
 const GoogleAds = () => {
   return (
     <article className="google-ads">

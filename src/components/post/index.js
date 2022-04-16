@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 
 import { Empty, SmallLoading, BASE_URL } from "../misc";
@@ -11,16 +11,25 @@ import Affiliate from "../../images/purchase.webp";
 
 // Paginate
 
-const Paginate = ({ posts, setPostUrl, page, to }) => {
+const Paginate = ({ posts, to }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <ScrollLink to={to} spy={true} offset={-100} style={{ display: "block" }}>
       <div className="paginate d-grid">
         <button
           className={posts.previous ? "" : "inactive"}
-          onClick={() => {
-            posts.previous && setPostUrl(posts.previous);
-            posts.previous &&
-              sessionStorage.setItem(`${page}PostsUrl`, posts.previous);
+          onClickCapture={(e) => {
+            if (posts.previous) {
+              searchParams.set(
+                "pg",
+                posts.previous.includes("page") ? posts.previous.slice(-1) : "1"
+              );
+
+              setSearchParams(searchParams);
+            } else {
+              e.stopPropagation();
+            }
           }}
         >
           <i className="fa fa-angle-left"></i> Previous
@@ -28,9 +37,13 @@ const Paginate = ({ posts, setPostUrl, page, to }) => {
 
         <button
           className={posts.next ? "" : "inactive"}
-          onClick={() => {
-            posts.next && setPostUrl(posts.next);
-            posts.next && sessionStorage.setItem(`${page}PostsUrl`, posts.next);
+          onClickCapture={(e) => {
+            if (posts.next) {
+              searchParams.set("pg", posts.next.slice(-1));
+              setSearchParams(searchParams);
+            } else {
+              e.stopPropagation();
+            }
           }}
         >
           Next <i className="fa fa-angle-right"></i>
@@ -43,13 +56,11 @@ const Paginate = ({ posts, setPostUrl, page, to }) => {
 // Main post component
 const MainPostComponent = ({
   mainPosts,
-  mainPostsCategory,
-  setMainPostsCategory,
-  setMainPostsUrl,
   mainPostsLoading,
   navtabsData,
   page,
-  path,
+  searchParams,
+  setSearchParams,
 }) => {
   return (
     <div className="card-cont">
@@ -57,44 +68,28 @@ const MainPostComponent = ({
       <div className="nav-tabs" id="nav-tabs">
         <ul className="d-flex">
           <li>
-            {path?.includes("tagonly")
+            {searchParams.has("tagonly")
               ? `Tags ( ${mainPosts.count} )`
-              : path?.includes("search")
+              : searchParams.has("search")
               ? `Search ( ${mainPosts.count} )`
-              : `${mainPostsCategory}  ${
-                  mainPostsCategory !== "All" ? ` ( ${mainPosts.count} )` : ""
-                } `}
+              : `${searchParams.get("cat") || "all"}  ${
+                  searchParams.get("cat") ? "( " + mainPosts.count + " )" : ""
+                }
+                 `}
           </li>
           {navtabsData.map((text, i) => {
             return (
               <li
                 key={i}
                 role="button"
-                className={text === mainPostsCategory ? "active" : ""}
-                onClick={({ currentTarget: c }) => {
-                  // mainposts category control
-                  // should only apply to home page
-                  if (navtabsData.length > 1) {
-                    setMainPostsCategory(c.textContent);
-
-                    let url =
-                      c.textContent === "All"
-                        ? `${BASE_URL}/api/post/posts/`
-                        : `${BASE_URL}/api/post/posts/filter/?category=${c.textContent}`;
-
-                    setMainPostsUrl(url);
-
-                    // save for reload
-                    sessionStorage.setItem(
-                      `${page}mainPostsCategory`,
-                      c.textContent
-                    );
-                    sessionStorage.setItem(`${page}mainPostsUrl`, url);
-                  }
+                className={text === searchParams.get("cat") ? "active" : ""}
+                onClick={() => {
+                  page === "home" &&
+                    setSearchParams(text === "all" ? {} : { cat: text });
                 }}
               >
-                {page.includes("tagonly") && "# "}
-                {text.split("%20").join(" ").slice(0, 25)}
+                {searchParams.has("tagonly") && "# "}
+                {text.slice(0, 25)}
               </li>
             );
           })}
@@ -115,8 +110,6 @@ const MainPostComponent = ({
           <Paginate
             {...{
               posts: mainPosts,
-              setPostUrl: setMainPostsUrl,
-              page: `${page}main`,
               to: "nav-tabs",
             }}
           />
@@ -124,7 +117,7 @@ const MainPostComponent = ({
       ) : (
         <Empty
           {...{
-            text: "No Posts found!",
+            text: "No Posts Found!",
             text2: "Hopefully, there'll be something next time",
             height: "50vh",
           }}
@@ -491,3 +484,5 @@ export {
   FollowTab,
   Paginate,
 };
+
+// 497 lines
