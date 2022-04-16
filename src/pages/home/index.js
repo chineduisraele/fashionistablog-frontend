@@ -25,8 +25,6 @@ const Home = () => {
 
   // set main post
   const [mainPosts, setMainPosts] = useState(),
-    // category
-    [mainPostsCategory, setMainPostsCategory] = useState(),
     // url
     [mainPostsUrl, setMainPostsUrl] = useState(),
     // loading
@@ -118,7 +116,7 @@ const Home = () => {
         />
 
         {/* side content */}
-        <SideContent query="all" page={page} />
+        <SideContent {...{ query: "all", page, searchParams }} />
       </section>
 
       {/* ads */}

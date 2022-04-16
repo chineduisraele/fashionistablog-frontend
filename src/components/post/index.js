@@ -323,14 +323,11 @@ const MostViewedPosts = ({ query }) => {
 };
 
 // side content
-const SideContent = ({ query, id }) => {
+const SideContent = ({ query, id, searchParams }) => {
   const [categoriesData, setCategoriesdata] = useState(),
     [archivesData, setArchivesData] = useState(),
     // popular
     [popularPosts, setPopularPosts] = useState();
-  // [popularPostUrl, setPopularPostUrl] = useState();
-
-  const path = useLocation();
 
   const followData = [
     ["fab fa-facebook", "#"],
@@ -343,23 +340,41 @@ const SideContent = ({ query, id }) => {
     ["fab fa-pinterest", "#"],
   ];
 
+  // useEffect(() => {
+  //   setMainPostsUrl(
+  //     search
+  //       ? `${BASE_URL}/api/post/posts/filter/?search=${searchParams.get(
+  //           "search"
+  //         )}&page=${searchParams.get("pg") || 1}`
+  //       : // if search is false
+  //       category
+  //       ? `${BASE_URL}/api/post/posts/filter/?category=${searchParams.get(
+  //           "cat"
+  //         )}&page=${searchParams.get("pg") || 1}`
+  //       : `${BASE_URL}/api/post/posts/?page=${searchParams.get("pg") || 1}`
+  //   );
+  // }, []);
   //popular
   useEffect(() => {
-    !path.search &&
-      axios
-        .get(
-          `${BASE_URL}/api/post/posts/filter/?popular=${query}${
-            id ? `&id=${id}` : ""
-          }`
-        )
-        .then((popularposts) => {
-          setPopularPosts(popularposts.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  }, [query, id, path.search]);
+    axios
+      .get(
+        searchParams.has("search")
+          ? `${BASE_URL}/api/post/posts/filter/?popular=${query}${
+              id ? `&id=${id}` : ""
+            }`
+          : `${BASE_URL}/api/post/posts/filter/?popular=${query}${
+              id ? `&id=${id}` : ""
+            }`
+      )
+      .then((popularposts) => {
+        setPopularPosts(popularposts.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
+  // fetch categories tab and archives tab data
   useEffect(() => {
     axios
       .all([
@@ -367,9 +382,9 @@ const SideContent = ({ query, id }) => {
         axios.get(`${BASE_URL}/api/post/posts/filter/?archives_count=all`),
       ])
       .then(
-        axios.spread((categoriescount, archivescount) => {
-          setCategoriesdata(categoriescount.data);
-          setArchivesData(archivescount.data);
+        axios.spread((categories, archives) => {
+          setCategoriesdata(categories.data);
+          setArchivesData(archives.data);
         })
       )
       .catch((err) => console.log(err));
@@ -393,7 +408,7 @@ const SideContent = ({ query, id }) => {
       {/* popular posts */}
       {popularPosts?.count !== 0 && (
         <>
-          {!path.search && (
+          {searchParams.has("search") && (
             <article className="popular-tabs d-grid" id="popular-tabs">
               {console.log(popularPosts?.count)}
               <header className="header">
