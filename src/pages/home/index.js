@@ -19,7 +19,6 @@ import FacebookLike from "../../images/facebook.webp";
 const Home = () => {
   const path = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-
   // for home ... page will be a state
   // console.log(`http://localhost:3000/?page=1`);
   // // category home
@@ -31,62 +30,68 @@ const Home = () => {
   // console.log(`${BASE_URL}/api/post/posts/?page=1`);
   // console.log(path.search.replace("?", "").split("&"));
 
+  // `${BASE_URL}/api/post/posts/filter/${path.search}`;
+
   // set page type
-  const page = path.search.includes("search") ? "search" : "home";
+  const page = searchParams.get("search") || "home";
 
   // set main post
   const [mainPosts, setMainPosts] = useState(),
     // category
-    [mainPostsCategory, setMainPostsCategory] = useState(
-      page === "home"
-        ? sessionStorage.getItem(`${page}mainPostsCategory`)
-        : "All"
-    ),
-    [mainPostsUrl, setMainPostsUrl] = useState(
-      page === "home"
-        ? sessionStorage.getItem(`${page}mainPostsUrl`)
-        : `${BASE_URL}/api/post/posts/filter/${path.search}`
-    ),
+    [mainPostsCategory, setMainPostsCategory] = useState(),
+    // url
+    [mainPostsUrl, setMainPostsUrl] = useState(),
+    // loading
     [mainPostsLoading, setMainPostsLoading] = useState(true),
+    // explore url
     [exploreUrl, setExploreUrl] = useState("");
 
+  // set States
+  // useEffect(() => {
+  //   const search = searchParams.has("search");
+  //   setMainPostsCategory(search ? null : searchParams.get("cat") || "All");
+  // }, []);
   useEffect(() => {
-    setSearchParams({ cat: mainPostsCategory, pg: "1" });
-  }, [mainPostsCategory]);
+    // replace this with page variable
+    const search = searchParams.has("search");
+    const category = searchParams.has("cat");
 
-  // fetch data
-  useEffect(() => {
-    console.log(page);
-    const url = sessionStorage.getItem(`${page}mainPostsUrl`);
-    path.search
-      ? setMainPostsUrl(`${BASE_URL}/api/post/posts/filter/${path.search}`)
-      : url
-      ? setMainPostsUrl(url)
-      : setMainPostsUrl(`${BASE_URL}/api/post/posts/`);
-  }, [path.search]);
+    setMainPostsUrl(
+      search
+        ? `${BASE_URL}/api/post/posts/filter/${path.search}&page=${
+            searchParams.get("pg") || 1
+          }`
+        : // if search is false
+        category
+        ? `${BASE_URL}/api/post/posts/filter/?category=${searchParams.get(
+            "cat"
+          )}&page=${searchParams.get("pg") || 1}`
+        : `${BASE_URL}/api/post/posts/?page=${searchParams.get("pg") || 1}`
+    );
+  }, [searchParams]);
+
+  // useEffect(() => {
+  //   setSearchParams({ cat: mainPostsCategory, pg: "1" });
+  // }, [mainPostsCategory]);
 
   // main
   useEffect(() => {
-    mainPostsUrl === null && setMainPostsUrl(`${BASE_URL}/api/post/posts/`);
-    mainPostsCategory === null && setMainPostsCategory("All");
-
     setMainPostsLoading(true);
-    mainPostsUrl &&
-      axios
-        .get(mainPostsUrl)
-        .then((mainposts) => {
-          const randompost =
-            page === "home" &&
-            mainposts.data.results[
-              Math.floor(Math.random() * mainposts.data.results.length)
-            ];
-
-          setMainPosts(mainposts.data);
+    axios
+      .get(mainPostsUrl)
+      .then((mainposts) => {
+        const randompost =
           page === "home" &&
-            setExploreUrl(`/post/${randompost?.category}/${randompost?.id}`);
-          setMainPostsLoading(false);
-        })
-        .catch((err) => console.log(err));
+          mainposts.data.results[
+            Math.floor(Math.random() * mainposts.data.results.length)
+          ];
+
+        setMainPosts(mainposts.data);
+        page === "home" &&
+          setExploreUrl(`/post/${randompost?.category}/${randompost?.id}`);
+        setMainPostsLoading(false);
+      })
+      .catch((err) => console.log(err));
   }, [mainPostsUrl]);
 
   return mainPosts === undefined ? (
