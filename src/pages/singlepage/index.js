@@ -5,19 +5,17 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaAngleDown,
-  FaEye,
   FaRegEye,
-  FaUserAlt,
-  FaComment,
-  FaClock,
+  FaRegUser,
+  FaRegComment,
+  FaRegClock,
   FaTags,
-  FaShare,
+  FaRegShareSquare,
   FaFacebookSquare,
   FaTwitter,
   FaInstagram,
   FaWhatsapp,
   FaTelegramPlane,
-  FaDiscord,
   FaGooglePlus,
   FaPinterest,
 } from "react-icons/fa";
@@ -261,18 +259,17 @@ const SinglePostComponent = ({
   query,
 }) => {
   const followData = [
-    ["fab fa-facebook", "#"],
-    ["fab fa-twitter", "#"],
-    ["fab fa-instagram", "#"],
-    ["fab fa-google-plus", "#"],
-    ["fab fa-pinterest", "#"],
+    [<FaFacebookSquare />, "#", "facebook"],
+    [<FaTwitter />, "#", "twitter"],
+    [<FaInstagram />, "#", "instagram"],
+    [<FaGooglePlus />, "#", "google"],
+    [<FaPinterest />, "#", "pinterest"],
   ];
-
   return (
     <section className="pagedetailscont d-grid">
       {/* postimg */}
       <article className="postimg">
-        <img src={image} alt="" />
+        <img src={image} alt="postbanner" />
       </article>
 
       {/* header */}
@@ -280,11 +277,11 @@ const SinglePostComponent = ({
         <div className="links">
           <Link to="/">Home</Link>
 
-          <i className="fa fa-angle-right"></i>
+          <FaAngleRight />
 
           <Link to={`/${query}`}>{query}</Link>
 
-          <i className="fa fa-angle-right"></i>
+          <FaAngleRight />
           <span>{title}</span>
         </div>
 
@@ -297,23 +294,22 @@ const SinglePostComponent = ({
 
         <div className="info d-flex">
           <span>
-            <i className="fa fa-clock"></i> MARCH 1, 2022
+            <FaRegClock /> MARCH 1, 2022
           </span>
           <span>
-            <i className="fa fa-user"></i> BY {author}
+            <FaRegUser /> BY {author}
           </span>
           <span>
-            <i className="fa fa-comment"></i> {total_comments} COMMENTS
+            <FaRegComment /> {total_comments} COMMENTS
           </span>
           <span>
-            <i className="fa fa-eye"></i>
-            {views} VIEWS
+            <FaRegEye /> {views} VIEWS
           </span>
         </div>
 
         <div className="share d-flex aic">
           <span>
-            <i className="fa fa-share"></i> SHARE:
+            <FaRegShareSquare /> SHARE:
           </span>
           <FollowTab data={followData} />
         </div>
@@ -337,7 +333,7 @@ const SinglePostComponent = ({
 
       <article className="tags d-flex aic">
         <span>
-          <i className="fa fa-tags"></i> TAGS:
+          <FaTags /> TAGS:
         </span>
         <div className="d-flex">
           {tags.split(",").map((it, i) => {
@@ -349,11 +345,11 @@ const SinglePostComponent = ({
       {/* pagination */}
       <div className="paginate d-grid">
         <button>
-          <i className="fa fa-angle-left"></i> Previous
+          <FaAngleLeft /> Previous
         </button>
 
         <button>
-          Next <i className="fa fa-angle-right"></i>
+          Next <FaAngleRight />
         </button>
       </div>
 
@@ -386,7 +382,7 @@ const Comment = ({ name, comment, date, img }) => {
         <p className="name d-flex jcsb">
           {name}
           <span>
-            <FaClock /> MARCH 1, 2022
+            <FaRegClock /> MARCH 1, 2022
           </span>
         </p>
         <p className="text">{comment}</p>

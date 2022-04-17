@@ -100,7 +100,8 @@ const MainPostComponent = ({
                 key={i}
                 role="button"
                 className={
-                  text === searchParams.get("cat") || text === "all"
+                  text === searchParams.get("cat") ||
+                  (text === "all" && !searchParams.get("cat"))
                     ? "active"
                     : ""
                 }
@@ -353,24 +354,26 @@ const SideContent = ({ page, searchParams }) => {
 };
 
 // follow tab
-const FollowTab = () => {
-  let data = [
-    [<FaFacebookSquare />, "#", "facebook"],
-    [<FaTwitter />, "#", "twitter"],
-    [<FaInstagram />, "#", "instagram"],
-    [<FaWhatsapp />, "#", "whatsapp"],
-    [<FaTelegram />, "#", "telegram"],
-    [<FaDiscord />, "#", "discord"],
-    [<FaGooglePlus />, "#", "google"],
-    [<FaPinterest />, "#", "pinterest"],
-  ];
+const FollowTab = ({ data }) => {
+  let followdata = data
+    ? data
+    : [
+        [<FaFacebookSquare />, "#", "facebook"],
+        [<FaTwitter />, "#", "twitter"],
+        [<FaInstagram />, "#", "instagram"],
+        [<FaWhatsapp />, "#", "whatsapp"],
+        [<FaTelegram />, "#", "telegram"],
+        [<FaDiscord />, "#", "discord"],
+        [<FaGooglePlus />, "#", "google"],
+        [<FaPinterest />, "#", "pinterest"],
+      ];
   return (
     <article className="follow-tab">
       <header className="header">
         <h3>Follow Us</h3>
       </header>
       <ul className="d-grid">
-        {data.map(([name, link, classname], i) => {
+        {followdata.map(([name, link, classname], i) => {
           return (
             <li key={i}>
               <a href={link} className={`d-flex aic jcc ${classname}`}>
@@ -397,8 +400,8 @@ const CategoriesTab = ({ data, title }) => {
           data.map(({ text, count }, i) => {
             return (
               <li key={i}>
-                <FaAngleDoubleRight />
-                <Link to={`/${text}`}>{text}</Link> ( {count} )
+                <FaAngleDoubleRight /> <Link to={`/${text}`}>{text}</Link> ({" "}
+                {count} )
               </li>
             );
           })}

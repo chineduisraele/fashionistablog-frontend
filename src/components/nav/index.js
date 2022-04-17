@@ -1,5 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { FaBars, FaSearch } from "react-icons/fa";
+
 import "./css/index.css";
 import Logo from "../../images/logo.webp";
 
@@ -83,7 +85,7 @@ const Nav = () => {
             toggleHeight();
           }}
         >
-          <i className="fa fa-bars"></i>
+          <FaBars />
         </button>
 
         {/* menu */}
@@ -119,7 +121,7 @@ const Nav = () => {
             }}
           >
             <button className="d-flex aic jcc c-white">
-              <i className="fa fa-search "></i>
+              <FaSearch />
             </button>
           </Link>
         </form>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaClock, FaComment, FaEye } from "react-icons/fa";
+import { FaRegClock, FaRegComment, FaRegEye } from "react-icons/fa";
 
 import "./css/index.css";
 
@@ -23,13 +23,13 @@ const Card = ({
         <h3>{title}</h3>
         <div className="info d-flex">
           <span>
-            <FaClock /> MARCH 1, 2022
+            <FaRegClock /> MARCH 1, 2022
           </span>
           <span>
-            <FaComment /> {total_comments}
+            <FaRegComment /> {total_comments}
           </span>
           <span>
-            <FaEye /> {views}
+            <FaRegEye /> {views}
           </span>
         </div>
         <p className="content">{short_text}</p>
@@ -46,7 +46,7 @@ const MiniCard = ({ id, thumbnail, category, title, date }) => {
       <div className="text d-grid">
         <h3>{title}</h3>
         <span>
-          <FaClock /> MARCH 1, 2022
+          <FaRegClock /> MARCH 1, 2022
         </span>
       </div>
     </Link>
@@ -70,13 +70,13 @@ const PhotoCard = ({
         <h3>{title}</h3>
         <div className="info d-flex">
           <span>
-            <FaClock /> MARCH 1, 2022
+            <FaRegClock /> MARCH 1, 2022
           </span>
           <span>
-            <FaComment /> {total_comments}
+            <FaRegComment /> {total_comments}
           </span>
           <span>
-            <FaEye /> {views}
+            <FaRegEye /> {views}
           </span>
         </div>
       </div>
