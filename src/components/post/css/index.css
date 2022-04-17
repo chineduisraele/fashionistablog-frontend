@@ -147,12 +147,8 @@
 
 .follow-tab ul a {
   border-radius: 0.5rem;
-}
-
-.follow-tab ul a i.fab {
   padding: 0.88rem;
   width: 100%;
-  font-size: 1.25rem;
   color: #fff;
   display: -ms-grid;
   display: grid;
@@ -165,35 +161,40 @@
   border-radius: 0.5rem;
 }
 
-.follow-tab ul a i.fab.fa-facebook {
+.follow-tab ul a svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.follow-tab ul a.facebook {
   background-color: #2f58a1;
 }
 
-.follow-tab ul a i.fab.fa-twitter {
+.follow-tab ul a.twitter {
   background-color: #069cd5;
 }
 
-.follow-tab ul a i.fab.fa-google-plus {
+.follow-tab ul a.google {
   background-color: #ea4335;
 }
 
-.follow-tab ul a i.fab.fa-pinterest {
+.follow-tab ul a.pinterest {
   background-color: #da0d32;
 }
 
-.follow-tab ul a i.fab.fa-instagram {
+.follow-tab ul a.instagram {
   background-color: #0076b8;
 }
 
-.follow-tab ul a i.fab.fa-whatsapp {
+.follow-tab ul a.whatsapp {
   background-color: #4caf50;
 }
 
-.follow-tab ul a i.fab.fa-telegram {
+.follow-tab ul a.telegram {
   background-color: #039be5;
 }
 
-.follow-tab ul a i.fab.fa-discord {
+.follow-tab ul a.discord {
   background-color: #5c6bc0;
 }
 
@@ -231,39 +232,10 @@
   margin-right: auto;
 }
 
-.most-viewed .inner div {
-  overflow: hidden;
-}
-
-.most-viewed .inner div .slide {
-  gap: 0.105rem;
-  -webkit-transition: -webkit-transform 0.5s ease-out;
-  transition: -webkit-transform 0.5s ease-out;
-  transition: transform 0.5s ease-out;
-  transition: transform 0.5s ease-out, -webkit-transform 0.5s ease-out;
-}
-
-.most-viewed .inner .controls {
-  width: 100%;
-  top: 50%;
-  left: 0;
-}
-
-.most-viewed .inner .controls button {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: #ba004a80;
-}
-
-.most-viewed .inner .controls button:active {
-  -webkit-transform: scale(1.05);
-          transform: scale(1.05);
-}
-
-.most-viewed .inner .controls button i {
-  color: #fff;
-  font-size: 2rem;
-  font-weight: normal;
+.most-viewed .slide {
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  gap: 0.15rem;
 }
 
 .featured-posts .cards {

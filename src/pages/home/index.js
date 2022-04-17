@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -7,13 +7,13 @@ import {
   FeaturedPosts,
   SideContent,
   MostViewedPosts,
+  Tweets,
 } from "../../components/post";
 import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
 import "./css/home.css";
 import "./css/responsive.css";
 import Banner from "../../images/banner.webp";
-import FacebookLike from "../../images/facebook.webp";
 
 // home
 const Home = () => {
@@ -73,7 +73,7 @@ const Home = () => {
           setMainPosts(mainposts.data);
           setMainPostsLoading(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
   }, [mainPostsUrl]);
 
   return mainPosts === undefined ? (
@@ -126,28 +126,13 @@ const Home = () => {
 
       <section className="more-content main-content d-grid">
         {/* featured posts */}
-        <FeaturedPosts query="all" page="home" />
+        <FeaturedPosts query="all" />
 
         {/* tweets */}
-        <aside>
-          <div className="tweets">
-            <header className="header">
-              <h3>RECENT TWEETS</h3>
-            </header>
-            <img src={FacebookLike} alt="tweets" />
-          </div>
-          <div className="fblikes">
-            <header className="header">
-              <h3>FACEBOOK LIKES</h3>
-            </header>
-            <img src={FacebookLike} alt="facebooklikes" />
-          </div>
-        </aside>
+        <Tweets />
       </section>
     </main>
   );
 };
 
 export default Home;
-
-// 162 lines

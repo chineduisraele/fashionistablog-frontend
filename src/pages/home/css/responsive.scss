@@ -29,6 +29,29 @@
   }
 }
 
+// most viewed posts only
+@media screen and (max-width: 1080px) {
+  .most-viewed {
+    .slide {
+      .photo-card {
+        .overlay {
+          gap: 0.8rem;
+          padding: 1.5rem;
+          padding-top: 5rem;
+          height: 99%;
+          h3 {
+            font-size: 16px;
+          }
+          p {
+            font-size: 11px;
+            padding: 3px 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
 // maincontent only
 @media (min-width: 875px) and (max-width: 1054px) {
   .main-content {
@@ -114,6 +137,26 @@
     .categories-tab ul,
     .mini-card {
       margin: 0;
+    }
+  }
+  .most-viewed {
+    .slide {
+      grid-template-columns: repeat(2, 1fr);
+      .photo-card {
+        .overlay {
+          gap: 0.8rem;
+          padding: 1.5rem;
+          padding-top: 5rem;
+          height: 99%;
+          h3 {
+            font-size: 16px;
+          }
+          p {
+            font-size: 11px;
+            padding: 3px 20px;
+          }
+        }
+      }
     }
   }
 }
@@ -203,6 +246,18 @@
       margin: 0 1rem;
     }
   }
+
+  .most-viewed {
+    .slide {
+      grid-template-columns: 1fr;
+      margin: 0 1rem;
+      .photo-card {
+        img {
+          aspect-ratio: 39.88 / 22;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 545px) {
@@ -241,6 +296,11 @@
     .follow-tab ul,
     .categories-tab ul,
     .mini-card {
+      margin: 0 0.5rem;
+    }
+  }
+  .most-viewed {
+    .slide {
       margin: 0 0.5rem;
     }
   }

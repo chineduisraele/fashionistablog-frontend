@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaClock, FaComment, FaEye } from "react-icons/fa";
 
 import "./css/index.css";
 
@@ -19,17 +20,16 @@ const Card = ({
         <p>{category}</p>
       </div>
       <div className="text-part d-grid">
-        {/* <span>Fashion</span> */}
-        <h3 className="trans">{title}</h3>
+        <h3>{title}</h3>
         <div className="info d-flex">
           <span>
-            <i className="fa fa-clock"></i> MARCH 1, 2022
+            <FaClock /> MARCH 1, 2022
           </span>
           <span>
-            <i className="fa fa-comment"></i> {total_comments}
+            <FaComment /> {total_comments}
           </span>
           <span>
-            <i className="fa fa-eye"></i> {views}
+            <FaEye /> {views}
           </span>
         </div>
         <p className="content">{short_text}</p>
@@ -46,7 +46,7 @@ const MiniCard = ({ id, thumbnail, category, title, date }) => {
       <div className="text d-grid">
         <h3>{title}</h3>
         <span>
-          <i className="fa fa-clock"></i> MARCH 1, 2022
+          <FaClock /> MARCH 1, 2022
         </span>
       </div>
     </Link>
@@ -70,13 +70,13 @@ const PhotoCard = ({
         <h3>{title}</h3>
         <div className="info d-flex">
           <span>
-            <i className="fa fa-clock"></i> MARCH 1, 2022
+            <FaClock /> MARCH 1, 2022
           </span>
           <span>
-            <i className="fa fa-comment"></i> {total_comments}
+            <FaComment /> {total_comments}
           </span>
           <span>
-            <i className="fa fa-eye"></i> {views}
+            <FaEye /> {views}
           </span>
         </div>
       </div>

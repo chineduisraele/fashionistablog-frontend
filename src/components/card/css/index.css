@@ -11,6 +11,7 @@
 }
 
 .card .card-img img {
+  display: block;
   width: 100%;
   height: 250px;
   -o-object-fit: cover;
@@ -74,6 +75,7 @@
 }
 
 .mini-card img {
+  display: block;
   border-radius: 0.5rem;
   height: 60px;
   -o-object-fit: cover;
@@ -97,9 +99,10 @@
 }
 
 .photo-card img {
+  display: block;
   border-radius: 0.5rem;
-  width: calc(400px - 0.07rem);
-  height: 250px;
+  width: 100%;
+  aspect-ratio: 39.88 / 25;
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: 50% 0;
@@ -119,7 +122,6 @@
   padding: 1.5rem;
   padding-top: 6.5rem;
   background-color: #00000065;
-  height: 99%;
 }
 
 .photo-card .overlay h3 {
@@ -130,7 +132,6 @@
 
 .photo-card .overlay p {
   font-size: 12px;
-  color: inherit;
   padding: 4px 20px;
   font-weight: bold;
   text-transform: uppercase;

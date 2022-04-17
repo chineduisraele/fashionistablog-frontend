@@ -1,18 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Link,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
+import {
+  FaFacebookSquare,
+  FaTwitter,
+  FaInstagram,
+  FaWhatsapp,
+  FaTelegram,
+  FaDiscord,
+  FaGooglePlus,
+  FaPinterest,
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleRight,
+} from "react-icons/fa";
 
 import { Empty, SmallLoading, BASE_URL } from "../misc";
 import { Card, MiniCard, PhotoCard } from "../card";
 
 import "./css/index.css";
 import Affiliate from "../../images/purchase.webp";
+import FacebookLike from "../../images/facebook.webp";
 
 // Paginate
 
@@ -37,7 +46,7 @@ const Paginate = ({ posts, to }) => {
             }
           }}
         >
-          <i className="fa fa-angle-left"></i> Previous
+          <FaAngleLeft />t Previous
         </button>
 
         <button
@@ -51,7 +60,7 @@ const Paginate = ({ posts, to }) => {
             }
           }}
         >
-          Next <i className="fa fa-angle-right"></i>
+          Next <FaAngleRight />
         </button>
       </div>
     </ScrollLink>
@@ -162,7 +171,7 @@ const FeaturedPosts = ({ query }) => {
           setFeaturedPostsLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
   }, [featuredPostsUrl]);
   return (
@@ -199,57 +208,7 @@ const FeaturedPosts = ({ query }) => {
 // popular posts
 const MostViewedPosts = ({ query }) => {
   // states
-  const [mostViewedPosts, setMostViewedPosts] = useState(),
-    [moved, setMoved] = useState(0);
-
-  // element ref
-  const slideRef = useRef();
-  const prevRef = useRef();
-  const nextRef = useRef();
-
-  // slide mover function
-  const moveSlide = (direction, moved) => {
-    let factor = window.innerWidth < 600 ? 10 : 8,
-      slide = slideRef.current;
-    // slide = c.parentElement.parentElement.querySelector(".slide"),
-
-    if (direction === "right" && moved > -(factor * 410)) {
-      setMoved((prev) => {
-        slide.style.transform = `translateX(${prev - 401}px)`;
-        return prev - 401;
-      });
-    }
-    if (direction === "left" && moved < 0) {
-      setMoved((prev) => {
-        slide.style.transform = `translateX(${prev + 401}px)`;
-        return prev + 401;
-      });
-    }
-  };
-
-  // auto slide
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     if (getComputedStyle(nextRef.current).visibility === "hidden") {
-  //       slideRef.current.style.transition = "none";
-  //       slideRef.current.style.transform = `translateX(0)`;
-
-  //       nextRef.current.style.visibility = "visible";
-  //       prevRef.current.style.visibility = "hidden";
-
-  //       setMoved(0);
-  //       setTimeout(() => {
-  //         slideRef.current.style.transition = "transform 0.5s ease-out";
-  //       }, []);
-
-  //       return;
-  //     }
-
-  //     moveSlide("right", moved);
-  //   }, 5000);
-  // }, []);
-
-  //fetchdata
+  const [mostViewedPosts, setMostViewedPosts] = useState();
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/post/posts/filter/?most_viewed=${query}`)
@@ -257,7 +216,7 @@ const MostViewedPosts = ({ query }) => {
         setMostViewedPosts(mostviewedposts.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [query]);
 
@@ -268,46 +227,12 @@ const MostViewedPosts = ({ query }) => {
       <header className="header">
         <h3>Most Viewed</h3>
       </header>
-      <div className="inner p-rel">
-        {mostViewedPosts && (
-          <div>
-            <article className="slide d-flex" ref={slideRef}>
-              {mostViewedPosts.results.map((i) => {
-                return <PhotoCard {...i} />;
-              })}
-            </article>
-          </div>
-        )}
 
-        <div className="controls p-abs d-flex jcsb ty-50">
-          <button
-            style={{ visibility: moved === 0 ? "hidden" : "" }}
-            onClick={() => {
-              moveSlide("left", moved);
-            }}
-            ref={prevRef}
-          >
-            <i className="fa fa-angle-left"></i>
-          </button>
-
-          <button
-            style={{
-              visibility:
-                window.innerWidth < 600 && moved === -4411
-                  ? "hidden"
-                  : window.innerWidth > 600 && moved === -3609
-                  ? "hidden"
-                  : "",
-            }}
-            onClick={(e) => {
-              moveSlide("right", moved);
-            }}
-            ref={nextRef}
-          >
-            <i className="fa fa-angle-right"></i>
-          </button>
-        </div>
-      </div>
+      <article className="slide d-grid">
+        {mostViewedPosts?.results.map((i) => {
+          return <PhotoCard {...i} />;
+        })}
+      </article>
     </section>
   );
 };
@@ -321,17 +246,6 @@ const SideContent = ({ page, searchParams }) => {
     // popular
     [popularPostsUrl, setPopularPostsUrl] = useState(),
     [popularPosts, setPopularPosts] = useState();
-
-  const followData = [
-    ["fab fa-facebook", "#"],
-    ["fab fa-twitter", "#"],
-    ["fab fa-instagram", "#"],
-    ["fab fa-whatsapp", "#"],
-    ["fab fa-telegram", "#"],
-    ["fab fa-discord", "#"],
-    ["fab fa-google-plus", "#"],
-    ["fab fa-pinterest", "#"],
-  ];
 
   useEffect(() => {
     setPopularPostsUrl(
@@ -348,7 +262,6 @@ const SideContent = ({ page, searchParams }) => {
 
   //popular
   useEffect(() => {
-    console.log(popularPostsUrl);
     popularPostsUrl &&
       axios
         .get(popularPostsUrl)
@@ -356,7 +269,7 @@ const SideContent = ({ page, searchParams }) => {
           setPopularPosts(popularposts.data);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
   }, [popularPostsUrl]);
 
@@ -373,10 +286,9 @@ const SideContent = ({ page, searchParams }) => {
           setArchivesData(archives.data);
         })
       )
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
 
-  console.log(popularPosts?.count !== 0 && page !== "search");
   return (
     <aside className="d-grid side-content">
       {/* purchase box */}
@@ -385,12 +297,18 @@ const SideContent = ({ page, searchParams }) => {
         <div className="overlay p-abs size-100 d-flex aic jcc">
           <h3>The Dawn</h3>
           <p>Follow the path that leads to morning.</p>
-          <Link to="/">Purchase Now</Link>
+          <a
+            href="https://www.friendlystores.netlify.app"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Purchase Now
+          </a>
         </div>
       </article>
 
       {/* social links */}
-      <FollowTab data={followData} />
+      <FollowTab />
 
       {/* popular posts */}
       {popularPosts?.count !== 0 && page !== "search" && (
@@ -429,18 +347,28 @@ const SideContent = ({ page, searchParams }) => {
 };
 
 // follow tab
-const FollowTab = ({ data }) => {
+const FollowTab = () => {
+  let data = [
+    [<FaFacebookSquare />, "#", "facebook"],
+    [<FaTwitter />, "#", "twitter"],
+    [<FaInstagram />, "#", "instagram"],
+    [<FaWhatsapp />, "#", "whatsapp"],
+    [<FaTelegram />, "#", "telegram"],
+    [<FaDiscord />, "#", "discord"],
+    [<FaGooglePlus />, "#", "google"],
+    [<FaPinterest />, "#", "pinterest"],
+  ];
   return (
     <article className="follow-tab">
       <header className="header">
         <h3>Follow Us</h3>
       </header>
       <ul className="d-grid">
-        {data.map(([name, link], i) => {
+        {data.map(([name, link, classname], i) => {
           return (
             <li key={i}>
-              <a href={link} className="d-flex aic jcc">
-                <i className={name}></i>
+              <a href={link} className={`d-flex aic jcc ${classname}`}>
+                {name}
               </a>
             </li>
           );
@@ -462,14 +390,34 @@ const CategoriesTab = ({ data, title }) => {
         {data &&
           data.map(({ text, count }, i) => {
             return (
-              <li key={i} className="trans">
-                <i className="fa fa-angle-double-right"></i>
+              <li key={i}>
+                <FaAngleDoubleRight />
                 <Link to={`/${text}`}>{text}</Link> ( {count} )
               </li>
             );
           })}
       </ul>
     </article>
+  );
+};
+
+// tweets
+const Tweets = () => {
+  return (
+    <aside>
+      <div className="tweets">
+        <header className="header">
+          <h3>RECENT TWEETS</h3>
+        </header>
+        <img src={FacebookLike} alt="facebooklikes" />
+      </div>
+      <div className="fblikes">
+        <header className="header">
+          <h3>FACEBOOK LIKES</h3>
+        </header>
+        <img src={FacebookLike} alt="facebooklikes" />
+      </div>
+    </aside>
   );
 };
 
@@ -480,6 +428,5 @@ export {
   SideContent,
   FollowTab,
   Paginate,
+  Tweets,
 };
-
-// 497 lines

@@ -130,40 +130,42 @@
     gap: 1rem;
     a {
       border-radius: $defaultBorderRadius;
-      i.fab {
-        padding: 0.88rem;
-        width: 100%;
-        font-size: 1.25rem;
-        color: #fff;
-        display: grid;
-        align-items: center;
-        justify-content: center;
-        border-radius: $defaultBorderRadius;
-        &.fa-facebook {
-          background-color: #2f58a1;
-        }
-        &.fa-twitter {
-          background-color: #069cd5;
-        }
-        &.fa-google-plus {
-          background-color: #ea4335;
-        }
-        &.fa-pinterest {
-          background-color: #da0d32;
-        }
-        &.fa-instagram {
-          background-color: #0076b8;
-        }
-        &.fa-whatsapp {
-          background-color: #4caf50;
-          // #e53935
-        }
-        &.fa-telegram {
-          background-color: #039be5;
-        }
-        &.fa-discord {
-          background-color: #5c6bc0;
-        }
+      padding: 0.88rem;
+      width: 100%;
+      color: #fff;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      border-radius: $defaultBorderRadius;
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      &.facebook {
+        background-color: #2f58a1;
+      }
+      &.twitter {
+        background-color: #069cd5;
+      }
+      &.google {
+        background-color: #ea4335;
+      }
+      &.pinterest {
+        background-color: #da0d32;
+      }
+      &.instagram {
+        background-color: #0076b8;
+      }
+      &.whatsapp {
+        background-color: #4caf50;
+        // #e53935
+      }
+      &.telegram {
+        background-color: #039be5;
+      }
+      &.discord {
+        background-color: #5c6bc0;
       }
     }
   }
@@ -199,32 +201,9 @@
 }
 
 .most-viewed {
-  .inner {
-    div {
-      overflow: hidden;
-      .slide {
-        gap: 0.105rem;
-        transition: transform 0.5s ease-out;
-      }
-    }
-    .controls {
-      width: 100%;
-      top: 50%;
-      left: 0;
-      button {
-        padding: 1rem;
-        border-radius: $defaultBorderRadius;
-        background-color: #ba004a80;
-        &:active {
-          transform: scale(1.05);
-        }
-        i {
-          color: #fff;
-          font-size: 2rem;
-          font-weight: normal;
-        }
-      }
-    }
+  .slide {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.15rem;
   }
 }
 
@@ -245,3 +224,43 @@
     }
   }
 }
+
+// @media screen and (max-width: 1100px) {
+//   .most-viewed {
+//     .slide {
+//       grid-template-columns: repeat(3, 1fr);
+//       gap: 0.105rem;
+//       .photo-card {
+//         img {
+//           display: block;
+//           border-radius: $defaultBorderRadius;
+//           width: 100%;
+//           aspect-ratio: 39.88 / 24;
+//           object-fit: cover;
+//           object-position: 50% 0;
+//         }
+//         .overlay {
+//           gap: 1rem;
+//           padding: 1.5rem;
+//           padding-top: 6.5rem;
+//           height: 99%;
+//           h3 {
+//           }
+//           p {
+//             font-size: 12px;
+//             padding: 4px 20px;
+//           }
+//           .info {
+//             gap: 1rem;
+//             span {
+//               font-size: 11px;
+//               i {
+//                 font-weight: normal;
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

@@ -1,8 +1,19 @@
 import React, { useState } from "react";
+import { FaHeart } from "react-icons/fa";
+
 import axios from "axios";
 import { Alerts, BASE_URL } from "../misc";
 import { FollowTab } from "../post";
 import "./css/index.css";
+
+import Image1 from "../../images/instagram/1.webp";
+import Image2 from "../../images/instagram/2.webp";
+import Image3 from "../../images/instagram/3.webp";
+import Image4 from "../../images/instagram/4.webp";
+import Image5 from "../../images/instagram/5.webp";
+import Image6 from "../../images/instagram/6.webp";
+import Image7 from "../../images/instagram/7.webp";
+import Image8 from "../../images/instagram/8.webp";
 
 const Footer = () => {
   const [alerts, setAlerts] = useState({
@@ -18,17 +29,13 @@ const Footer = () => {
       .then((res) => {
         setAlerts({
           show: true,
-          message:
-            "The email you entered is already subscribed to our Newsletter service!",
-          error: true,
+          message: "Thank you for subscribing to our Newsletter service!",
+          error: false,
         });
 
         setTimeout(() => {
           setAlerts({
             show: false,
-            message:
-              "The email you entered is already subscribed to our Newsletter service!",
-            error: true,
           });
         }, 1500);
       })
@@ -43,33 +50,21 @@ const Footer = () => {
         setTimeout(() => {
           setAlerts({
             show: false,
-            message:
-              "The email you entered is already subscribed to our Newsletter service!",
-            error: true,
           });
         }, 1500);
       });
   };
   const imgData = [
-      "./images/test-instagram/instagram-1(1).jpg",
-      "./images/test-instagram/instagram-2(1).jpg",
-      "./images/test-instagram/instagram-3(1).jpg",
-      "./images/test-instagram/instagram-4(1).jpg",
-      "./images/test-instagram/instagram-8.jpg",
-      "./images/test-instagram/instagram-5(1).jpg",
-      "./images/test-instagram/instagram-6.jpg",
-      "./images/test-instagram/instagram-1(1).jpg",
-    ],
-    followData = [
-      ["fab fa-facebook", "#"],
-      ["fab fa-twitter", "#"],
-      ["fab fa-instagram", "#"],
-      ["fab fa-whatsapp", "#"],
-      ["fab fa-telegram", "#"],
-      ["fab fa-discord", "#"],
-      ["fab fa-google-plus", "#"],
-      ["fab fa-pinterest", "#"],
-    ];
+    Image1,
+    Image2,
+    Image3,
+    Image4,
+    Image5,
+    Image6,
+    Image7,
+    Image8,
+  ];
+
   return (
     <footer>
       <Alerts
@@ -108,13 +103,13 @@ const Footer = () => {
           </article>
           <article className="socials d-grid">
             <h3>SOCIAL LINKS</h3>
-            <FollowTab data={followData} />
+            <FollowTab />
           </article>
         </article>
 
         <article className="d-flex jcsb third">
           <p>
-            Created with <i class="fa fa-heart"></i> by
+            Created with <FaHeart /> by
             <span>
               <img src="./images/fivefingers.png" alt="" />
               ive Fingers Dev.

@@ -26,9 +26,7 @@ const SinglePage = () => {
     // related posts
     [relatedPostData, setRelatedPostData] = useState(),
     [relatedPostLoading, setRelatedPostLoading] = useState(true),
-    [relatedPostUrl, setRelatedPostUrl] = useState(
-      sessionStorage.getItem(`single${id}PostsUrl`)
-    ),
+    [relatedPostUrl, setRelatedPostUrl] = useState(),
     [commentAlert, setCommentAlert] = useState({ message: "", show: false });
 
   const [commentPage, setCommentPage] = useState(4);

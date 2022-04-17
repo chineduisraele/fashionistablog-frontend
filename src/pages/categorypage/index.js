@@ -7,12 +7,12 @@ import {
   FeaturedPosts,
   SideContent,
   MostViewedPosts,
+  Tweets,
 } from "../../components/post";
 import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
 import "./css/home.css";
 import "./css/responsive.css";
-import FacebookLike from "../../images/facebook.webp";
 
 // home
 const CategoryPage = () => {
@@ -49,11 +49,6 @@ const CategoryPage = () => {
         .catch((err) => console.log(err));
   }, [mainPostsUrl]);
 
-  // scroll to top on reload
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  });
-
   return mainPosts === undefined ? (
     <Loading />
   ) : (
@@ -86,20 +81,7 @@ const CategoryPage = () => {
         <FeaturedPosts query={category} page={category} />
 
         {/* tweets */}
-        <aside>
-          <div className="tweets">
-            <header className="header">
-              <h3>RECENT TWEETS</h3>
-            </header>
-            <img src={FacebookLike} alt="facebooklikes" />
-          </div>
-          <div className="fblikes">
-            <header className="header">
-              <h3>FACEBOOK LIKES</h3>
-            </header>
-            <img src={FacebookLike} alt="facebooklikes" />
-          </div>
-        </aside>
+        <Tweets />
       </section>
     </main>
   );

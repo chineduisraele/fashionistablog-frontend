@@ -1,6 +1,9 @@
 import React from "react";
+import { FaInfoCircle } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+
 import "./css/index.css";
-import Gad from "../../images/add-1.webp";
+import Googlead from "../../images/add-1.webp";
 
 const BASE_URL = "http://127.0.0.1:8000";
 // No data
@@ -60,9 +63,9 @@ const Alerts = ({ message, error, show }) => {
     <div className={`alerts d-flex aic jcc p-fixed ${show ? "show" : ""}`}>
       <div className={`inner d-flex aic jcc ${error === true ? "error" : ""}`}>
         {error === true ? (
-          <i className="fa fa-info-circle"></i>
+          <FaInfoCircle />
         ) : (
-          <i className="fa fa-check-circle"></i>
+          error === false && <FaCheckCircle />
         )}
         <p>{message}</p>
       </div>
@@ -74,7 +77,7 @@ const Alerts = ({ message, error, show }) => {
 const GoogleAds = () => {
   return (
     <article className="google-ads">
-      <img src={Gad} alt="ad" />
+      <img src={Googlead} alt="googlead" />
     </article>
   );
 };
