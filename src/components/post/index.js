@@ -140,7 +140,7 @@ const MainPostComponent = ({
 };
 
 // Featured Posts
-const FeaturedPosts = ({ query, page }) => {
+const FeaturedPosts = ({ query }) => {
   // featured
   const [featuredPosts, setFeaturedPosts] = useState(),
     [featuredPostsUrl, setFeaturedPostsUrl] = useState(),
@@ -148,18 +148,7 @@ const FeaturedPosts = ({ query, page }) => {
 
   //featured
   useEffect(() => {
-    let tempUrl =
-      query === "all"
-        ? sessionStorage.getItem(`homefeaturedPostsUrl`)
-        : sessionStorage.getItem(`${query}featuredPostsUrl`);
-    console.log(query);
-    if (tempUrl) {
-      setFeaturedPostsUrl(tempUrl);
-    } else if (tempUrl === null) {
-      setFeaturedPostsUrl(
-        `${BASE_URL}/api/post/posts/filter/?featured=${query}`
-      );
-    }
+    setFeaturedPostsUrl(`${BASE_URL}/api/post/posts/filter/?featured=${query}`);
   }, [query]);
 
   useEffect(() => {
@@ -198,8 +187,6 @@ const FeaturedPosts = ({ query, page }) => {
           <Paginate
             {...{
               posts: featuredPosts,
-              setPostUrl: setFeaturedPostsUrl,
-              page: `${page}featured`,
               to: "featured-posts",
             }}
           />
@@ -286,7 +273,6 @@ const MostViewedPosts = ({ query }) => {
     <></>
   ) : (
     <section className="most-viewed">
-      {console.log(mostViewedPosts)}
       <header className="header">
         <h3>Most Viewed</h3>
       </header>
@@ -398,6 +384,7 @@ const SideContent = ({ page, searchParams }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  console.log(popularPosts?.count !== 0 && page !== "search");
   return (
     <aside className="d-grid side-content">
       {/* purchase box */}
@@ -414,7 +401,7 @@ const SideContent = ({ page, searchParams }) => {
       <FollowTab data={followData} />
 
       {/* popular posts */}
-      {(popularPosts?.count !== 0 || page !== "search") && (
+      {popularPosts?.count !== 0 && page !== "search" && (
         <>
           <article className="popular-tabs d-grid" id="popular-tabs">
             <header className="header">
