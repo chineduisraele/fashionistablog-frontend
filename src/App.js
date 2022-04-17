@@ -40,7 +40,7 @@ function App() {
 
             <Route exact path="/search" element={<Home />} />
 
-            <Route exact path="/:query" element={<CategoryPage />} />
+            <Route exact path="/:category" element={<CategoryPage />} />
 
             <Route exact path="/post/:category/:id" element={<SinglePage />} />
           </Routes>

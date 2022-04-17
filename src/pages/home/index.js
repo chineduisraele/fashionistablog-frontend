@@ -17,7 +17,6 @@ import FacebookLike from "../../images/facebook.webp";
 
 // home
 const Home = () => {
-  const path = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // set page type
@@ -116,7 +115,7 @@ const Home = () => {
         />
 
         {/* side content */}
-        <SideContent {...{ query: "all", page, searchParams }} />
+        <SideContent {...{ page, searchParams }} />
       </section>
 
       {/* ads */}

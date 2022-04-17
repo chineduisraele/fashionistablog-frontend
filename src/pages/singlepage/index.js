@@ -147,7 +147,7 @@ const SinglePage = () => {
           )}
 
           {/* sidecontent */}
-          <SideContent {...{ query, page: query, id }} />
+          <SideContent page="singlepost" />
 
           {/* commenmts */}
           <article className="comments d-grid">

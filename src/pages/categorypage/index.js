@@ -16,7 +16,7 @@ import FacebookLike from "../../images/facebook.webp";
 
 // home
 const CategoryPage = () => {
-  let { query } = useParams();
+  let { category } = useParams();
 
   const [mainPosts, setMainPosts] = useState(),
     [mainPostsUrl, setMainPostsUrl] = useState(),
@@ -24,13 +24,15 @@ const CategoryPage = () => {
 
   // fetch data
   useEffect(() => {
-    let tempUrl = sessionStorage.getItem(`${query}mainPostsUrl`);
+    let tempUrl = sessionStorage.getItem(`${category}mainPostsUrl`);
     if (tempUrl) {
       setMainPostsUrl(tempUrl);
     } else if (tempUrl === null) {
-      setMainPostsUrl(`${BASE_URL}/api/post/posts/filter/?category=${query}`);
+      setMainPostsUrl(
+        `${BASE_URL}/api/post/posts/filter/?category=${category}`
+      );
     }
-  }, [query]);
+  }, [category]);
 
   // main
   useEffect(() => {
@@ -60,27 +62,27 @@ const CategoryPage = () => {
         <MainPostComponent
           {...{
             mainPosts,
-            mainPostsCategory: query,
+            mainPostsCategory: category,
             setMainPostsUrl,
             mainPostsLoading,
-            navtabsData: [query],
-            page: query,
+            navtabsData: [category],
+            page: "category",
           }}
         />
 
         {/* side content */}
-        <SideContent query={query} page={query} />
+        <SideContent page={"category"} />
       </section>
 
       {/* ads */}
       <GoogleAds />
 
       {/* Popular posts */}
-      <MostViewedPosts query={query} />
+      <MostViewedPosts query={category} />
 
       <section className="more-content main-content d-grid">
         {/* featured posts */}
-        <FeaturedPosts query={query} page={query} />
+        <FeaturedPosts query={category} page={category} />
 
         {/* tweets */}
         <aside>

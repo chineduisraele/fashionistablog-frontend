@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 
 import { Empty, SmallLoading, BASE_URL } from "../misc";
@@ -61,6 +66,7 @@ const MainPostComponent = ({
   page,
   searchParams,
   setSearchParams,
+  param,
 }) => {
   return (
     <div className="card-cont">
@@ -68,7 +74,9 @@ const MainPostComponent = ({
       <div className="nav-tabs" id="nav-tabs">
         <ul className="d-flex">
           <li>
-            {searchParams.has("tagonly")
+            {param
+              ? ""
+              : searchParams.has("tagonly")
               ? `Tags ( ${mainPosts.count} )`
               : searchParams.has("search")
               ? `Search ( ${mainPosts.count} )`
@@ -323,10 +331,13 @@ const MostViewedPosts = ({ query }) => {
 };
 
 // side content
-const SideContent = ({ query, id, searchParams }) => {
+const SideContent = ({ page, searchParams }) => {
+  const path = useParams();
+
   const [categoriesData, setCategoriesdata] = useState(),
     [archivesData, setArchivesData] = useState(),
     // popular
+    [popularPostsUrl, setPopularPostsUrl] = useState(),
     [popularPosts, setPopularPosts] = useState();
 
   const followData = [
@@ -340,39 +351,32 @@ const SideContent = ({ query, id, searchParams }) => {
     ["fab fa-pinterest", "#"],
   ];
 
-  // useEffect(() => {
-  //   setMainPostsUrl(
-  //     search
-  //       ? `${BASE_URL}/api/post/posts/filter/?search=${searchParams.get(
-  //           "search"
-  //         )}&page=${searchParams.get("pg") || 1}`
-  //       : // if search is false
-  //       category
-  //       ? `${BASE_URL}/api/post/posts/filter/?category=${searchParams.get(
-  //           "cat"
-  //         )}&page=${searchParams.get("pg") || 1}`
-  //       : `${BASE_URL}/api/post/posts/?page=${searchParams.get("pg") || 1}`
-  //   );
-  // }, []);
+  useEffect(() => {
+    setPopularPostsUrl(
+      (page === "home" &&
+        `${BASE_URL}/api/post/posts/filter/?popular=${
+          searchParams.get("cat") || "all"
+        }`) ||
+        (page === "singlepost" &&
+          `${BASE_URL}/api/post/posts/filter/?popular=${path.category}&id=${path.id}`) ||
+        (page === "category" &&
+          `${BASE_URL}/api/post/posts/filter/?popular=${path.category}`)
+    );
+  }, [searchParams, path.category, path.id]);
+
   //popular
   useEffect(() => {
-    axios
-      .get(
-        searchParams.has("search")
-          ? `${BASE_URL}/api/post/posts/filter/?popular=${query}${
-              id ? `&id=${id}` : ""
-            }`
-          : `${BASE_URL}/api/post/posts/filter/?popular=${query}${
-              id ? `&id=${id}` : ""
-            }`
-      )
-      .then((popularposts) => {
-        setPopularPosts(popularposts.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    console.log(popularPostsUrl);
+    popularPostsUrl &&
+      axios
+        .get(popularPostsUrl)
+        .then((popularposts) => {
+          setPopularPosts(popularposts.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [popularPostsUrl]);
 
   // fetch categories tab and archives tab data
   useEffect(() => {
@@ -408,22 +412,17 @@ const SideContent = ({ query, id, searchParams }) => {
       {/* popular posts */}
       {popularPosts?.count !== 0 && (
         <>
-          {searchParams.has("search") && (
-            <article className="popular-tabs d-grid" id="popular-tabs">
-              {console.log(popularPosts?.count)}
-              <header className="header">
-                <h3>Popular</h3>
-              </header>
+          <article className="popular-tabs d-grid" id="popular-tabs">
+            <header className="header">
+              <h3>Popular</h3>
+            </header>
 
-              {popularPosts && (
-                <div className="minicards-cont d-grid">
-                  {popularPosts.results.map((i) => {
-                    return <MiniCard {...i} />;
-                  })}
-                </div>
-              )}
-            </article>
-          )}
+            <div className="minicards-cont d-grid">
+              {popularPosts?.results.map((i) => {
+                return <MiniCard {...i} />;
+              })}
+            </div>
+          </article>
 
           {/* categories tab and archives tab */}
           <div className="d-grid catscont">
