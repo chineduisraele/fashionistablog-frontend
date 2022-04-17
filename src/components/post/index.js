@@ -149,37 +149,43 @@ const MainPostComponent = ({
 };
 
 // Featured Posts
-const FeaturedPosts = ({ query }) => {
+const FeaturedPosts = ({ query, title, data }) => {
   // featured
-  const [featuredPosts, setFeaturedPosts] = useState(),
+  const [featuredPosts, setFeaturedPosts] = useState(data),
     [featuredPostsUrl, setFeaturedPostsUrl] = useState(),
-    [featuredPostsLoading, setFeaturedPostsLoading] = useState(true);
-
+    [featuredPostsLoading, setFeaturedPostsLoading] = useState(
+      data ? false : true
+    );
   //featured
   useEffect(() => {
-    setFeaturedPostsUrl(`${BASE_URL}/api/post/posts/filter/?featured=${query}`);
+    !data &&
+      setFeaturedPostsUrl(
+        `${BASE_URL}/api/post/posts/filter/?featured=${query}`
+      );
   }, [query]);
 
   useEffect(() => {
-    setFeaturedPostsLoading(true);
+    if (!data) {
+      setFeaturedPostsLoading(true);
 
-    featuredPostsUrl &&
-      axios
-        .get(featuredPostsUrl)
-        .then((featuredposts) => {
-          setFeaturedPosts(featuredposts.data);
-          setFeaturedPostsLoading(false);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      featuredPostsUrl &&
+        axios
+          .get(featuredPostsUrl)
+          .then((featuredposts) => {
+            setFeaturedPosts(featuredposts.data);
+            setFeaturedPostsLoading(false);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+    }
   }, [featuredPostsUrl]);
   return (
     /* featured posts */
 
     <div className="card-cont featured-posts" id="featured-posts">
       <header className="header">
-        <h3>Featured Posts</h3>
+        <h3>{title || "Featured Posts"}</h3>
       </header>
       {/* cards */}
       {featuredPostsLoading ? (

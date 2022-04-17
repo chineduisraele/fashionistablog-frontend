@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDown,
+  FaEye,
+  FaRegEye,
+  FaUserAlt,
+  FaComment,
+  FaClock,
+  FaTags,
+  FaShare,
+  FaFacebookSquare,
+  FaTwitter,
+  FaInstagram,
+  FaWhatsapp,
+  FaTelegramPlane,
+  FaDiscord,
+  FaGooglePlus,
+  FaPinterest,
+} from "react-icons/fa";
 
-import { FollowTab, SideContent, Paginate } from "../../components/post";
-import { Card } from "../../components/card";
+import { FollowTab, SideContent, FeaturedPosts } from "../../components/post";
 import {
   Empty,
   Alerts,
   BASE_URL,
   GoogleAds,
   Loading,
-  SmallLoading,
 } from "../../components/misc";
 import "./css/singlepage.css";
 import "./css/responsive.css";
@@ -25,13 +43,12 @@ const SinglePage = () => {
     [postDataLoading, setPostDataLoading] = useState(true),
     // related posts
     [relatedPostData, setRelatedPostData] = useState(),
-    [relatedPostLoading, setRelatedPostLoading] = useState(true),
     [relatedPostUrl, setRelatedPostUrl] = useState(),
+    // comment
     [commentAlert, setCommentAlert] = useState({ message: "", show: false });
 
   const [commentPage, setCommentPage] = useState(4);
 
-  // `${BASE_URL}/api/post/posts/filter/?relatedcategory=${query}&erelatedtag=${}`
   // create comment
   const createComment = ({ currentTarget: c }) => {
     const form = new FormData(c),
@@ -72,8 +89,6 @@ const SinglePage = () => {
       .catch((err) => {
         c.reset();
         submitBtn.disabled = false;
-
-        console.log(err);
         setCommentAlert({
           message: "There was a problem posting your comment!",
           error: true,
@@ -102,23 +117,20 @@ const SinglePage = () => {
           setPostDataLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           setPostData("404");
         });
-  }, [id]);
+  }, [id, query]);
 
   // fetch related post data
   useEffect(() => {
-    setRelatedPostLoading(true);
     relatedPostUrl &&
       axios
         .get(relatedPostUrl)
         .then((res) => {
           setRelatedPostData(res.data);
-          setRelatedPostLoading(false);
-          console.log(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
   }, [relatedPostUrl]);
 
   return postData === "404" ? (
@@ -133,7 +145,9 @@ const SinglePage = () => {
     />
   ) : (
     <>
+      {/* comment alert */}
       <Alerts {...commentAlert} />
+
       <main className="singlepage">
         {/* main content */}
         <section className="main-content d-grid">
@@ -172,7 +186,7 @@ const SinglePage = () => {
                               setCommentPage((prev) => prev + 4);
                             }}
                           >
-                            <i className="fa fa-angle-down"></i> More
+                            <FaAngleDown /> More
                           </button>
                         </div>
                       )}
@@ -198,11 +212,18 @@ const SinglePage = () => {
                   createComment(e);
                 }}
               >
-                <input type="text" placeholder="NAME" name="name" required />
+                <input
+                  type="text"
+                  placeholder="NAME"
+                  name="name"
+                  required
+                  maxLength={50}
+                />
                 <textarea
                   required
                   name="comment"
                   placeholder="ENTER COMMENT..."
+                  maxLength={250}
                 ></textarea>
                 <button type="submit" className="btn">
                   POST COMMENT
@@ -217,41 +238,11 @@ const SinglePage = () => {
         {/* more */}
         {/* more content */}
         <section className="more-content main-content d-grid">
-          {/* card cont */}
-          <div className="card-cont featured-posts" id="related-posts">
-            <header className="header">
-              <h3>Related posts</h3>
-            </header>
-            {/* cards */}
-
-            {relatedPostLoading ? (
-              <SmallLoading />
-            ) : relatedPostData.results.length ? (
-              <div className="cards d-grid">
-                {relatedPostData.results.map((it) => {
-                  return <Card {...it} />;
-                })}
-
-                {/* pagination */}
-                <Paginate
-                  {...{
-                    posts: relatedPostData,
-                    setPostUrl: setRelatedPostUrl,
-                    page: `single${id}`,
-                    to: "related-postsrelated-posts",
-                  }}
-                />
-              </div>
-            ) : (
-              <Empty
-                {...{
-                  text: "No Posts found!",
-                  text2: "Hopefully, there'll be something next time",
-                  height: "200px",
-                }}
-              />
-            )}
-          </div>
+          {relatedPostData && (
+            <FeaturedPosts
+              {...{ title: "Related Posts", data: relatedPostData }}
+            />
+          )}
         </section>
       </main>
     </>
@@ -381,6 +372,13 @@ const SinglePostComponent = ({
 };
 
 const Comment = ({ name, comment, date, img }) => {
+  const social = [
+    [<FaFacebookSquare />, "http://"],
+    [<FaTwitter />, "http://"],
+    [<FaInstagram />, "http://"],
+    [<FaWhatsapp />, "http://"],
+    [<FaTelegramPlane />, "http://"],
+  ];
   return (
     <article className="comment d-grid jcc">
       <img src={img} alt="profile" />
@@ -388,22 +386,26 @@ const Comment = ({ name, comment, date, img }) => {
         <p className="name d-flex jcsb">
           {name}
           <span>
-            <i className="fa fa-clock"></i> MARCH 1, 2022
+            <FaClock /> MARCH 1, 2022
           </span>
         </p>
-
         <p className="text">{comment}</p>
-
         <div className="social-links d-flex">
-          <i className="fab fa-facebook"></i>
-          <i className="fab fa-twitter"></i>
-          <i className="fab fa-instagram"></i>
-          <i className="fab fa-whatsapp"></i>
-          <i className="fab fa-telegram"></i>
+          {social.map(([icon, link]) => {
+            return (
+              <a href={link} target="_blank" rel="noreferrer">
+                {icon}
+              </a>
+            );
+          })}
         </div>
+
+        <div className="social-links d-flex"></div>
       </div>
     </article>
   );
 };
 
 export default SinglePage;
+
+// 379 lines
