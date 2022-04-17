@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -16,7 +16,11 @@ import FacebookLike from "../../images/facebook.webp";
 
 // home
 const CategoryPage = () => {
-  let { category } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams(),
+    { category } = useParams();
+
+  // set page type
+  const page = "category";
 
   const [mainPosts, setMainPosts] = useState(),
     [mainPostsUrl, setMainPostsUrl] = useState(),
@@ -24,15 +28,12 @@ const CategoryPage = () => {
 
   // fetch data
   useEffect(() => {
-    let tempUrl = sessionStorage.getItem(`${category}mainPostsUrl`);
-    if (tempUrl) {
-      setMainPostsUrl(tempUrl);
-    } else if (tempUrl === null) {
-      setMainPostsUrl(
-        `${BASE_URL}/api/post/posts/filter/?category=${category}`
-      );
-    }
-  }, [category]);
+    setMainPostsUrl(
+      `${BASE_URL}/api/post/posts/filter/?category=${category}&page=${
+        searchParams.get("pg") || 1
+      }`
+    );
+  }, [category, searchParams]);
 
   // main
   useEffect(() => {
@@ -43,7 +44,6 @@ const CategoryPage = () => {
         .get(mainPostsUrl)
         .then((mainposts) => {
           setMainPosts(mainposts.data);
-          console.log(mainposts.data);
           setMainPostsLoading(false);
         })
         .catch((err) => console.log(err));
@@ -62,11 +62,12 @@ const CategoryPage = () => {
         <MainPostComponent
           {...{
             mainPosts,
-            mainPostsCategory: category,
             setMainPostsUrl,
             mainPostsLoading,
             navtabsData: [category],
-            page: "category",
+            searchParams,
+            setSearchParams,
+            page,
           }}
         />
 

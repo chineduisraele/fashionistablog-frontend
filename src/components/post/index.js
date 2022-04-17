@@ -66,7 +66,7 @@ const MainPostComponent = ({
   page,
   searchParams,
   setSearchParams,
-  param,
+  category,
 }) => {
   return (
     <div className="card-cont">
@@ -74,8 +74,8 @@ const MainPostComponent = ({
       <div className="nav-tabs" id="nav-tabs">
         <ul className="d-flex">
           <li>
-            {param
-              ? ""
+            {category
+              ? `${category} ( ${mainPosts.count} )`
               : searchParams.has("tagonly")
               ? `Tags ( ${mainPosts.count} )`
               : searchParams.has("search")
@@ -96,7 +96,7 @@ const MainPostComponent = ({
                     setSearchParams(text === "all" ? {} : { cat: text });
                 }}
               >
-                {searchParams.has("tagonly") && "# "}
+                {searchParams?.has("tagonly") && "# "}
                 {text.slice(0, 25)}
               </li>
             );
