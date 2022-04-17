@@ -90,13 +90,17 @@ const MainPostComponent = ({
               <li
                 key={i}
                 role="button"
-                className={text === searchParams.get("cat") ? "active" : ""}
+                className={
+                  text === searchParams.get("cat") || text === "all"
+                    ? "active"
+                    : ""
+                }
                 onClick={() => {
                   page === "home" &&
                     setSearchParams(text === "all" ? {} : { cat: text });
                 }}
               >
-                {searchParams?.has("tagonly") && "# "}
+                {searchParams.has("tagonly") && "# "}
                 {text.slice(0, 25)}
               </li>
             );
@@ -410,7 +414,7 @@ const SideContent = ({ page, searchParams }) => {
       <FollowTab data={followData} />
 
       {/* popular posts */}
-      {popularPosts?.count !== 0 && (
+      {(popularPosts?.count !== 0 || page !== "search") && (
         <>
           <article className="popular-tabs d-grid" id="popular-tabs">
             <header className="header">

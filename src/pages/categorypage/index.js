@@ -62,17 +62,17 @@ const CategoryPage = () => {
         <MainPostComponent
           {...{
             mainPosts,
-            setMainPostsUrl,
             mainPostsLoading,
             navtabsData: [category],
             searchParams,
             setSearchParams,
+            category,
             page,
           }}
         />
 
         {/* side content */}
-        <SideContent page={"category"} />
+        <SideContent page={page} />
       </section>
 
       {/* ads */}
