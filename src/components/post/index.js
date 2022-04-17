@@ -182,14 +182,6 @@ const FeaturedPosts = ({ query }) => {
               return <Card {...i} />;
             })}
           </div>
-
-          {/* paginate */}
-          <Paginate
-            {...{
-              posts: featuredPosts,
-              to: "featured-posts",
-            }}
-          />
         </>
       ) : (
         <Empty

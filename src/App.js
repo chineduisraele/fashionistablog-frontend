@@ -14,6 +14,7 @@ import {
 
 import { useLayoutEffect } from "react";
 import CategoryPage from "./pages/categorypage";
+import { Empty } from "./components/misc";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -43,6 +44,21 @@ function App() {
             <Route exact path="/:category" element={<CategoryPage />} />
 
             <Route exact path="/post/:category/:id" element={<SinglePage />} />
+
+            <Route
+              path="/404"
+              element={
+                <Empty
+                  {...{
+                    text1: "404!",
+                    text: "Page Not Found",
+                    text2:
+                      "This page may have been moved or deleted or the URL you entered is incorrect",
+                    height: "75vh",
+                  }}
+                />
+              }
+            />
           </Routes>
 
           {/* footer */}
