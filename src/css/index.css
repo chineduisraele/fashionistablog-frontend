@@ -69,8 +69,17 @@ li {
   transition: all 0.35s;
 }
 
+.rg-1 {
+  row-gap: 1rem;
+}
+
 .c-white {
   color: white;
+}
+
+.size-100 {
+  width: 100%;
+  height: 100%;
 }
 
 .bg-w {

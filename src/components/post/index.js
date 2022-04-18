@@ -46,7 +46,7 @@ const Paginate = ({ posts, to }) => {
             }
           }}
         >
-          <FaAngleLeft />t Previous
+          <FaAngleLeft /> Previous
         </button>
 
         <button

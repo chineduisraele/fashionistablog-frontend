@@ -51,14 +51,6 @@
   text-transform: capitalize;
 }
 
-.singlepage .main-content .pagedetailscont > header .links i {
-  padding-right: 0.75rem;
-  padding-left: 0.25rem;
-  font-size: 13px;
-  font-weight: normal;
-  color: inherit;
-}
-
 .singlepage .main-content .pagedetailscont > header .categories {
   -webkit-column-gap: 0.5rem;
           column-gap: 0.5rem;
@@ -66,12 +58,12 @@
 
 .singlepage .main-content .pagedetailscont > header .categories button {
   padding: 4px 12px;
-  background-color: #ba004b;
+  background-color: black;
   text-transform: uppercase;
 }
 
-.singlepage .main-content .pagedetailscont > header .categories button:first-of-type {
-  background-color: black;
+.singlepage .main-content .pagedetailscont > header .categories button:last-of-type {
+  background-color: #ba004b;
 }
 
 .singlepage .main-content .pagedetailscont > header h2 {
@@ -94,10 +86,6 @@
   text-transform: uppercase;
 }
 
-.singlepage .main-content .pagedetailscont > header .info span i {
-  font-weight: normal;
-}
-
 .singlepage .main-content .pagedetailscont > header .share {
   -webkit-column-gap: 0.5rem;
           column-gap: 0.5rem;
@@ -118,11 +106,6 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.singlepage .main-content .pagedetailscont > header .share .follow-tab ul i {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .singlepage .main-content .pagedetailscont .page-content {
@@ -168,7 +151,7 @@
 .singlepage .main-content .pagedetailscont .tags div a {
   padding: 0.3rem 0.75rem;
   color: #fff;
-  background-color: #777777;
+  background-color: black;
   border-radius: 0.5rem;
   font-size: 11px;
   text-transform: uppercase;
@@ -320,19 +303,16 @@
   font-weight: 500;
 }
 
-.comment .text-part .name span i {
-  font-weight: normal;
-}
-
 .comment .text-part .social-links {
-  margin-top: 0.5rem;
-  -webkit-column-gap: 0.5rem;
-          column-gap: 0.5rem;
+  margin-top: 0.75rem;
+  -webkit-column-gap: 0.75rem;
+          column-gap: 0.75rem;
 }
 
-.comment .text-part .social-links i {
+.comment .text-part .social-links svg {
   color: #808080aa;
-  font-size: 0.9rem;
+  height: 16px;
+  width: 16px;
 }
 
 .comment img {

@@ -29,6 +29,7 @@ footer {
         row-gap: 1rem;
 
         form {
+          row-gap: 1rem;
           input {
             padding: 0 1rem;
             height: 34px;
@@ -138,10 +139,10 @@ footer {
 }
 @media screen and (max-width: 600px) {
   footer .inner {
+    padding: 0 1rem;
     .second {
       grid-template-columns: 1fr;
       row-gap: 3rem;
-      padding: 0 1rem;
       column-gap: 1rem;
     }
     .third {

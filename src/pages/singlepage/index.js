@@ -29,7 +29,6 @@ import {
   Loading,
 } from "../../components/misc";
 import "./css/singlepage.css";
-import "./css/responsive.css";
 
 import AdminImg from "../../images/admin.webp";
 import AnonImg from "../../images/noprofile.webp";
@@ -274,14 +273,8 @@ const SinglePostComponent = ({
       {/* header */}
       <header className="d-grid">
         <div className="links">
-          <Link to="/">Home</Link>
-
-          <FaAngleRight />
-
-          <Link to={`/${query}`}>{query}</Link>
-
-          <FaAngleRight />
-          <span>{title}</span>
+          <Link to="/">Home </Link> &gt; <Link to={`/${query}`}>{query}</Link>{" "}
+          &gt; <span>{title}</span>
         </div>
 
         <div className="categories d-flex">

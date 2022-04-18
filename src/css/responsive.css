@@ -227,6 +227,16 @@
 }
 
 @media screen and (max-width: 600px) {
+  .main-content .card-cont .nav-tabs ul {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .main-content .card-cont .nav-tabs ul li:first-of-type {
+    display: none;
+  }
   .main-content .card-cont .nav-tabs ul li.active {
     background-color: #ba004b;
     color: white;
@@ -309,16 +319,6 @@
 }
 
 @media screen and (max-width: 545px) {
-  .main-content .card-cont .nav-tabs ul {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-  }
-  .main-content .card-cont .nav-tabs ul li:first-of-type {
-    display: none;
-  }
   .main-content .card-cont .pagination {
     -webkit-column-gap: 0.25rem;
             column-gap: 0.25rem;

@@ -261,10 +261,18 @@
 @media screen and (max-width: 600px) {
   .main-content {
     .card-cont {
-      .nav-tabs ul li.active {
-        background-color: $green;
-        color: white;
+      .nav-tabs ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        li:first-of-type {
+          display: none;
+        }
+        li.active {
+          background-color: $green;
+          color: white;
+        }
       }
+
       .cards {
         grid-template-columns: 1fr !important;
       }
@@ -363,15 +371,6 @@
 @media screen and (max-width: 545px) {
   .main-content {
     .card-cont {
-      .nav-tabs {
-        ul {
-          justify-content: center;
-          flex-wrap: wrap;
-          li:first-of-type {
-            display: none;
-          }
-        }
-      }
       .pagination {
         column-gap: 0.25rem;
         button {

@@ -39,6 +39,10 @@ footer .inner .second .subscribeform {
   row-gap: 1rem;
 }
 
+footer .inner .second .subscribeform form {
+  row-gap: 1rem;
+}
+
 footer .inner .second .subscribeform form input {
   padding: 0 1rem;
   height: 34px;
@@ -178,11 +182,13 @@ footer .inner .third p span img {
 }
 
 @media screen and (max-width: 600px) {
+  footer .inner {
+    padding: 0 1rem;
+  }
   footer .inner .second {
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     row-gap: 3rem;
-    padding: 0 1rem;
     -webkit-column-gap: 1rem;
             column-gap: 1rem;
   }

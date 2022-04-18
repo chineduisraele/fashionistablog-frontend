@@ -79,7 +79,7 @@ const Footer = () => {
             <h3>NEWSLETTER</h3>
             <p>Get latest posts delivered right to your inbox!</p>
             <form
-              className="d-grid rg-1"
+              className="d-grid"
               method="POST"
               onSubmit={(e) => {
                 e.preventDefault();
