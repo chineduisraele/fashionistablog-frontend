@@ -65,19 +65,21 @@ const PhotoCard = ({
   return (
     <Link to={`/post/${category}/${id}`} className="photo-card p-rel">
       <img src={thumbnail} alt="cardimg" />
-      <div className="overlay p-abs d-flex aic jcc size-100">
-        <p>{category}</p>
-        <h3>{title}</h3>
-        <div className="info d-flex">
-          <span>
-            <FaRegClock /> MARCH 1, 2022
-          </span>
-          <span>
-            <FaRegComment /> {total_comments}
-          </span>
-          <span>
-            <FaRegEye /> {views}
-          </span>
+      <div className="overlay p-abs d-grid size-100">
+        <div className="d-grid aic jcc">
+          <p>{category}</p>
+          <h3>{title}</h3>
+          <div className="info d-flex">
+            <span>
+              <FaRegClock /> MARCH 1, 2022
+            </span>
+            <span>
+              <FaRegComment /> {total_comments}
+            </span>
+            <span>
+              <FaRegEye /> {views}
+            </span>
+          </div>
         </div>
       </div>
     </Link>

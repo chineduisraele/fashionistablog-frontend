@@ -11,8 +11,7 @@ import {
 } from "../../components/post";
 import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
-import "./css/home.css";
-import "./css/responsive.css";
+import "../home/css/home.css";
 
 // home
 const CategoryPage = () => {

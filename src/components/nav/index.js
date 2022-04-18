@@ -34,27 +34,6 @@ const Nav = () => {
     }
   };
 
-  // axis
-  const [cordinate, setCordinate] = useState(0);
-  useLayoutEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > cordinate) {
-        let nav = document.querySelector("nav");
-        nav.style.position = "static";
-        nav.style.zIndex = "100";
-        nav.style.backgroundColor = "transparent";
-        setCordinate(window.scrollY);
-      } else if (window.scrollY < cordinate) {
-        let nav = document.querySelector("nav");
-        nav.style.position = "sticky";
-        nav.style.top = "-1px";
-        nav.style.zIndex = "100";
-        nav.style.backgroundColor = "#fff";
-        setCordinate(window.scrollY);
-      }
-    });
-  }, [cordinate]);
-
   useLayoutEffect(() => {
     let cont = document.querySelector(".linkscont");
     cont.style.transition = "none";
@@ -63,13 +42,6 @@ const Nav = () => {
       cont.style.transition = "height 0.35s";
     });
   }, [path.pathname]);
-
-  // toggle height on scroll
-  useLayoutEffect(() => {
-    window.addEventListener("scroll", () => {
-      toggleHeight(true);
-    });
-  }, []);
 
   return (
     <nav className="shad2 mainnavbar">

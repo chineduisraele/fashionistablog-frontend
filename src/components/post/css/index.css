@@ -69,10 +69,19 @@
   overflow: hidden;
 }
 
+.side-content .purchase-box img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 0 50%;
+     object-position: 0 50%;
+}
+
 .side-content .purchase-box .overlay {
   outline: 2px solid #808080aa;
-  outline-offset: -1rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  outline-offset: -0.5rem;
+  background-color: rgba(0, 0, 0, 0.75);
   top: 0;
   left: 0;
   -webkit-box-orient: vertical;
@@ -85,23 +94,24 @@
 .side-content .purchase-box .overlay h3,
 .side-content .purchase-box .overlay p {
   color: #fff;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   text-align: center;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .side-content .purchase-box .overlay h3 {
   font-size: 20px;
   color: #ba004b;
+  font-weight: 600;
 }
 
 .side-content .purchase-box .overlay a {
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   font-weight: 700;
   color: #ba004b;
-  padding: 10px 32px;
+  padding: 8px 32px;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
   border: 2px solid #ba004b;
   border-radius: 0.5rem;
 }
