@@ -3,12 +3,19 @@
   max-width: $defaultWidth;
   margin: auto;
   .banner {
-    height: 62.5vh;
+    padding-top: 37.5%;
+    width: 100%;
+    height: 0;
     img {
-      height: 100%;
+      position: absolute;
       width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: $defaultBorderRadius;
+      display: block;
       object-fit: cover;
-      object-position: 60% 0%;
+      object-position: 0 0;
     }
     div {
       row-gap: 1.3rem;
@@ -71,7 +78,6 @@
 @media screen and (max-width: 1054px) {
   .home {
     .banner {
-      height: auto;
       div {
         row-gap: 1rem;
         width: 380px;
@@ -118,11 +124,10 @@
     }
   }
 }
-
 @media screen and (max-width: 875px) {
   .home {
     .banner {
-      height: 60vh;
+      padding-top: 56.25%;
     }
   }
 }
@@ -130,7 +135,6 @@
 @media screen and (max-width: 765px) {
   .home {
     .banner {
-      height: 50vh !important;
       div {
         padding: 1rem 0.5rem;
         width: 300px;
@@ -160,7 +164,6 @@
 @media screen and (max-width: 630px) {
   .home {
     .banner {
-      height: 43vh !important;
       div {
         row-gap: 0.5rem;
         margin: {
@@ -175,7 +178,6 @@
 @media screen and (max-width: 575px) {
   .home {
     .banner {
-      height: 40vh !important;
       div {
         row-gap: 0.45rem;
         h2 {
@@ -198,25 +200,14 @@
 @media screen and (max-width: 510px) {
   .home {
     .banner {
-      height: 37.5vh !important;
       div {
-        // display: none;
         padding: 1rem 0.5rem;
         width: 300px;
-        // row-gap: 0.5rem;
         margin: {
           bottom: 0;
           right: 0;
         }
       }
-    }
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .home {
-    .banner {
-      height: 34vh !important;
     }
   }
 }

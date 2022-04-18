@@ -42,7 +42,9 @@ const Card = ({
 const MiniCard = ({ id, thumbnail, category, title, date }) => {
   return (
     <Link to={`/post/${category}/${id}`} className="mini-card d-grid">
-      <img src={thumbnail} alt="cardimg" />
+      <div className="imgcont p-rel">
+        <img src={thumbnail} alt="cardimg" />
+      </div>
       <div className="text d-grid">
         <h3>{title}</h3>
         <span>
