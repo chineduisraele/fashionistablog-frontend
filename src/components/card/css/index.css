@@ -11,6 +11,7 @@
 }
 
 .card .card-img img {
+  border-radius: 0.5rem;
   display: block;
   width: 100%;
   height: 250px;
@@ -46,10 +47,6 @@
 .card .text-part .info span {
   color: #222222;
   font-size: 11px;
-}
-
-.card .text-part .info span i {
-  font-weight: normal;
 }
 
 .card .text-part .content {
@@ -147,9 +144,5 @@
   color: #222222;
   font-size: 11px;
   color: inherit;
-}
-
-.photo-card .overlay .info span i {
-  font-weight: normal;
 }
 /*# sourceMappingURL=index.css.map */

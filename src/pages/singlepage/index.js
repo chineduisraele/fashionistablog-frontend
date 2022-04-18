@@ -30,7 +30,6 @@ import {
 } from "../../components/misc";
 import "./css/singlepage.css";
 import "./css/responsive.css";
-import "../home/css/responsive.css";
 
 import AdminImg from "../../images/admin.webp";
 import AnonImg from "../../images/noprofile.webp";

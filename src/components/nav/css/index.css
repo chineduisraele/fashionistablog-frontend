@@ -53,10 +53,6 @@ nav .inner form a button {
   background-color: #ba004b;
 }
 
-nav .inner form a button i {
-  font-weight: normal;
-}
-
 @media screen and (max-width: 765px) {
   nav {
     border-radius: 0.5rem;
@@ -84,9 +80,6 @@ nav .inner form a button i {
     width: 40.6px;
     height: 34px;
     border-radius: 0.5rem;
-  }
-  nav .inner > button i {
-    font-weight: normal;
   }
   nav .inner .linkscont {
     -webkit-box-ordinal-group: 5;

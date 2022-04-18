@@ -81,10 +81,9 @@ footer {
         border-radius: $defaultBorderRadius;
         color: #fff;
 
-        i {
-          color: red;
-          font-size: 1.1rem;
-          padding: 0.2rem;
+        svg {
+          fill: red;
+          width: 1.5rem;
         }
         span {
           display: inline-block;
@@ -104,7 +103,7 @@ footer {
   }
 }
 
-// all
+// Responsive
 @media screen and (max-width: 1210px) {
   footer .inner {
     padding: 0 0.5rem;

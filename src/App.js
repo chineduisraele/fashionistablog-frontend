@@ -4,6 +4,7 @@ import Home from "./pages/home";
 import SinglePage from "./pages/singlepage";
 
 import "./css/index.css";
+import "./css/responsive.css";
 
 import {
   BrowserRouter as Router,

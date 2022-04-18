@@ -12,7 +12,6 @@ import {
 import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
 import "./css/home.css";
-import "./css/responsive.css";
 import Banner from "../../images/banner.webp";
 
 // home

@@ -185,9 +185,9 @@
       color: $green !important;
       font-weight: 600;
     }
-    i {
-      color: $green;
-      padding-right: 1rem;
+    svg {
+      fill: $green;
+      margin-right: 1rem;
     }
     a {
       font-size: inherit;
@@ -224,43 +224,3 @@
     }
   }
 }
-
-// @media screen and (max-width: 1100px) {
-//   .most-viewed {
-//     .slide {
-//       grid-template-columns: repeat(3, 1fr);
-//       gap: 0.105rem;
-//       .photo-card {
-//         img {
-//           display: block;
-//           border-radius: $defaultBorderRadius;
-//           width: 100%;
-//           aspect-ratio: 39.88 / 24;
-//           object-fit: cover;
-//           object-position: 50% 0;
-//         }
-//         .overlay {
-//           gap: 1rem;
-//           padding: 1.5rem;
-//           padding-top: 6.5rem;
-//           height: 99%;
-//           h3 {
-//           }
-//           p {
-//             font-size: 12px;
-//             padding: 4px 20px;
-//           }
-//           .info {
-//             gap: 1rem;
-//             span {
-//               font-size: 11px;
-//               i {
-//                 font-weight: normal;
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }

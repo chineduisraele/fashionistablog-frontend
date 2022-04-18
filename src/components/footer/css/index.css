@@ -119,10 +119,9 @@ footer .inner .third p {
   color: #fff;
 }
 
-footer .inner .third p i {
-  color: red;
-  font-size: 1.1rem;
-  padding: 0.2rem;
+footer .inner .third p svg {
+  fill: red;
+  width: 1.5rem;
 }
 
 footer .inner .third p span {

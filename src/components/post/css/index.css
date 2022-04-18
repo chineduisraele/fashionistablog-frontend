@@ -218,9 +218,9 @@
   font-weight: 600;
 }
 
-.categories-tab li i {
-  color: #ba004b;
-  padding-right: 1rem;
+.categories-tab li svg {
+  fill: #ba004b;
+  margin-right: 1rem;
 }
 
 .categories-tab li a {
