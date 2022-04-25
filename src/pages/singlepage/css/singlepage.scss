@@ -1,11 +1,15 @@
 @import "../../../components/globals";
 
 @mixin imgmixin {
+  position: absolute;
   width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: $defaultBorderRadius;
   display: block;
   object-fit: cover;
-  object-position: center;
-  border-radius: $defaultBorderRadius;
+  object-position: 0 0;
 }
 
 .singlepage {
@@ -16,8 +20,13 @@
 
     .pagedetailscont {
       row-gap: 2rem;
-      .postimg img {
-        @include imgmixin();
+      .postimg {
+        padding-top: 50%;
+        width: 100%;
+        height: 0;
+        img {
+          @include imgmixin();
+        }
       }
       // header
       > header {
@@ -108,9 +117,16 @@
             color: #0000ee;
           }
         }
-        img {
-          @include imgmixin();
+
+        .pagecontentimg {
+          padding-top: 45%;
+          width: 100%;
+          height: 0;
           margin: 1rem 0 2rem;
+          img {
+            @include imgmixin();
+            width: 100%;
+          }
         }
       }
       // tags

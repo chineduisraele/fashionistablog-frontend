@@ -16,7 +16,7 @@ const Card = ({
   return (
     <Link to={`/post/${category}/${id}`} className="card d-grid">
       <div className="card-img p-rel">
-        <img src={thumbnail} alt="cardimg" />
+        <img src={thumbnail} alt="cardimg" loading="lazy" />
         <p>{category}</p>
       </div>
       <div className="text-part d-grid">
@@ -43,7 +43,7 @@ const MiniCard = ({ id, thumbnail, category, title, date }) => {
   return (
     <Link to={`/post/${category}/${id}`} className="mini-card d-grid">
       <div className="imgcont p-rel">
-        <img src={thumbnail} alt="cardimg" />
+        <img src={thumbnail} alt="cardimg" loading="lazy" />
       </div>
       <div className="text d-grid">
         <h3>{title}</h3>
@@ -66,7 +66,7 @@ const PhotoCard = ({
 }) => {
   return (
     <Link to={`/post/${category}/${id}`} className="photo-card p-rel">
-      <img src={thumbnail} alt="cardimg" />
+      <img src={thumbnail} alt="cardimg" loading="lazy" />
       <div className="overlay p-abs d-grid size-100">
         <div className="d-grid aic jcc">
           <p>{category}</p>

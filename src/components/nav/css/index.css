@@ -43,10 +43,6 @@ nav .inner form input::placeholder {
 }
 
 nav .inner form a {
-  background-color: transparent;
-}
-
-nav .inner form a button {
   width: 44px;
   height: 34px;
   border-radius: 0.5rem;
@@ -101,7 +97,7 @@ nav .inner form a button {
   nav .inner form input {
     width: 100%;
   }
-  nav .inner form button {
+  nav .inner form a {
     width: 44px;
   }
 }
@@ -145,7 +141,7 @@ nav .inner form a button {
   nav .inner form input {
     width: 170px;
   }
-  nav .inner form button {
+  nav .inner form a {
     width: 34px;
   }
 }

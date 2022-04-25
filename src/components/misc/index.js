@@ -6,6 +6,9 @@ import "./css/index.css";
 import Googlead from "../../images/add-1.webp";
 
 const BASE_URL = "http://127.0.0.1:8000";
+
+const DOMAIN = "http://localhost:3000";
+
 // No data
 const Empty = ({ text, text1, text2, height }) => {
   return (
@@ -82,4 +85,4 @@ const GoogleAds = () => {
   );
 };
 
-export { Empty, SmallLoading, Loading, Alerts, GoogleAds, BASE_URL };
+export { Empty, SmallLoading, Loading, Alerts, GoogleAds, BASE_URL, DOMAIN };

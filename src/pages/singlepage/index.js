@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import {
   FaAngleLeft,
@@ -16,7 +16,8 @@ import {
   FaInstagram,
   FaWhatsapp,
   FaTelegramPlane,
-  FaGooglePlus,
+  FaRedditAlien,
+  FaLinkedin,
   FaPinterest,
 } from "react-icons/fa";
 
@@ -25,6 +26,7 @@ import {
   Empty,
   Alerts,
   BASE_URL,
+  DOMAIN,
   GoogleAds,
   Loading,
 } from "../../components/misc";
@@ -169,8 +171,8 @@ const SinglePage = () => {
                   <>
                     {/* comments */}
                     <div className="inner d-grid">
-                      {postData.comments.slice(0, commentPage).map((it) => {
-                        return <Comment {...it} img={AnonImg} />;
+                      {postData.comments.slice(0, commentPage).map((it, id) => {
+                        return <Comment {...it} img={AnonImg} key={id} />;
                       })}
                     </div>
                     {/* pagination */}
@@ -256,17 +258,38 @@ const SinglePostComponent = ({
   tags,
   query,
 }) => {
+  const path = useLocation();
   const followData = [
-    [<FaFacebookSquare />, "#", "facebook"],
-    [<FaTwitter />, "#", "twitter"],
-    [<FaInstagram />, "#", "instagram"],
-    [<FaGooglePlus />, "#", "google"],
-    [<FaPinterest />, "#", "pinterest"],
+    [
+      <FaFacebookSquare />,
+      `https://www.facebook.com/sharer/sharer.php?u=${DOMAIN}${path.pathname}`,
+      "facebook",
+    ],
+    [
+      <FaTwitter />,
+      `https://twitter.com/intent/tweet?url=${DOMAIN}${path.pathname}&text=Fashionista Blog`,
+      "twitter",
+    ],
+    [
+      <FaRedditAlien />,
+      `http://reddit.com/submit?url=${DOMAIN}${path.pathname}%23&title=Fashionista%20Blog`,
+      "reddit",
+    ],
+    [
+      <FaLinkedin />,
+      `http://www.linkedin.com/shareArticle?url=${DOMAIN}${path.pathname}%23&title=Fashionista%20Blog`,
+      "linkedin",
+    ],
+    [
+      <FaPinterest />,
+      `https://pinterest.com/pin/create/button/?url=${DOMAIN}${path.pathname}%23&description=FashionistaBlog`,
+      "pinterest",
+    ],
   ];
   return (
     <section className="pagedetailscont d-grid">
       {/* postimg */}
-      <article className="postimg">
+      <article className="postimg p-rel">
         <img src={image} alt="postbanner" />
       </article>
 
@@ -309,10 +332,12 @@ const SinglePostComponent = ({
 
       {/* content */}
       <article className="page-content d-grid">
-        {paragraphs.map(({ image, text }, i) => {
+        {paragraphs.map(({ image, text }, id) => {
           return image ? (
-            <div>
-              <img src={image} alt="post img" />
+            <div key={id}>
+              <div className="pagecontentimg p-rel">
+                <img src={image} alt="post img" />
+              </div>
               <p dangerouslySetInnerHTML={{ __html: text }}></p>
             </div>
           ) : (
@@ -328,8 +353,12 @@ const SinglePostComponent = ({
           <FaTags /> TAGS:
         </span>
         <div className="d-flex">
-          {tags.split(",").map((it, i) => {
-            return <Link to={`/search?search=${it}&tagonly=true`}>#{it}</Link>;
+          {tags.split(",").map((it, id) => {
+            return (
+              <Link to={`/search?search=${it}&tagonly=true`} key={id}>
+                #{it}
+              </Link>
+            );
           })}
         </div>
       </article>
@@ -348,7 +377,7 @@ const SinglePostComponent = ({
       {/* author */}
       <article className="author">
         <Comment
-          name={"Chinedu Emeka"}
+          name={"Chinedu Israele"}
           comment={
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure modivitae aspernatur est, distinctio maxime tempora"
           }
@@ -379,9 +408,9 @@ const Comment = ({ name, comment, date, img }) => {
         </p>
         <p className="text">{comment}</p>
         <div className="social-links d-flex">
-          {social.map(([icon, link]) => {
+          {social.map(([icon, link], id) => {
             return (
-              <a href={link} target="_blank" rel="noreferrer">
+              <a href={link} target="_blank" rel="noreferrer" key={id}>
                 {icon}
               </a>
             );

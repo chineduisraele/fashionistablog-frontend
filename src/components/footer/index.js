@@ -96,8 +96,8 @@ const Footer = () => {
           <article className="instagram d-grid">
             <h3>INSTAGRAM PHOTOS</h3>
             <div className="d-grid aic-jcc">
-              {imgData.map((it) => {
-                return <img src={it} alt="" />;
+              {imgData.map((it, id) => {
+                return <img src={it} alt="instagram" key={id} loading="lazy" />;
               })}
             </div>
           </article>
@@ -111,7 +111,7 @@ const Footer = () => {
           <p>
             Created with <FaHeart /> by
             <span>
-              <img src="./images/fivefingers.png" alt="" />
+              <img src="./images/fivefingers.png" alt="" loading="lazy" />
               ive Fingers Dev.
             </span>
           </p>

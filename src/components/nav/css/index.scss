@@ -33,13 +33,10 @@ nav {
         }
       }
       a {
-        background-color: transparent;
-        button {
-          width: 44px;
-          height: 34px;
-          border-radius: $defaultBorderRadius;
-          background-color: $green;
-        }
+        width: 44px;
+        height: 34px;
+        border-radius: $defaultBorderRadius;
+        background-color: $green;
       }
     }
   }
@@ -91,7 +88,7 @@ nav {
         input {
           width: 100%;
         }
-        button {
+        a {
           width: 44px;
         }
       }
@@ -143,7 +140,7 @@ nav {
         input {
           width: 170px;
         }
-        button {
+        a {
           width: 34px;
         }
       }

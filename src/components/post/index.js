@@ -29,7 +29,13 @@ const Paginate = ({ posts, to }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <ScrollLink to={to} spy={true} offset={-100} style={{ display: "block" }}>
+    <ScrollLink
+      to={to}
+      spy={true}
+      offset={-100}
+      style={{ display: "block" }}
+      role="button"
+    >
       <div className="paginate d-grid">
         <button
           className={posts.previous ? "" : "inactive"}
@@ -124,8 +130,8 @@ const MainPostComponent = ({
       ) : mainPosts.results.length ? (
         <>
           <div className="cards d-grid">
-            {mainPosts.results.map((i) => {
-              return <Card {...i} />;
+            {mainPosts.results.map((it, id) => {
+              return <Card {...it} key={id} />;
             })}
           </div>
 
@@ -194,8 +200,8 @@ const FeaturedPosts = ({ query, title, data }) => {
       ) : featuredPosts.results.length ? (
         <>
           <div className="cards d-grid">
-            {featuredPosts.results.map((i) => {
-              return <Card {...i} />;
+            {featuredPosts.results.map((it, id) => {
+              return <Card {...it} key={id} />;
             })}
           </div>
         </>
@@ -236,8 +242,8 @@ const MostViewedPosts = ({ query }) => {
       </header>
 
       <article className="slide d-grid">
-        {mostViewedPosts?.results.map((i) => {
-          return <PhotoCard {...i} />;
+        {mostViewedPosts?.results.map((it, id) => {
+          return <PhotoCard {...it} key={id} />;
         })}
       </article>
     </section>
@@ -326,8 +332,8 @@ const SideContent = ({ page, searchParams }) => {
             </header>
 
             <div className="minicards-cont d-grid">
-              {popularPosts?.results.map((i) => {
-                return <MiniCard {...i} />;
+              {popularPosts?.results.map((it, id) => {
+                return <MiniCard {...it} key={id} />;
               })}
             </div>
           </article>
@@ -376,7 +382,14 @@ const FollowTab = ({ data }) => {
         {followdata.map(([name, link, classname], i) => {
           return (
             <li key={i}>
-              <a href={link} className={`d-flex aic jcc ${classname}`}>
+              <a
+                href={link}
+                target={data && "_blank"}
+                rel={data && "noreferrer"}
+                className={`d-flex aic jcc ${classname}`}
+                aria-label={`${classname}-link`}
+                role="button"
+              >
                 {name}
               </a>
             </li>

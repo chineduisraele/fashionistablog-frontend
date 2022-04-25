@@ -56,6 +56,7 @@ const Nav = () => {
           onClick={() => {
             toggleHeight();
           }}
+          aria-label="toggle button"
         >
           <FaBars />
         </button>
@@ -67,7 +68,7 @@ const Nav = () => {
               return (
                 <li
                   key={id}
-                  class={path.pathname === link ? "active" : undefined}
+                  className={path.pathname === link ? "active" : undefined}
                 >
                   <Link to={link}>{text}</Link>
                 </li>
@@ -91,10 +92,11 @@ const Nav = () => {
             onClick={(e) => {
               !search && e.preventDefault();
             }}
+            role="button"
+            aria-label="search-link"
+            className="d-flex aic jcc c-white"
           >
-            <button className="d-flex aic jcc c-white">
-              <FaSearch />
-            </button>
+            <FaSearch />
           </Link>
         </form>
       </div>

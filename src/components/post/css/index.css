@@ -61,7 +61,6 @@
 }
 
 .side-content img {
-  display: block;
   width: 100%;
 }
 
@@ -69,7 +68,6 @@
   border-radius: 0.5rem;
   overflow: hidden;
   padding-top: 56.25%;
-  width: 100%;
   height: 0;
 }
 
@@ -214,6 +212,14 @@
 
 .follow-tab ul a.discord {
   background-color: #5c6bc0;
+}
+
+.follow-tab ul a.linkedin {
+  background-color: #0579d8;
+}
+
+.follow-tab ul a.reddit {
+  background-color: red;
 }
 
 .categories-tab li {
