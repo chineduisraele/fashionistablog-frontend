@@ -60,7 +60,7 @@ const SinglePage = () => {
 
     // create comment
     axios
-      .post("http://127.0.0.1:8000/api/post/posts/comment/", form)
+      .post(`${BASE_URL}/api/post/posts/comment/`, form)
       .then((res) => {
         c.reset();
         submitBtn.disabled = false;
