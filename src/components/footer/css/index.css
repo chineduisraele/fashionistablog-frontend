@@ -96,7 +96,13 @@ footer .inner .second .instagram div {
 }
 
 footer .inner .second .instagram div img {
-  max-width: 100%;
+  max-width: 90px;
+  aspect-ratio: 1 / 1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  width: 100%;
   border-radius: 0.5rem;
 }
 

@@ -7,15 +7,14 @@
     width: 100%;
     height: 0;
     img {
+      object-fit: cover;
+      object-position: 0 0;
       position: absolute;
       width: 100%;
       height: 100%;
       top: 0;
       left: 0;
       border-radius: $defaultBorderRadius;
-      display: block;
-      object-fit: cover;
-      object-position: 0 0;
     }
     div {
       row-gap: 1.3rem;

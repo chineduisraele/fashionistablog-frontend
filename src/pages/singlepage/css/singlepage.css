@@ -125,7 +125,6 @@
 .singlepage .main-content .pagedetailscont .page-content p {
   color: #777777;
   line-height: 1.6rem;
-  text-align: justify;
 }
 
 .singlepage .main-content .pagedetailscont .page-content p a {
@@ -200,7 +199,7 @@
 }
 
 .singlepage .main-content .comments .main .inner {
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .singlepage .main-content .comments .main .inner .comment .text-part .social-links {

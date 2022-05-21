@@ -14,6 +14,7 @@ import Image5 from "../../images/instagram/5.webp";
 import Image6 from "../../images/instagram/6.webp";
 import Image7 from "../../images/instagram/7.webp";
 import Image8 from "../../images/instagram/8.webp";
+import LazyImage from "../../images/lazyimage.webp";
 
 const Footer = () => {
   const [alerts, setAlerts] = useState({
@@ -22,11 +23,14 @@ const Footer = () => {
     error: "false",
   });
 
-  const handleForm = (e) => {
+  const handleForm = (e, btn) => {
     let form = new FormData(e.currentTarget);
     axios
       .post(`${BASE_URL}/api/post/newsfeed/`, form)
-      .then((res) => {
+      .then(() => {
+        btn.style.opacity = "1";
+        btn.disabled = false;
+        btn.textContent = "Subscribe";
         setAlerts({
           show: true,
           message: "Thank you for subscribing to our Newsletter service!",
@@ -40,6 +44,9 @@ const Footer = () => {
         }, 1500);
       })
       .catch((err) => {
+        btn.style.opacity = "1";
+        btn.disabled = false;
+        btn.textContent = "Subscribe";
         setAlerts({
           show: true,
           message:
@@ -82,12 +89,16 @@ const Footer = () => {
               className="d-grid"
               method="POST"
               onSubmit={(e) => {
+                let btn = e.currentTarget.lastElementChild;
+                btn.style.opacity = "0.5";
+                btn.disabled = true;
+                btn.textContent = "Subscribing...";
                 e.preventDefault();
-                handleForm(e);
+                handleForm(e, btn);
               }}
             >
-              <input type="name" name="name" placeholder="NAME" />
-              <input type="email" name="email" placeholder="EMAIL" />
+              <input type="name" name="name" placeholder="NAME" required />
+              <input type="email" name="email" placeholder="EMAIL" required />
               <button className="btn f-bold" type="submit">
                 Subscribe
               </button>
@@ -97,7 +108,15 @@ const Footer = () => {
             <h3>INSTAGRAM PHOTOS</h3>
             <div className="d-grid aic-jcc">
               {imgData.map((it, id) => {
-                return <img src={it} alt="instagram" key={id} loading="lazy" />;
+                return (
+                  <img
+                    src={LazyImage}
+                    data-src={it}
+                    alt="instagram"
+                    key={id}
+                    className="lazyimg"
+                  />
+                );
               })}
             </div>
           </article>
@@ -109,11 +128,7 @@ const Footer = () => {
 
         <article className="d-flex jcsb third">
           <p>
-            Created with <FaHeart /> by
-            <span>
-              <img src="./images/fivefingers.png" alt="" loading="lazy" />
-              ive Fingers Dev.
-            </span>
+            Created with <FaHeart /> by <span> Chinedu Israele</span>
           </p>
           <p>Powered by Django. &copy; 2022</p>
         </article>

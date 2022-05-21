@@ -1,5 +1,6 @@
 nav .inner > a img {
   width: 170px;
+  background-color: transparent;
 }
 
 nav .inner ul li {
@@ -89,6 +90,9 @@ nav .inner form a {
   }
   nav .inner .linkscont ul li {
     padding: 0.5rem;
+  }
+  nav .inner .linkscont ul li a {
+    width: 100%;
   }
   nav .inner form {
     width: 100%;

@@ -4,6 +4,7 @@ nav {
   .inner {
     > a img {
       width: 170px;
+      background-color: transparent;
     }
 
     ul {
@@ -77,6 +78,9 @@ nav {
           padding: 1rem 0;
           li {
             padding: 0.5rem;
+            a {
+              width: 100%;
+            }
           }
         }
       }

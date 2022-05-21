@@ -112,7 +112,7 @@
         p {
           color: $black025;
           line-height: 1.6rem;
-          text-align: justify;
+          // text-align: justify;
           a {
             color: #0000ee;
           }
@@ -174,7 +174,7 @@
       margin-bottom: 3rem !important;
       .main {
         .inner {
-          gap: 2rem;
+          gap: 1rem;
           .comment .text-part {
             .social-links {
               display: none;

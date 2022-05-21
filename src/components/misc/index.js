@@ -5,8 +5,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./css/index.css";
 import Googlead from "../../images/add-1.webp";
 
-// const BASE_URL = "http://127.0.0.1:8000";
-const BASE_URL = "https://fashionistablog.herokuapp.com";
+const BASE_URL = "http://127.0.0.1:8000";
+// const BASE_URL = "https://fashionistablog.herokuapp.com";
 
 const DOMAIN = "https//:fashionistablog.netlify.app";
 
@@ -26,38 +26,23 @@ const Empty = ({ text, text1, text2, height }) => {
 // loading
 const Loading = () => {
   return (
-    <p
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "white",
-        position: "fixed",
-        top: "0",
-        left: "0",
-        zIndex: 1000,
-      }}
-    >
-      Loading...
-    </p>
+    <div className="loading size-100 bg-w d-flex aic-jcc trans">
+      <LoadingSvg />
+    </div>
   );
 };
 
 // small loading
 const SmallLoading = () => {
   return (
-    <p
+    <div
+      className="loading size-100 bg-w d-flex aic-jcc trans"
       style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "#39271b73",
-        position: "fixed",
-        top: "0",
-        left: "0",
-        zIndex: 1000,
+        backgroundColor: "#ba004b40",
       }}
     >
-      Loading...
-    </p>
+      <LoadingSvg style={{ width: "35px" }} stroke={"5"} />
+    </div>
   );
 };
 
@@ -87,3 +72,21 @@ const GoogleAds = () => {
 };
 
 export { Empty, SmallLoading, Loading, Alerts, GoogleAds, BASE_URL, DOMAIN };
+
+const LoadingSvg = ({ style, stroke }) => {
+  return (
+    <div className="loader" style={style}>
+      <svg className="circular" viewBox="25 25 50 50">
+        <circle
+          className="path"
+          cx="50"
+          cy="50"
+          r="20"
+          fill="none"
+          strokeWidth={stroke || "8"}
+          strokeMiterlimit="10"
+        />
+      </svg>
+    </div>
+  );
+};

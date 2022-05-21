@@ -22,6 +22,7 @@ import { Card, MiniCard, PhotoCard } from "../card";
 import "./css/index.css";
 import Affiliate from "../../images/purchase.webp";
 import FacebookLike from "../../images/facebook.webp";
+import LazyImage from "../../images/lazyimage.webp";
 
 // Paginate
 
@@ -131,7 +132,7 @@ const MainPostComponent = ({
         <>
           <div className="cards d-grid">
             {mainPosts.results.map((it, id) => {
-              return <Card {...it} key={id} />;
+              return <Card {...it} key={id} index={id} />;
             })}
           </div>
 
@@ -147,7 +148,6 @@ const MainPostComponent = ({
           {...{
             text: "No Posts Found!",
             text2: "Hopefully, there'll be something next time",
-            height: "50vh",
           }}
         />
       )}
@@ -201,7 +201,7 @@ const FeaturedPosts = ({ query, title, data }) => {
         <>
           <div className="cards d-grid">
             {featuredPosts.results.map((it, id) => {
-              return <Card {...it} key={id} />;
+              return <Card {...it} key={id} index={4} />;
             })}
           </div>
         </>
@@ -210,7 +210,6 @@ const FeaturedPosts = ({ query, title, data }) => {
           {...{
             text: "No Posts found!",
             text2: "Hopefully, there'll be something next time",
-            height: "50vh",
           }}
         />
       )}
@@ -431,13 +430,23 @@ const Tweets = () => {
         <header className="header">
           <h3>RECENT TWEETS</h3>
         </header>
-        <img src={FacebookLike} alt="facebooklikes" />
+        <img
+          data-src={FacebookLike}
+          src={LazyImage}
+          alt="facebooklikes"
+          className="lazyimg"
+        />
       </div>
       <div className="fblikes">
         <header className="header">
           <h3>FACEBOOK LIKES</h3>
         </header>
-        <img src={FacebookLike} alt="facebooklikes" />
+        <img
+          data-src={FacebookLike}
+          src={LazyImage}
+          alt="facebooklikes"
+          className="lazyimg"
+        />
       </div>
     </aside>
   );

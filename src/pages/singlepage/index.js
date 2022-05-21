@@ -48,13 +48,8 @@ const SinglePage = () => {
   const [commentPage, setCommentPage] = useState(4);
 
   // create comment
-  const createComment = ({ currentTarget: c }) => {
-    const form = new FormData(c),
-      submitBtn = c.querySelector("button");
-
-    // disable btn
-    submitBtn.disabled = true;
-
+  const createComment = ({ currentTarget: c }, btn) => {
+    const form = new FormData(c);
     // append post id
     form.append("id", id);
 
@@ -63,7 +58,9 @@ const SinglePage = () => {
       .post(`${BASE_URL}/api/post/posts/comment/`, form)
       .then((res) => {
         c.reset();
-        submitBtn.disabled = false;
+        btn.style.opacity = "1";
+        btn.disabled = false;
+        btn.textContent = "POST COMMENT";
 
         setCommentAlert({
           message: "Comment posted successfully",
@@ -86,7 +83,9 @@ const SinglePage = () => {
       })
       .catch((err) => {
         c.reset();
-        submitBtn.disabled = false;
+        btn.style.opacity = "1";
+        btn.disabled = false;
+        btn.textContent = "POST COMMENT";
         setCommentAlert({
           message: "There was a problem posting your comment!",
           error: true,
@@ -206,8 +205,12 @@ const SinglePage = () => {
               <p>Have something to contribute?</p>
               <form
                 onSubmit={(e) => {
+                  let btn = e.currentTarget.lastElementChild;
+                  btn.style.opacity = "0.5";
+                  btn.disabled = true;
+                  btn.textContent = "SAVING...";
                   e.preventDefault();
-                  createComment(e);
+                  createComment(e, btn);
                 }}
               >
                 <input
@@ -250,6 +253,7 @@ const SinglePage = () => {
 const SinglePostComponent = ({
   image,
   title,
+  date,
   featured,
   author,
   total_comments,
@@ -309,7 +313,8 @@ const SinglePostComponent = ({
 
         <div className="info d-flex">
           <span>
-            <FaRegClock /> MARCH 1, 2022
+            <FaRegClock />{" "}
+            {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
           </span>
           <span>
             <FaRegUser /> BY {author}
@@ -364,7 +369,7 @@ const SinglePostComponent = ({
       </article>
 
       {/* pagination */}
-      <div className="paginate d-grid">
+      {/* <div className="paginate d-grid">
         <button>
           <FaAngleLeft /> Previous
         </button>
@@ -372,7 +377,7 @@ const SinglePostComponent = ({
         <button>
           Next <FaAngleRight />
         </button>
-      </div>
+      </div> */}
 
       {/* author */}
       <article className="author">
@@ -390,11 +395,11 @@ const SinglePostComponent = ({
 
 const Comment = ({ name, comment, date, img }) => {
   const social = [
-    [<FaFacebookSquare />, "http://"],
-    [<FaTwitter />, "http://"],
-    [<FaInstagram />, "http://"],
-    [<FaWhatsapp />, "http://"],
-    [<FaTelegramPlane />, "http://"],
+    [<FaFacebookSquare />, "#0"],
+    [<FaTwitter />, "#0"],
+    [<FaInstagram />, "#0"],
+    [<FaWhatsapp />, "#0"],
+    [<FaTelegramPlane />, "#0"],
   ];
   return (
     <article className="comment d-grid jcc">
@@ -403,14 +408,15 @@ const Comment = ({ name, comment, date, img }) => {
         <p className="name d-flex jcsb">
           {name}
           <span>
-            <FaRegClock /> MARCH 1, 2022
+            <FaRegClock />{" "}
+            {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
           </span>
         </p>
         <p className="text">{comment}</p>
         <div className="social-links d-flex">
           {social.map(([icon, link], id) => {
             return (
-              <a href={link} target="_blank" rel="noreferrer" key={id}>
+              <a href={link} key={id}>
                 {icon}
               </a>
             );
