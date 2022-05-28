@@ -12,7 +12,7 @@ import {
 import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
 import "./css/home.css";
-import Banner from "../../images/banner.webp";
+// import Banner from "../../images/banner.webp";
 
 // home
 const Home = () => {
@@ -82,7 +82,7 @@ const Home = () => {
       {/* banner */}
       {page === "home" && (
         <section className="banner p-rel">
-          <img src={Banner} alt="banner" className="d-block" />
+          {/* <img src={Banner} alt="banner" className="d-block" /> */}
           <div className="p-abs d-grid">
             <h2>Hottest news and trending gists in the fashion world!</h2>
             <p>

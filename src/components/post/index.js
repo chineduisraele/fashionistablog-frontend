@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
@@ -23,7 +23,7 @@ import "./css/index.css";
 import Affiliate from "../../images/purchase.webp";
 import FacebookLike from "../../images/facebook.webp";
 import LazyImage from "../../images/lazyimage.webp";
-
+import { useObserver } from "../../App";
 // Paginate
 
 const Paginate = ({ posts, to }) => {
@@ -84,6 +84,8 @@ const MainPostComponent = ({
   setSearchParams,
   category,
 }) => {
+  const parentRef = useRef();
+  useObserver({ ref: parentRef, data: mainPosts });
   return (
     <div className="card-cont">
       {/* card-nav */}
@@ -130,7 +132,7 @@ const MainPostComponent = ({
         <SmallLoading />
       ) : mainPosts.results.length ? (
         <>
-          <div className="cards d-grid">
+          <div className="cards d-grid" ref={parentRef}>
             {mainPosts.results.map((it, id) => {
               return <Card {...it} key={id} index={id} />;
             })}
@@ -163,6 +165,11 @@ const FeaturedPosts = ({ query, title, data }) => {
     [featuredPostsLoading, setFeaturedPostsLoading] = useState(
       data ? false : true
     );
+
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef, data: featuredPosts });
+
   //featured
   useEffect(() => {
     !data &&
@@ -199,7 +206,7 @@ const FeaturedPosts = ({ query, title, data }) => {
         <SmallLoading />
       ) : featuredPosts.results.length ? (
         <>
-          <div className="cards d-grid">
+          <div className="cards d-grid" ref={parentRef}>
             {featuredPosts.results.map((it, id) => {
               return <Card {...it} key={id} index={4} />;
             })}
@@ -221,6 +228,12 @@ const FeaturedPosts = ({ query, title, data }) => {
 const MostViewedPosts = ({ query }) => {
   // states
   const [mostViewedPosts, setMostViewedPosts] = useState();
+
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef, data: mostViewedPosts });
+
+  // fetch
   useEffect(() => {
     axios
       .get(`${BASE_URL}/api/post/posts/filter/?most_viewed=${query}`)
@@ -240,7 +253,7 @@ const MostViewedPosts = ({ query }) => {
         <h3>Most Viewed</h3>
       </header>
 
-      <article className="slide d-grid">
+      <article className="slide d-grid" ref={parentRef}>
         {mostViewedPosts?.results.map((it, id) => {
           return <PhotoCard {...it} key={id} />;
         })}

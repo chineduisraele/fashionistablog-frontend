@@ -27,35 +27,34 @@ function ScrollToTop() {
   return null;
 }
 
-function App() {
+// hook
+const useObserver = (prop) => {
   useEffect(() => {
-    const lazyloadimgs = () => {
-      const imageObserver = new IntersectionObserver(
-        (entries, imgObserver) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const lazyimg = entry.target;
-              lazyimg.src = lazyimg.dataset.src;
-              lazyimg.classList.remove("lazyimg");
-              imgObserver.unobserve(lazyimg);
-            }
-          });
-        },
-        { rootMargin: "200px" }
+    const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const lazyimg = entry.target;
+          lazyimg.src = lazyimg.dataset.src;
+          lazyimg.classList.remove("lazyimg");
+          imgObserver.unobserve(lazyimg);
+        }
+      });
+    }, prop.options || { rootMargin: "400px" });
+
+    if (prop.ref.current) {
+      console.log(
+        prop.ref.current,
+        prop.ref.current.querySelectorAll(".lazyimg")
       );
 
-      document
-        .querySelectorAll("img.lazyimg")
+      prop.ref.current
+        .querySelectorAll(".lazyimg")
         .forEach((img) => imageObserver.observe(img));
-    };
+    }
+  }, [prop.ref, prop.options, prop.data]);
+};
 
-    document.addEventListener("scroll", lazyloadimgs);
-
-    return () => {
-      document.removeEventListener("scroll", lazyloadimgs);
-    };
-  }, []);
-
+function App() {
   return (
     <>
       {
@@ -113,3 +112,4 @@ function App() {
 }
 
 export default App;
+export { useObserver };

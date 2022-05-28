@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import {
-  FaAngleLeft,
-  FaAngleRight,
   FaAngleDown,
   FaRegEye,
   FaRegUser,
