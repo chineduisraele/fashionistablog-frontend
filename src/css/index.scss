@@ -8,6 +8,8 @@
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   line-height: 1.4rem;
   letter-spacing: 0.75px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h3 {
@@ -38,6 +40,7 @@ img {
 }
 input,
 textarea {
+  user-select: auto;
   &:focus {
     outline: none;
   }
