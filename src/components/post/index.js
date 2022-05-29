@@ -84,10 +84,11 @@ const MainPostComponent = ({
   setSearchParams,
   category,
 }) => {
+  // lazy load
   const parentRef = useRef();
-  useObserver({ ref: parentRef, data: mainPosts });
+  useObserver({ ref: parentRef });
   return (
-    <div className="card-cont">
+    <div className="card-cont" ref={parentRef}>
       {/* card-nav */}
       <div className="nav-tabs" id="nav-tabs">
         <ul className="d-flex">
@@ -132,7 +133,7 @@ const MainPostComponent = ({
         <SmallLoading />
       ) : mainPosts.results.length ? (
         <>
-          <div className="cards d-grid" ref={parentRef}>
+          <div className="cards d-grid">
             {mainPosts.results.map((it, id) => {
               return <Card {...it} key={id} index={id} />;
             })}
@@ -166,10 +167,6 @@ const FeaturedPosts = ({ query, title, data }) => {
       data ? false : true
     );
 
-  // lazy load
-  const parentRef = useRef();
-  useObserver({ ref: parentRef, data: featuredPosts });
-
   //featured
   useEffect(() => {
     !data &&
@@ -194,10 +191,18 @@ const FeaturedPosts = ({ query, title, data }) => {
           });
     }
   }, [featuredPostsUrl]);
+
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef });
   return (
     /* featured posts */
 
-    <div className="card-cont featured-posts" id="featured-posts">
+    <div
+      className="card-cont featured-posts"
+      id="featured-posts"
+      ref={parentRef}
+    >
       <header className="header">
         <h3>{title || "Featured Posts"}</h3>
       </header>
@@ -206,7 +211,7 @@ const FeaturedPosts = ({ query, title, data }) => {
         <SmallLoading />
       ) : featuredPosts.results.length ? (
         <>
-          <div className="cards d-grid" ref={parentRef}>
+          <div className="cards d-grid">
             {featuredPosts.results.map((it, id) => {
               return <Card {...it} key={id} index={4} />;
             })}
@@ -229,10 +234,6 @@ const MostViewedPosts = ({ query }) => {
   // states
   const [mostViewedPosts, setMostViewedPosts] = useState();
 
-  // lazy load
-  const parentRef = useRef();
-  useObserver({ ref: parentRef, data: mostViewedPosts });
-
   // fetch
   useEffect(() => {
     axios
@@ -245,15 +246,19 @@ const MostViewedPosts = ({ query }) => {
       });
   }, [query]);
 
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef });
+
   return mostViewedPosts?.count === 0 ? (
     <></>
   ) : (
-    <section className="most-viewed">
+    <section className="most-viewed" ref={parentRef}>
       <header className="header">
         <h3>Most Viewed</h3>
       </header>
 
-      <article className="slide d-grid" ref={parentRef}>
+      <article className="slide d-grid">
         {mostViewedPosts?.results.map((it, id) => {
           return <PhotoCard {...it} key={id} />;
         })}
@@ -314,6 +319,10 @@ const SideContent = ({ page, searchParams }) => {
       .catch((err) => console.error(err));
   }, []);
 
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef });
+
   return (
     <aside className="d-grid side-content">
       {/* purchase box */}
@@ -338,7 +347,11 @@ const SideContent = ({ page, searchParams }) => {
       {/* popular posts */}
       {popularPosts?.count !== 0 && page !== "search" && (
         <>
-          <article className="popular-tabs d-grid" id="popular-tabs">
+          <article
+            className="popular-tabs d-grid"
+            id="popular-tabs"
+            ref={parentRef}
+          >
             <header className="header">
               <h3>Popular</h3>
             </header>
@@ -437,8 +450,11 @@ const CategoriesTab = ({ data, title }) => {
 
 // tweets
 const Tweets = () => {
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef });
   return (
-    <aside>
+    <aside ref={parentRef}>
       <div className="tweets">
         <header className="header">
           <h3>RECENT TWEETS</h3>

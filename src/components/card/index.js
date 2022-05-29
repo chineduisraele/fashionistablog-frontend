@@ -22,9 +22,9 @@ const Card = ({
       <div className="card-img p-rel">
         <img
           data-src={thumbnail}
-          src={index > 3 ? LazyImage : thumbnail}
+          src={index > 1 ? LazyImage : thumbnail}
           alt="cardimg"
-          className={index > 3 ? "lazyimg" : ""}
+          className={index > 1 ? "lazyimg" : ""}
         />
         <p>{category}</p>
       </div>

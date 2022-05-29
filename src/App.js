@@ -28,7 +28,7 @@ function ScrollToTop() {
 }
 
 // hook
-const useObserver = (prop) => {
+const useObserver = ({ ref, options }) => {
   useEffect(() => {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
       entries.forEach((entry) => {
@@ -39,19 +39,16 @@ const useObserver = (prop) => {
           imgObserver.unobserve(lazyimg);
         }
       });
-    }, prop.options || { rootMargin: "400px" });
+    }, options || { rootMargin: "400px" });
 
-    if (prop.ref.current) {
-      console.log(
-        prop.ref.current,
-        prop.ref.current.querySelectorAll(".lazyimg")
-      );
+    if (ref.current) {
+      console.log(ref.current, ref.current.querySelectorAll(".lazyimg"));
 
-      prop.ref.current
+      ref.current
         .querySelectorAll(".lazyimg")
         .forEach((img) => imageObserver.observe(img));
     }
-  }, [prop.ref, prop.options, prop.data]);
+  });
 };
 
 function App() {

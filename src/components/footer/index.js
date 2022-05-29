@@ -14,7 +14,6 @@ import Image5 from "../../images/instagram/5.webp";
 import Image6 from "../../images/instagram/6.webp";
 import Image7 from "../../images/instagram/7.webp";
 import Image8 from "../../images/instagram/8.webp";
-import LazyImage from "../../images/lazyimage.webp";
 
 const Footer = () => {
   const [alerts, setAlerts] = useState({
@@ -108,15 +107,7 @@ const Footer = () => {
             <h3>INSTAGRAM PHOTOS</h3>
             <div className="d-grid aic-jcc">
               {imgData.map((it, id) => {
-                return (
-                  <img
-                    src={LazyImage}
-                    data-src={it}
-                    alt="instagram"
-                    key={id}
-                    className="lazyimg"
-                  />
-                );
+                return <img src={it} alt="instagram" key={id} loading="lazy" />;
               })}
             </div>
           </article>

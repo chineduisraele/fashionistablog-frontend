@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -32,6 +32,8 @@ import "./css/singlepage.css";
 
 import AdminImg from "../../images/admin.webp";
 import AnonImg from "../../images/noprofile.webp";
+import LazyImg from "../../images/lazyimage.webp";
+import { useObserver } from "../../App";
 
 const SinglePage = () => {
   const { category: query, id } = useParams(),
@@ -288,6 +290,11 @@ const SinglePostComponent = ({
       "pinterest",
     ],
   ];
+
+  // lazy load
+  const parentRef = useRef();
+  useObserver({ ref: parentRef });
+
   return (
     <section className="pagedetailscont d-grid">
       {/* postimg */}
@@ -298,8 +305,8 @@ const SinglePostComponent = ({
       {/* header */}
       <header className="d-grid">
         <div className="links">
-          <Link to="/">Home </Link> &gt; <Link to={`/${query}`}>{query}</Link>{" "}
-          &gt; <span>{title}</span>
+          <Link to="/">Home </Link> &rarr; <Link to={`/${query}`}>{query}</Link>{" "}
+          &rarr; <span>{title}</span>
         </div>
 
         <div className="categories d-flex">
@@ -334,12 +341,17 @@ const SinglePostComponent = ({
       </header>
 
       {/* content */}
-      <article className="page-content d-grid">
+      <article className="page-content d-grid" ref={parentRef}>
         {paragraphs.map(({ image, text }, id) => {
           return image ? (
             <div key={id}>
               <div className="pagecontentimg p-rel">
-                <img src={image} alt="post img" />
+                <img
+                  src={LazyImg}
+                  alt="post img"
+                  data-src={image}
+                  className="lazyimg"
+                />
               </div>
               <p dangerouslySetInnerHTML={{ __html: text }}></p>
             </div>
