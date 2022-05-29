@@ -42,8 +42,6 @@ const useObserver = ({ ref, options }) => {
     }, options || { rootMargin: "400px" });
 
     if (ref.current) {
-      console.log(ref.current, ref.current.querySelectorAll(".lazyimg"));
-
       ref.current
         .querySelectorAll(".lazyimg")
         .forEach((img) => imageObserver.observe(img));

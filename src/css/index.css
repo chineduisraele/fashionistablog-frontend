@@ -6,6 +6,11 @@
   font-family: "system ui", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   line-height: 1.4rem;
   letter-spacing: 0.75px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h3 {
@@ -35,12 +40,23 @@ img {
   background-color: #8080802f;
 }
 
+input,
+textarea {
+  -webkit-user-select: auto;
+     -moz-user-select: auto;
+      -ms-user-select: auto;
+          user-select: auto;
+}
+
 input:focus,
 textarea:focus {
   outline: none;
 }
 
-ul,
+ul {
+  list-style: none;
+}
+
 li {
   list-style: none;
 }
