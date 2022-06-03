@@ -7,7 +7,7 @@ import LazyImage from "../../images/lazyimage.webp";
 
 const Card = ({
   id,
-  thumbnail,
+  image,
   category,
   title,
   date,
@@ -21,8 +21,8 @@ const Card = ({
     <Link to={`/post/${category}/${id}`} className="card d-grid">
       <div className="card-img p-rel">
         <img
-          data-src={thumbnail}
-          src={index > 1 ? LazyImage : thumbnail}
+          data-src={image}
+          src={index > 1 ? LazyImage : image}
           alt="cardimg"
           className={index > 1 ? "lazyimg" : ""}
         />
@@ -49,12 +49,12 @@ const Card = ({
   );
 };
 
-const MiniCard = ({ id, thumbnail, category, title, date }) => {
+const MiniCard = ({ id, image, category, title, date }) => {
   return (
     <Link to={`/post/${category}/${id}`} className="mini-card d-grid">
       <div className="imgcont p-rel">
         <img
-          data-src={thumbnail}
+          data-src={image}
           src={LazyImage}
           alt="cardimg"
           className="lazyimg"
@@ -73,7 +73,7 @@ const MiniCard = ({ id, thumbnail, category, title, date }) => {
 
 const PhotoCard = ({
   id,
-  thumbnail,
+  image,
   category,
   title,
   date,
@@ -82,12 +82,7 @@ const PhotoCard = ({
 }) => {
   return (
     <Link to={`/post/${category}/${id}`} className="photo-card p-rel">
-      <img
-        data-src={thumbnail}
-        src={LazyImage}
-        alt="cardimg"
-        className="lazyimg"
-      />
+      <img data-src={image} src={LazyImage} alt="cardimg" className="lazyimg" />
       <div className="overlay p-abs d-grid size-100">
         <div className="d-grid aic jcc">
           <p>{category}</p>

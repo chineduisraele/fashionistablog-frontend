@@ -22,6 +22,24 @@ const Empty = ({ text, text1, text2, height }) => {
   );
 };
 
+const LoadingSvg = ({ style, stroke }) => {
+  return (
+    <div className="loader" style={style}>
+      <svg className="circular" viewBox="25 25 50 50">
+        <circle
+          className="path"
+          cx="50"
+          cy="50"
+          r="20"
+          fill="none"
+          strokeWidth={stroke || "8"}
+          strokeMiterlimit="10"
+        />
+      </svg>
+    </div>
+  );
+};
+
 // loading
 const Loading = () => {
   return (
@@ -71,21 +89,3 @@ const GoogleAds = () => {
 };
 
 export { Empty, SmallLoading, Loading, Alerts, GoogleAds, BASE_URL, DOMAIN };
-
-const LoadingSvg = ({ style, stroke }) => {
-  return (
-    <div className="loader" style={style}>
-      <svg className="circular" viewBox="25 25 50 50">
-        <circle
-          className="path"
-          cx="50"
-          cy="50"
-          r="20"
-          fill="none"
-          strokeWidth={stroke || "8"}
-          strokeMiterlimit="10"
-        />
-      </svg>
-    </div>
-  );
-};

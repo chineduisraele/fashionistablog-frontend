@@ -3,9 +3,6 @@ import Footer from "./components/footer";
 import Home from "./pages/home";
 import SinglePage from "./pages/singlepage";
 
-import "./css/index.css";
-import "./css/responsive.css";
-
 import {
   BrowserRouter as Router,
   Route,
@@ -13,9 +10,12 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import CategoryPage from "./pages/categorypage";
 import { Empty } from "./components/misc";
+
+import "./css/index.css";
+import "./css/responsive.css";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -50,6 +50,13 @@ const useObserver = ({ ref, options }) => {
 };
 
 function App() {
+  const [loaded, setLoaded] = useState();
+
+  useEffect(() => {
+    window.addEventListener("load", () => {
+      setLoaded("true");
+    });
+  }, []);
   return (
     <>
       {
@@ -99,7 +106,7 @@ function App() {
           </Routes>
 
           {/* footer */}
-          <Footer />
+          {loaded && <Footer />}
         </Router>
       }
     </>
