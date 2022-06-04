@@ -327,7 +327,7 @@ const SinglePostComponent = ({
             {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
           </span>
           <span>
-            <FaRegUser /> BY {author}
+            <FaRegUser /> BY ADMIN
           </span>
           <span>
             <FaRegComment /> {total_comments} COMMENTS

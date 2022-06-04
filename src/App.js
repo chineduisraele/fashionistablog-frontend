@@ -28,7 +28,7 @@ function ScrollToTop() {
 }
 
 // hook
-const useObserver = ({ ref, options, data }) => {
+const useObserver = ({ ref, options }) => {
   useEffect(() => {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
       entries.forEach((entry) => {
@@ -41,7 +41,7 @@ const useObserver = ({ ref, options, data }) => {
           imgObserver.unobserve(lazyimg);
         }
       });
-    }, options || { rootMargin: "400px" });
+    }, options || { rootMargin: "600px" });
 
     if (ref.current) {
       ref.current
