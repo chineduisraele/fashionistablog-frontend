@@ -4,8 +4,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./css/index.css";
 import Googlead from "../../images/add-1.webp";
 
-const BASE_URL = "http://127.0.0.1:8000";
-// const BASE_URL = "https://fashionistablog.herokuapp.com";
+// const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://fashionistablog.herokuapp.com";
 
 const DOMAIN = "https//:fashionistablog.netlify.app";
 
