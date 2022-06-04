@@ -163,9 +163,7 @@ const FeaturedPosts = ({ query, title, data }) => {
   // featured
   const [featuredPosts, setFeaturedPosts] = useState(data),
     [featuredPostsUrl, setFeaturedPostsUrl] = useState(),
-    [featuredPostsLoading, setFeaturedPostsLoading] = useState(
-      data ? false : true
-    );
+    [featuredPostsLoading, setFeaturedPostsLoading] = useState(true);
 
   //featured
   useEffect(() => {
@@ -173,12 +171,11 @@ const FeaturedPosts = ({ query, title, data }) => {
       setFeaturedPostsUrl(
         `${BASE_URL}/api/post/posts/filter/?featured=${query}`
       );
-  }, [query]);
+  }, [query, data]);
 
   useEffect(() => {
+    setFeaturedPostsLoading(true);
     if (!data) {
-      setFeaturedPostsLoading(true);
-
       featuredPostsUrl &&
         axios
           .get(featuredPostsUrl)
@@ -189,8 +186,11 @@ const FeaturedPosts = ({ query, title, data }) => {
           .catch((err) => {
             console.error(err);
           });
+    } else {
+      setFeaturedPosts(data);
+      setFeaturedPostsLoading(false);
     }
-  }, [featuredPostsUrl]);
+  }, [featuredPostsUrl, data]);
 
   // lazy load
   const parentRef = useRef();
@@ -229,7 +229,7 @@ const FeaturedPosts = ({ query, title, data }) => {
   );
 };
 
-// popular posts
+// most viewed posts
 const MostViewedPosts = ({ query }) => {
   // states
   const [mostViewedPosts, setMostViewedPosts] = useState();
@@ -332,7 +332,7 @@ const SideContent = ({ page, searchParams }) => {
           <h3>The Dawn</h3>
           <p>Follow the path that leads to morning.</p>
           <a
-            href="https://www.friendlystores.netlify.app"
+            href="https://friendlee.netlify.app"
             target="_blank"
             rel="noreferrer"
           >
@@ -450,7 +450,6 @@ const CategoriesTab = ({ data, title }) => {
 
 // tweets
 const Tweets = () => {
-  // lazy load
   const parentRef = useRef();
   useObserver({ ref: parentRef });
   return (

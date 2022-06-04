@@ -104,7 +104,9 @@ const SinglePage = () => {
     setPostDataLoading(true);
     id &&
       axios
-        .get(`${BASE_URL}/api/post/posts/singlepost/?id=${id}`)
+        .get(
+          `${BASE_URL}/api/post/posts/singlepost/?category=${query}&id=${id}`
+        )
         .then((res) => {
           setPostData(res.data.results[0]);
           // !relatedPostUrl &&
@@ -126,6 +128,7 @@ const SinglePage = () => {
         .get(relatedPostUrl)
         .then((res) => {
           setRelatedPostData(res.data);
+          console.log(res.data);
         })
         .catch((err) => console.error(err));
   }, [relatedPostUrl]);
@@ -156,6 +159,7 @@ const SinglePage = () => {
           )}
 
           {/* sidecontent */}
+
           <SideContent page="singlepost" />
 
           {/* commenmts */}
@@ -251,6 +255,7 @@ const SinglePage = () => {
 };
 
 const SinglePostComponent = ({
+  id,
   image,
   title,
   date,
@@ -293,7 +298,7 @@ const SinglePostComponent = ({
 
   // lazy load
   const parentRef = useRef();
-  useObserver({ ref: parentRef });
+  useObserver({ ref: parentRef, data: id });
 
   return (
     <section className="pagedetailscont d-grid">

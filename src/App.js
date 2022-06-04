@@ -10,7 +10,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryPage from "./pages/categorypage";
 import { Empty } from "./components/misc";
 
@@ -20,7 +20,7 @@ import "./css/responsive.css";
 function ScrollToTop() {
   const { pathname } = useLocation();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
@@ -28,14 +28,16 @@ function ScrollToTop() {
 }
 
 // hook
-const useObserver = ({ ref, options }) => {
+const useObserver = ({ ref, options, data }) => {
   useEffect(() => {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const lazyimg = entry.target;
-          lazyimg.src = lazyimg.dataset.src;
-          lazyimg.classList.remove("lazyimg");
+          if (lazyimg.src !== lazyimg.dataset.src) {
+            lazyimg.src = lazyimg.dataset.src;
+          }
+          // lazyimg.classList.remove("lazyimg");
           imgObserver.unobserve(lazyimg);
         }
       });
