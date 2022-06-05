@@ -163,8 +163,16 @@ const FeaturedPosts = ({ query, title, data }) => {
   // featured
   const [featuredPosts, setFeaturedPosts] = useState(data),
     [featuredPostsUrl, setFeaturedPostsUrl] = useState(),
-    [featuredPostsLoading, setFeaturedPostsLoading] = useState(true);
+    [featuredPostsLoading, setFeaturedPostsLoading] = useState(true),
+    parentRef = useRef();
 
+  // only load footer after last page conponent loads to avoid layout shift
+  useEffect(() => {
+    let footer = document.querySelector("footer");
+    if (getComputedStyle(footer).display === "none") {
+      footer.style.display = "block";
+    }
+  }, []);
   //featured
   useEffect(() => {
     !data &&
@@ -193,7 +201,6 @@ const FeaturedPosts = ({ query, title, data }) => {
   }, [featuredPostsUrl, data]);
 
   // lazy load
-  const parentRef = useRef();
   useObserver({ ref: parentRef });
   return (
     /* featured posts */

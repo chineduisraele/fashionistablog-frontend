@@ -52,13 +52,6 @@ const useObserver = ({ ref, options }) => {
 };
 
 function App() {
-  const [loaded, setLoaded] = useState();
-
-  useEffect(() => {
-    window.addEventListener("load", () => {
-      setLoaded("true");
-    });
-  }, []);
   return (
     <>
       {
@@ -108,7 +101,7 @@ function App() {
           </Routes>
 
           {/* footer */}
-          {loaded && <Footer />}
+          <Footer />
         </Router>
       }
     </>
