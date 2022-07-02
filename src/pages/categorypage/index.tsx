@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
@@ -12,18 +12,22 @@ import {
 import { Loading, BASE_URL, GoogleAds } from "../../components/misc";
 
 import "../home/css/home.css";
+import { useFetch } from "../../hooks";
 
 // home
 const CategoryPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams(),
+  const [searchParams] = useSearchParams(),
     { category } = useParams();
 
   // set page type
   const page = "category";
 
-  const [mainPosts, setMainPosts] = useState(),
-    [mainPostsUrl, setMainPostsUrl] = useState(),
-    [mainPostsLoading, setMainPostsLoading] = useState(true);
+  const [mainPostsUrl, setMainPostsUrl] = useState<string>(),
+    { data, isLoading, isError } = useFetch(
+      category!,
+      mainPostsUrl!,
+      mainPostsUrl
+    );
 
   // fetch data
   useEffect(() => {
@@ -35,35 +39,31 @@ const CategoryPage = () => {
   }, [category, searchParams]);
 
   // main
-  useEffect(() => {
-    setMainPostsLoading(true);
+  // useEffect(() => {
+  //   setMainPostsLoading(true);
 
-    mainPostsUrl &&
-      axios
-        .get(mainPostsUrl)
-        .then((mainposts) => {
-          setMainPosts(mainposts.data);
-          setMainPostsLoading(false);
-        })
-        .catch((err) => console.log(err));
-  }, [mainPostsUrl]);
+  //   mainPostsUrl &&
+  //     axios
+  //       .get(mainPostsUrl)
+  //       .then((mainposts) => {
+  //         setMainPosts(mainposts.data);
+  //         setMainPostsLoading(false);
+  //       })
+  //       .catch((err) => console.log(err));
+  // }, [mainPostsUrl]);
 
-  return mainPosts === undefined ? (
-    <Loading />
-  ) : (
+  const mainPostProps = {
+    data: data?.data,
+    isLoading,
+    isError,
+    navtabsData: [category!],
+    page,
+  };
+
+  return (
     <main className="home">
       <section className="main-content d-grid">
-        <MainPostComponent
-          {...{
-            mainPosts,
-            mainPostsLoading,
-            navtabsData: [category],
-            searchParams,
-            setSearchParams,
-            category,
-            page,
-          }}
-        />
+        <MainPostComponent {...mainPostProps} />
 
         {/* side content */}
         <SideContent page={page} />
@@ -73,11 +73,11 @@ const CategoryPage = () => {
       <GoogleAds />
 
       {/* Popular posts */}
-      <MostViewedPosts query={category} />
+      <MostViewedPosts query={category as string} />
 
       <section className="more-content main-content d-grid">
         {/* featured posts */}
-        <FeaturedPosts query={category} page={category} />
+        <FeaturedPosts query={category} />
 
         {/* tweets */}
         <Tweets />

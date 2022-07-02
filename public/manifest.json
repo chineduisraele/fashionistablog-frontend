@@ -1,0 +1,42 @@
+{
+  "short_name": "Fashionista",
+  "name": "Fashionista Blog",
+  "start_url": ".",
+  "id": "/",
+  "description": "It's all about fashion, design and lifestyle",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ba004b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./favicon.webp",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "./manifest-icon-192.maskable.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "./manifest-icon-192.maskable.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./manifest-icon-512.maskable.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "./manifest-icon-512.maskable.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "maskable"
+    }
+  ]
+}

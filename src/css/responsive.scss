@@ -147,9 +147,9 @@
         order: 3;
       }
       .comments {
-        order: 2;
-        grid-column: 1 / 2;
-        grid-template-columns: 1fr;
+        order: 2 !important;
+        grid-column: 1 / 2 !important;
+        grid-template-columns: 1fr !important;
       }
     }
   }

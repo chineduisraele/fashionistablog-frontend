@@ -14,15 +14,19 @@ import Image5 from "../../images/instagram/5.webp";
 import Image6 from "../../images/instagram/6.webp";
 import Image7 from "../../images/instagram/7.webp";
 import Image8 from "../../images/instagram/8.webp";
+import { alert } from "../../interfaces";
 
 const Footer = () => {
-  const [alerts, setAlerts] = useState({
+  const [alerts, setAlerts] = useState<alert>({
     show: false,
     message: "",
-    error: "false",
+    error: false,
   });
 
-  const handleForm = (e, btn) => {
+  const handleForm = (
+    e: React.FormEvent<HTMLFormElement>,
+    btn: HTMLButtonElement
+  ) => {
     let form = new FormData(e.currentTarget);
     axios
       .post(`${BASE_URL}/api/post/newsfeed/`, form)
@@ -46,12 +50,29 @@ const Footer = () => {
         btn.style.opacity = "1";
         btn.disabled = false;
         btn.textContent = "Subscribe";
-        setAlerts({
-          show: true,
-          message:
-            "The email you entered is already subscribed to our Newsletter service!",
-          error: true,
-        });
+        if (err.response) {
+          setAlerts({
+            show: true,
+            message:
+              "The email you entered is already subscribed to our Newsletter service!",
+            error: true,
+          });
+        }
+        if (err.request) {
+          setAlerts({
+            show: true,
+            message:
+              "An error occured and your request could not be completed! Please check your internet connection",
+            error: true,
+          });
+        } else if (err.response) {
+          setAlerts({
+            show: true,
+            message:
+              "The email you entered is already subscribed to our Newsletter service!",
+            error: true,
+          });
+        }
 
         setTimeout(() => {
           setAlerts({
@@ -74,7 +95,7 @@ const Footer = () => {
   return (
     <footer>
       <Alerts
-        message={alerts.message}
+        message={alerts.message as string}
         show={alerts.show}
         error={alerts.error}
       />
@@ -88,7 +109,7 @@ const Footer = () => {
               className="d-grid"
               method="POST"
               onSubmit={(e) => {
-                let btn = e.currentTarget.lastElementChild;
+                let btn = e.currentTarget.lastElementChild as HTMLButtonElement;
                 btn.style.opacity = "0.5";
                 btn.disabled = true;
                 btn.textContent = "Subscribing...";

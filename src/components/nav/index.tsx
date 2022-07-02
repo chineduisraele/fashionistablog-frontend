@@ -7,7 +7,7 @@ import Logo from "../../images/logo.webp";
 
 const Nav = () => {
   let path = useLocation(),
-    [search, setSearch] = useState();
+    [search, setSearch] = useState<string>();
 
   let navData = [
     ["/", "Home"],
@@ -17,25 +17,25 @@ const Nav = () => {
     ["/talks", "Talks"],
   ];
 
-  const toggleHeight = (scroll) => {
-    let cont = document.querySelector(".linkscont"),
-      child = cont.firstElementChild,
+  const toggleHeight = (scroll?: any) => {
+    let cont = document.querySelector(".linkscont") as HTMLDivElement,
+      child = cont.firstElementChild!,
       contheight = cont.getBoundingClientRect().height,
       childheight = child.getBoundingClientRect().height;
 
     if (scroll) {
-      cont.style.height = 0;
+      cont.style.height = "0";
       return;
     }
     if (contheight === 0) {
       cont.style.height = `${childheight}px`;
     } else {
-      cont.style.height = 0;
+      cont.style.height = "0";
     }
   };
 
   useLayoutEffect(() => {
-    let cont = document.querySelector(".linkscont");
+    let cont = document.querySelector(".linkscont") as HTMLDivElement;
     cont.style.transition = "none";
     cont.style.height = "0";
     setTimeout(() => {

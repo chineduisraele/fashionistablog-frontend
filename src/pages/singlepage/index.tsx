@@ -26,32 +26,40 @@ import {
   BASE_URL,
   DOMAIN,
   GoogleAds,
-  Loading,
+  SmallLoading,
 } from "../../components/misc";
 import "./css/singlepage.css";
 
 import AdminImg from "../../images/admin.webp";
 import AnonImg from "../../images/noprofile.webp";
 import LazyImg from "../../images/lazyimage.webp";
-import { useObserver } from "../../App";
+import { useObserver } from "../../hooks";
+import { comment, paragraph, post, postGen } from "../../interfaces";
 
 const SinglePage = () => {
   const { category: query, id } = useParams(),
-    [postData, setPostData] = useState(),
+    [postData, setPostData] = useState<any>(),
     [postDataLoading, setPostDataLoading] = useState(true),
+    [postError, setPostError] = useState<string>(),
     // related posts
-    [relatedPostData, setRelatedPostData] = useState(),
-    [relatedPostUrl, setRelatedPostUrl] = useState(),
+    [relatedPostUrl, setRelatedPostUrl] = useState<string>(),
     // comment
-    [commentAlert, setCommentAlert] = useState({ message: "", show: false });
+    [commentAlert, setCommentAlert] = useState({
+      message: "",
+      show: false,
+      error: false,
+    });
 
   const [commentPage, setCommentPage] = useState(4);
 
   // create comment
-  const createComment = ({ currentTarget: c }, btn) => {
+  const createComment = (
+    { currentTarget: c }: React.FormEvent<HTMLFormElement>,
+    btn: HTMLButtonElement
+  ) => {
     const form = new FormData(c);
     // append post id
-    form.append("id", id);
+    form.append("id", id as string);
 
     // create comment
     axios
@@ -67,10 +75,11 @@ const SinglePage = () => {
           error: false,
           show: true,
         });
-        setPostData((prev) => {
+        setPostData((prev: any) => {
+          const { total_comments } = prev!;
           return {
-            ...prev,
-            total_comments: prev.total_comments + 1,
+            ...(prev as post),
+            total_comments: (total_comments as number) + 1,
             comments: res.data.results,
           };
         });
@@ -116,24 +125,15 @@ const SinglePage = () => {
           setPostDataLoading(false);
         })
         .catch((err) => {
-          console.error(err);
-          setPostData("404");
+          setPostDataLoading(false);
+          if (err.response) setPostError("request error");
+          else {
+            setPostError("response error");
+          }
         });
   }, [id, query]);
 
-  // fetch related post data
-  useEffect(() => {
-    relatedPostUrl &&
-      axios
-        .get(relatedPostUrl)
-        .then((res) => {
-          setRelatedPostData(res.data);
-          console.log(res.data);
-        })
-        .catch((err) => console.error(err));
-  }, [relatedPostUrl]);
-
-  return postData === "404" ? (
+  return postError === "response error" ? (
     <Empty
       {...{
         text1: "404!",
@@ -152,11 +152,11 @@ const SinglePage = () => {
         {/* main content */}
         <section className="main-content d-grid">
           {/* pagedetailscont */}
-          {postDataLoading ? (
-            <Loading />
-          ) : (
-            <SinglePostComponent {...postData} query={query} />
-          )}
+
+          <SinglePostComponent
+            {...postData}
+            {...{ postDataLoading, postError, query }}
+          />
 
           {/* sidecontent */}
 
@@ -167,20 +167,22 @@ const SinglePage = () => {
             {postDataLoading === false && (
               <div className="main">
                 <header className="header" id="comments">
-                  <h3>Comments ( {postData.total_comments} )</h3>
+                  <h3>Comments ( {postData?.total_comments} )</h3>
                 </header>
 
-                {postData.comments.length ? (
+                {postData?.comments.length ? (
                   <>
                     {/* comments */}
                     <div className="inner d-grid">
-                      {postData.comments.slice(0, commentPage).map((it, id) => {
-                        return <Comment {...it} img={AnonImg} key={id} />;
-                      })}
+                      {postData?.comments
+                        .slice(0, commentPage)
+                        .map((it: any, id: number) => {
+                          return <Comment {...it} img={AnonImg} key={id} />;
+                        })}
                     </div>
                     {/* pagination */}
-                    {postData.total_comments > 0 &&
-                      commentPage < postData.total_comments && (
+                    {postData?.total_comments > 0 &&
+                      commentPage < postData?.total_comments && (
                         <div className="paginate d-grid">
                           <button
                             onClick={() => {
@@ -209,7 +211,8 @@ const SinglePage = () => {
               <p>Have something to contribute?</p>
               <form
                 onSubmit={(e) => {
-                  let btn = e.currentTarget.lastElementChild;
+                  let btn = e.currentTarget
+                    .lastElementChild as HTMLButtonElement;
                   btn.style.opacity = "0.5";
                   btn.disabled = true;
                   btn.textContent = "SAVING...";
@@ -243,9 +246,9 @@ const SinglePage = () => {
         {/* more */}
         {/* more content */}
         <section className="more-content main-content d-grid">
-          {relatedPostData && (
+          {relatedPostUrl && (
             <FeaturedPosts
-              {...{ title: "Related Posts", data: relatedPostData }}
+              {...{ title: "Related Posts", url: relatedPostUrl }}
             />
           )}
         </section>
@@ -266,8 +269,11 @@ const SinglePostComponent = ({
   paragraphs,
   tags,
   query,
-}) => {
+  postDataLoading,
+  postError,
+}: postGen) => {
   const path = useLocation();
+
   const followData = [
     [
       <FaFacebookSquare />,
@@ -297,94 +303,107 @@ const SinglePostComponent = ({
   ];
 
   // lazy load
-  const parentRef = useRef();
-  useObserver({ ref: parentRef, data: id });
+  const parentRef = useRef<HTMLDivElement>(null);
+  useObserver({ ref: parentRef });
 
   return (
     <section className="pagedetailscont d-grid">
-      {/* postimg */}
-      <article className="postimg p-rel">
-        <img src={image} alt="postbanner" />
-      </article>
+      {postDataLoading ? (
+        <SmallLoading />
+      ) : postError === "request error" ? (
+        <Empty
+          {...{
+            text2:
+              "You're currently offline. Please check your network connection.",
+          }}
+        />
+      ) : (
+        <>
+          <article className="postimg p-rel">
+            <img src={image} alt="postbanner" />
+          </article>
 
-      {/* header */}
-      <header className="d-grid">
-        <div className="links">
-          <Link to="/">Home </Link> &rarr; <Link to={`/${query}`}>{query}</Link>{" "}
-          &rarr; <span>{title}</span>
-        </div>
-
-        <div className="categories d-flex">
-          {featured && <button className="btn">FEATURED</button>}
-          <button className="btn">{query}</button>
-        </div>
-
-        <h2 className="title">{title}</h2>
-
-        <div className="info d-flex">
-          <span>
-            <FaRegClock />{" "}
-            {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
-          </span>
-          <span>
-            <FaRegUser /> BY ADMIN
-          </span>
-          <span>
-            <FaRegComment /> {total_comments} COMMENTS
-          </span>
-          <span>
-            <FaRegEye /> {views} VIEWS
-          </span>
-        </div>
-
-        <div className="share d-flex aic">
-          <span>
-            <FaRegShareSquare /> SHARE:
-          </span>
-          <FollowTab data={followData} />
-        </div>
-      </header>
-
-      {/* content */}
-      <article className="page-content d-grid" ref={parentRef}>
-        {paragraphs.map(({ image, text }, id) => {
-          return image ? (
-            <div key={id}>
-              <div className="pagecontentimg p-rel">
-                <img
-                  src={LazyImg}
-                  alt="post img"
-                  data-src={image}
-                  className="lazyimg"
-                />
-              </div>
-              <p dangerouslySetInnerHTML={{ __html: text }}></p>
+          {/* header */}
+          <header className="d-grid">
+            <div className="links">
+              <Link to="/">Home </Link> &rarr;{" "}
+              <Link to={`/${query}`}>{query}</Link> &rarr; <span>{title}</span>
             </div>
-          ) : (
-            <p dangerouslySetInnerHTML={{ __html: text }}></p>
-          );
-        })}
-      </article>
 
-      {/* tags */}
+            <div className="categories d-flex">
+              {featured && <button className="btn">FEATURED</button>}
+              <button className="btn">{query}</button>
+            </div>
 
-      <article className="tags d-flex aic">
-        <span>
-          <FaTags /> TAGS:
-        </span>
-        <div className="d-flex">
-          {tags.split(",").map((it, id) => {
-            return (
-              <Link to={`/search?search=${it}&tagonly=true`} key={id}>
-                #{it}
-              </Link>
-            );
-          })}
-        </div>
-      </article>
+            <h2 className="title">{title}</h2>
 
-      {/* pagination */}
-      {/* <div className="paginate d-grid">
+            <div className="info d-flex">
+              <span>
+                <FaRegClock />{" "}
+                {new Date(date as string)
+                  .toDateString()
+                  .slice(4)
+                  .toLocaleUpperCase()}
+              </span>
+              <span>
+                <FaRegUser /> BY ADMIN
+              </span>
+              <span>
+                <FaRegComment /> {total_comments} COMMENTS
+              </span>
+              <span>
+                <FaRegEye /> {views} VIEWS
+              </span>
+            </div>
+
+            <div className="share d-flex aic">
+              <span>
+                <FaRegShareSquare /> SHARE:
+              </span>
+              <FollowTab data={followData} />
+            </div>
+          </header>
+
+          {/* content */}
+          <article className="page-content d-grid" ref={parentRef}>
+            {paragraphs?.map(({ image, text }: paragraph, id: number) => {
+              return image ? (
+                <div key={id}>
+                  <div className="pagecontentimg p-rel">
+                    <img
+                      src={LazyImg}
+                      alt="post img"
+                      data-src={image}
+                      className="lazyimg"
+                    />
+                  </div>
+                  <p dangerouslySetInnerHTML={{ __html: text }}></p>
+                </div>
+              ) : (
+                <p dangerouslySetInnerHTML={{ __html: text }}></p>
+              );
+            })}
+          </article>
+
+          {/* tags */}
+
+          <article className="tags d-flex aic">
+            <span>
+              <FaTags /> TAGS:
+            </span>
+            <div className="d-flex">
+              {tags?.split(",").map((it: string, id: number) => {
+                return (
+                  <Link to={`/search?search=${it}&tagonly=true`} key={id}>
+                    #{it}
+                  </Link>
+                );
+              })}
+            </div>
+          </article>
+
+          {/* pagination */}
+          {/* <div className="paginate d-grid">
         <button>
           <FaAngleLeft /> Previous
         </button>
@@ -394,21 +413,23 @@ const SinglePostComponent = ({
         </button>
       </div> */}
 
-      {/* author */}
-      <article className="author">
-        <Comment
-          name={"Chinedu Israele"}
-          comment={
-            "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure modivitae aspernatur est, distinctio maxime tempora"
-          }
-          img={AdminImg}
-        />
-      </article>
+          {/* author */}
+          <article className="author">
+            <Comment
+              name={"Chinedu Israele"}
+              comment={
+                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure modivitae aspernatur est, distinctio maxime tempora"
+              }
+              img={AdminImg}
+            />
+          </article>
+        </>
+      )}
     </section>
   );
 };
 
-const Comment = ({ name, comment, date, img }) => {
+const Comment = ({ name, comment, date, img }: comment) => {
   const social = [
     [<FaFacebookSquare />, "#0"],
     [<FaTwitter />, "#0"],
@@ -424,14 +445,17 @@ const Comment = ({ name, comment, date, img }) => {
           {name}
           <span>
             <FaRegClock />{" "}
-            {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
+            {new Date(date as string)
+              .toDateString()
+              .slice(4)
+              .toLocaleUpperCase()}
           </span>
         </p>
         <p className="text">{comment}</p>
         <div className="social-links d-flex">
           {social.map(([icon, link], id) => {
             return (
-              <a href={link} key={id}>
+              <a href={link as string} key={id}>
                 {icon}
               </a>
             );

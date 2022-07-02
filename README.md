@@ -2,7 +2,7 @@
 
 ## About
 
-Fashionista Blog is a modern SEO-optimized and accessibility friendly fashion blog built on React Js framework and powered by Django backends and PostgreSQL database.
+Fashionista Blog is a modern SEO-optimized and accessibility friendly Progressive Web Application built on React Typescript framework and powered by Django backends and PostgreSQL database.
 
 ### Project goal
 
@@ -13,6 +13,12 @@ Implements an efficient file caching policy to increase page load speed and save
 Incorporates AWS S3 to upload images and persist image data to PosgreSQL database
 
 Includes HTML notification emails built with Django templates
+
+### Functionalities
+
+Admin can create, update and delete posts. Has superuser permissions.
+
+Users can view posts, comment, subscribe to news feed and receive email alerts
 
 ### UI
 
@@ -25,7 +31,7 @@ Average lighthouse score of 95% on mobile and desktop.
 ### Author
 
 Chinedu Israel Emeka
-chineduisraele@gmail.com
-www.linkedin.com/in/chineduisraele
+
+[LinkedIn Profile](www.linkedin.com/in/chineduisraele)
 
 Feel free to contact me

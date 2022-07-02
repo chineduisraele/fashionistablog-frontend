@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
@@ -23,11 +23,31 @@ import "./css/index.css";
 import Affiliate from "../../images/purchase.webp";
 import FacebookLike from "../../images/facebook.webp";
 import LazyImage from "../../images/lazyimage.webp";
-import { useObserver } from "../../App";
+import { useFetch, useObserver } from "../../hooks";
+import {
+  archiveTab,
+  mainPosts,
+  paginatedResponse,
+  post,
+} from "../../interfaces";
 // Paginate
 
-const Paginate = ({ posts, to }) => {
+const Paginate = ({ posts, to }: { posts: paginatedResponse; to: string }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // get numbers from string
+  const getNumbersFromString = (str: string) => {
+    let arr: number[] = str
+      .replace(BASE_URL, "")
+      .split("")
+      .reduce((a: number[], b: string) => {
+        if (+b) {
+          a.push(+b);
+        }
+        return a;
+      }, []);
+    return arr.join("");
+  };
 
   return (
     <ScrollLink
@@ -44,7 +64,9 @@ const Paginate = ({ posts, to }) => {
             if (posts.previous) {
               searchParams.set(
                 "pg",
-                posts.previous.includes("page") ? posts.previous.slice(-1) : "1"
+                posts.previous.includes("page")
+                  ? getNumbersFromString(posts.previous)
+                  : "1"
               );
 
               setSearchParams(searchParams);
@@ -60,7 +82,7 @@ const Paginate = ({ posts, to }) => {
           className={posts.next ? "" : "inactive"}
           onClickCapture={(e) => {
             if (posts.next) {
-              searchParams.set("pg", posts.next.slice(-1));
+              searchParams.set("pg", getNumbersFromString(posts.next));
               setSearchParams(searchParams);
             } else {
               e.stopPropagation();
@@ -74,36 +96,34 @@ const Paginate = ({ posts, to }) => {
   );
 };
 
-// Main post component
 const MainPostComponent = ({
-  mainPosts,
-  mainPostsLoading,
+  data,
+  isLoading,
+  isError,
   navtabsData,
   page,
-  searchParams,
-  setSearchParams,
   category,
-}) => {
+}: mainPosts) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   // lazy load
-  const parentRef = useRef();
+  const parentRef = useRef<HTMLDivElement>(null);
   useObserver({ ref: parentRef });
+
+  // tabs
+  const tabValue = category
+    ? `${category}`
+    : searchParams.has("tagonly")
+    ? `Tags`
+    : searchParams.has("search")
+    ? `Search`
+    : `${searchParams.get("cat") || "all"}`;
+
   return (
     <div className="card-cont" ref={parentRef}>
       {/* card-nav */}
       <div className="nav-tabs" id="nav-tabs">
         <ul className="d-flex">
-          <li>
-            {category
-              ? `${category} ( ${mainPosts.count} )`
-              : searchParams.has("tagonly")
-              ? `Tags ( ${mainPosts.count} )`
-              : searchParams.has("search")
-              ? `Search ( ${mainPosts.count} )`
-              : `${searchParams.get("cat") || "all"}  ${
-                  searchParams.get("cat") ? "( " + mainPosts.count + " )" : ""
-                }
-                 `}
-          </li>
+          <li> {`${tabValue} ( ${data?.count || 0} )`}</li>
           {navtabsData.map((text, i) => {
             return (
               <li
@@ -121,7 +141,7 @@ const MainPostComponent = ({
                 }}
               >
                 {searchParams.has("tagonly") && "# "}
-                {text.slice(0, 25)}
+                {text?.slice(0, 25)}
               </li>
             );
           })}
@@ -129,19 +149,26 @@ const MainPostComponent = ({
       </div>
 
       {/* cards */}
-      {mainPostsLoading ? (
+      {isLoading ? (
         <SmallLoading />
-      ) : mainPosts.results.length ? (
+      ) : isError ? (
+        <Empty
+          {...{
+            text2:
+              "You're currently offline. Please check your network connection.",
+          }}
+        />
+      ) : data?.results.length ? (
         <>
           <div className="cards d-grid">
-            {mainPosts.results.map((it, id) => {
+            {data?.results.map((it: any, id: any) => {
               return <Card {...it} key={id} index={id} />;
             })}
           </div>
 
           <Paginate
             {...{
-              posts: mainPosts,
+              posts: data,
               to: "nav-tabs",
             }}
           />
@@ -159,52 +186,41 @@ const MainPostComponent = ({
 };
 
 // Featured Posts
-const FeaturedPosts = ({ query, title, data }) => {
+const FeaturedPosts = ({
+  query,
+  title,
+  url,
+}: {
+  query?: string;
+  title?: string;
+  url?: string;
+}) => {
   // featured
-  const [featuredPosts, setFeaturedPosts] = useState(data),
-    [featuredPostsUrl, setFeaturedPostsUrl] = useState(),
-    [featuredPostsLoading, setFeaturedPostsLoading] = useState(true),
-    parentRef = useRef();
+  const [featuredPostsUrl, setFeaturedPostsUrl] = useState<
+      string | undefined
+    >(),
+    parentRef = useRef<HTMLDivElement>(null);
 
-  // only load footer after last page conponent loads to avoid layout shift
-  useEffect(() => {
-    let footer = document.querySelector("footer");
-    if (getComputedStyle(footer).display === "none") {
-      footer.style.display = "block";
-    }
-  }, []);
+  const { data: featuredPosts, isError: featuredPostsError } = useFetch(
+    `${query}featuredPosts`,
+    featuredPostsUrl!,
+    featuredPostsUrl
+  );
+
   //featured
   useEffect(() => {
-    !data &&
-      setFeaturedPostsUrl(
-        `${BASE_URL}/api/post/posts/filter/?featured=${query}`
-      );
-  }, [query, data]);
-
-  useEffect(() => {
-    setFeaturedPostsLoading(true);
-    if (!data) {
-      featuredPostsUrl &&
-        axios
-          .get(featuredPostsUrl)
-          .then((featuredposts) => {
-            setFeaturedPosts(featuredposts.data);
-            setFeaturedPostsLoading(false);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-    } else {
-      setFeaturedPosts(data);
-      setFeaturedPostsLoading(false);
-    }
-  }, [featuredPostsUrl, data]);
+    url
+      ? setFeaturedPostsUrl(url)
+      : setFeaturedPostsUrl(
+          `${BASE_URL}/api/post/posts/filter/?featured=${query}`
+        );
+  }, [query, url]);
 
   // lazy load
   useObserver({ ref: parentRef });
+
   return (
     /* featured posts */
-
     <div
       className="card-cont featured-posts"
       id="featured-posts"
@@ -214,12 +230,17 @@ const FeaturedPosts = ({ query, title, data }) => {
         <h3>{title || "Featured Posts"}</h3>
       </header>
       {/* cards */}
-      {featuredPostsLoading ? (
-        <SmallLoading />
-      ) : featuredPosts.results.length ? (
+      {featuredPostsError ? (
+        <Empty
+          {...{
+            text2:
+              "You're currently offline. Please check your network connection.",
+          }}
+        />
+      ) : featuredPosts?.data.results.length ? (
         <>
           <div className="cards d-grid">
-            {featuredPosts.results.map((it, id) => {
+            {featuredPosts?.data.results.map((it: any, id: any) => {
               return <Card {...it} key={id} index={4} />;
             })}
           </div>
@@ -237,28 +258,24 @@ const FeaturedPosts = ({ query, title, data }) => {
 };
 
 // most viewed posts
-const MostViewedPosts = ({ query }) => {
-  // states
-  const [mostViewedPosts, setMostViewedPosts] = useState();
-
-  // fetch
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/post/posts/filter/?most_viewed=${query}`)
-      .then((mostviewedposts) => {
-        setMostViewedPosts(mostviewedposts.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [query]);
+const MostViewedPosts = ({ query }: { query: string }) => {
+  const { data, isError } = useFetch(
+    query,
+    `${BASE_URL}/api/post/posts/filter/?most_viewed=${query}`,
+    query
+  );
 
   // lazy load
-  const parentRef = useRef();
+  const parentRef = useRef<HTMLDivElement>(null);
   useObserver({ ref: parentRef });
 
-  return mostViewedPosts?.count === 0 ? (
-    <></>
+  return data?.data.count === 0 ? (
+    <Empty
+      {...{
+        text: "No Posts found!",
+        text2: "Hopefully, there'll be something next time",
+      }}
+    />
   ) : (
     <section className="most-viewed" ref={parentRef}>
       <header className="header">
@@ -266,49 +283,53 @@ const MostViewedPosts = ({ query }) => {
       </header>
 
       <article className="slide d-grid">
-        {mostViewedPosts?.results.map((it, id) => {
-          return <PhotoCard {...it} key={id} />;
-        })}
+        {isError ? (
+          <Empty
+            {...{
+              text2:
+                "You're currently offline. Please check your network connection.",
+            }}
+          />
+        ) : (
+          <>
+            {data?.data.results.map((it: any, id: any) => {
+              return <PhotoCard {...it} key={id} />;
+            })}
+          </>
+        )}
       </article>
     </section>
   );
 };
 
 // side content
-const SideContent = ({ page, searchParams }) => {
+const SideContent = ({
+  page,
+  searchParams,
+}: {
+  page: string;
+  searchParams?: URLSearchParams;
+}) => {
   const path = useParams();
 
-  const [categoriesData, setCategoriesdata] = useState(),
-    [archivesData, setArchivesData] = useState(),
+  const [categoriesData, setCategoriesdata] = useState<archiveTab["data"]>(),
+    [archivesData, setArchivesData] = useState<archiveTab["data"]>(),
     // popular
-    [popularPostsUrl, setPopularPostsUrl] = useState(),
-    [popularPosts, setPopularPosts] = useState();
+    [popularPostsUrl, setPopularPostsUrl] = useState<string>();
 
   useEffect(() => {
     setPopularPostsUrl(
       (page === "home" &&
         `${BASE_URL}/api/post/posts/filter/?popular=${
-          searchParams.get("cat") || "all"
+          searchParams?.get("cat") || "all"
         }`) ||
         (page === "singlepost" &&
           `${BASE_URL}/api/post/posts/filter/?popular=${path.category}&id=${path.id}`) ||
-        (page === "category" &&
-          `${BASE_URL}/api/post/posts/filter/?popular=${path.category}`)
+        (page === "category"
+          ? `${BASE_URL}/api/post/posts/filter/?popular=${path.category}`
+          : undefined)
     );
   }, [searchParams, path.category, path.id]);
-
-  //popular
-  useEffect(() => {
-    popularPostsUrl &&
-      axios
-        .get(popularPostsUrl)
-        .then((popularposts) => {
-          setPopularPosts(popularposts.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-  }, [popularPostsUrl]);
 
   // fetch categories tab and archives tab data
   useEffect(() => {
@@ -322,12 +343,18 @@ const SideContent = ({ page, searchParams }) => {
           setCategoriesdata(categories.data);
           setArchivesData(archives.data);
         })
-      )
-      .catch((err) => console.error(err));
+      );
   }, []);
 
+  // fetch data
+  const { data, isError: isPopularError } = useFetch(
+    `popular${page}PostsData`,
+    popularPostsUrl as string,
+    popularPostsUrl
+  );
+
   // lazy load
-  const parentRef = useRef();
+  const parentRef = useRef<HTMLDivElement>(null);
   useObserver({ ref: parentRef });
 
   return (
@@ -352,7 +379,7 @@ const SideContent = ({ page, searchParams }) => {
       <FollowTab />
 
       {/* popular posts */}
-      {popularPosts?.count !== 0 && page !== "search" && (
+      {data?.data.count !== 0 && page !== "search" && (
         <>
           <article
             className="popular-tabs d-grid"
@@ -364,27 +391,38 @@ const SideContent = ({ page, searchParams }) => {
             </header>
 
             <div className="minicards-cont d-grid">
-              {popularPosts?.results.map((it, id) => {
-                return <MiniCard {...it} key={id} />;
-              })}
+              {isPopularError ? (
+                <Empty
+                  {...{
+                    text2:
+                      "You're currently offline. Please check your network connection.",
+                  }}
+                />
+              ) : (
+                data?.data.results.map((it: post, id: number) => {
+                  return <MiniCard {...it} key={id} />;
+                })
+              )}
             </div>
           </article>
 
           {/* categories tab and archives tab */}
-          <div className="d-grid catscont">
-            <CategoriesTab
-              {...{
-                data: categoriesData,
-                title: "Categories",
-              }}
-            />
-            <CategoriesTab
-              {...{
-                data: archivesData,
-                title: "Archives",
-              }}
-            />
-          </div>
+          {!isPopularError && page !== "singlepost" && (
+            <div className="d-grid catscont">
+              <CategoriesTab
+                {...{
+                  data: categoriesData,
+                  title: "Categories",
+                }}
+              />
+              <CategoriesTab
+                {...{
+                  data: archivesData,
+                  title: "Archives",
+                }}
+              />
+            </div>
+          )}
         </>
       )}
     </aside>
@@ -392,7 +430,7 @@ const SideContent = ({ page, searchParams }) => {
 };
 
 // follow tab
-const FollowTab = ({ data }) => {
+const FollowTab = ({ data }: { data?: (string | JSX.Element)[][] }) => {
   let followdata = data
     ? data
     : [
@@ -415,7 +453,7 @@ const FollowTab = ({ data }) => {
           return (
             <li key={i}>
               <a
-                href={link}
+                href={link as string}
                 target={data && "_blank"}
                 rel={data && "noreferrer"}
                 className={`d-flex aic jcc ${classname}`}
@@ -433,7 +471,7 @@ const FollowTab = ({ data }) => {
 };
 
 // category tab
-const CategoriesTab = ({ data, title }) => {
+const CategoriesTab = ({ data, title }: archiveTab) => {
   return (
     <article className="categories-tab">
       <header className="header">
@@ -441,7 +479,7 @@ const CategoriesTab = ({ data, title }) => {
       </header>
 
       <ul>
-        {data &&
+        {data ? (
           data.map(({ text, count }, i) => {
             return (
               <li key={i}>
@@ -449,7 +487,15 @@ const CategoriesTab = ({ data, title }) => {
                 {count} )
               </li>
             );
-          })}
+          })
+        ) : (
+          <Empty
+            {...{
+              text2:
+                "You're currently offline. Please check your network connection.",
+            }}
+          />
+        )}
       </ul>
     </article>
   );
@@ -457,32 +503,26 @@ const CategoriesTab = ({ data, title }) => {
 
 // tweets
 const Tweets = () => {
-  const parentRef = useRef();
+  const parentRef = useRef<HTMLDivElement>(null);
   useObserver({ ref: parentRef });
   return (
     <aside ref={parentRef}>
-      <div className="tweets">
-        <header className="header">
-          <h3>RECENT TWEETS</h3>
-        </header>
-        <img
-          data-src={FacebookLike}
-          src={LazyImage}
-          alt="facebooklikes"
-          className="lazyimg"
-        />
-      </div>
-      <div className="fblikes">
-        <header className="header">
-          <h3>FACEBOOK LIKES</h3>
-        </header>
-        <img
-          data-src={FacebookLike}
-          src={LazyImage}
-          alt="facebooklikes"
-          className="lazyimg"
-        />
-      </div>
+      {[
+        ["RECENT TWEETS", FacebookLike],
+        ["FACEBOOK LIKES", FacebookLike],
+      ].map((item, id) => (
+        <div className="tweets" key={id}>
+          <header className="header">
+            <h3>{item[0]}</h3>
+          </header>
+          <img
+            data-src={item[1]}
+            src={LazyImage}
+            alt="facebooklikes"
+            className="lazyimg"
+          />
+        </div>
+      ))}
     </aside>
   );
 };

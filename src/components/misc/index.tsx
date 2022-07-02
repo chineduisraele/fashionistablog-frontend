@@ -3,14 +3,25 @@ import { FaCheckCircle } from "react-icons/fa";
 
 import "./css/index.css";
 import Googlead from "../../images/add-1.webp";
+import { CSSProperties } from "react";
 
 // const BASE_URL = "http://127.0.0.1:8000";
 const BASE_URL = "https://fashionistablog.herokuapp.com";
 
-const DOMAIN = "https//:fashionistablog.netlify.app";
+const DOMAIN = window.location.origin;
 
 // No data
-const Empty = ({ text, text1, text2, height }) => {
+const Empty = ({
+  text,
+  text1,
+  text2,
+  height,
+}: {
+  text?: string;
+  text1?: string;
+  text2?: string;
+  height?: string;
+}) => {
   return (
     <article className="empty d-grid aic jcc" style={{ height }}>
       <div className="inner">
@@ -22,7 +33,13 @@ const Empty = ({ text, text1, text2, height }) => {
   );
 };
 
-const LoadingSvg = ({ style, stroke }) => {
+const LoadingSvg = ({
+  style,
+  stroke,
+}: {
+  style?: CSSProperties;
+  stroke?: string;
+}) => {
   return (
     <div className="loader" style={style}>
       <svg className="circular" viewBox="25 25 50 50">
@@ -64,7 +81,15 @@ const SmallLoading = () => {
 };
 
 // alerts
-const Alerts = ({ message, error, show }) => {
+const Alerts = ({
+  message,
+  error,
+  show,
+}: {
+  message: string;
+  error?: boolean;
+  show: boolean;
+}) => {
   return (
     <div className={`alerts d-flex aic jcc p-fixed ${show ? "show" : ""}`}>
       <div className={`inner d-flex aic jcc ${error === true ? "error" : ""}`}>

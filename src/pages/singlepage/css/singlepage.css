@@ -8,6 +8,7 @@
 }
 
 .singlepage .main-content .pagedetailscont {
+  min-height: 75vh !important;
   row-gap: 2rem;
 }
 

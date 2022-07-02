@@ -4,6 +4,7 @@ import { FaRegClock, FaRegComment, FaRegEye } from "react-icons/fa";
 
 import "./css/index.css";
 import LazyImage from "../../images/lazyimage.webp";
+import { post, postGen } from "../../interfaces";
 
 const Card = ({
   id,
@@ -14,8 +15,7 @@ const Card = ({
   total_comments,
   views,
   short_text,
-  index,
-}) => {
+}: postGen) => {
   // console;
   return (
     <Link to={`/post/${category}/${id}`} className="card d-grid">
@@ -33,7 +33,10 @@ const Card = ({
         <div className="info d-flex">
           <span>
             <FaRegClock />{" "}
-            {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
+            {new Date(date as string)
+              .toDateString()
+              .slice(4)
+              .toLocaleUpperCase()}
           </span>
           <span>
             <FaRegComment /> {total_comments}
@@ -49,7 +52,7 @@ const Card = ({
   );
 };
 
-const MiniCard = ({ id, image, category, title, date }) => {
+const MiniCard = ({ id, image, category, title, date }: post) => {
   return (
     <Link to={`/post/${category}/${id}`} className="mini-card d-grid">
       <div className="imgcont p-rel">
@@ -64,7 +67,7 @@ const MiniCard = ({ id, image, category, title, date }) => {
         <h3>{title}</h3>
         <span>
           <FaRegClock />{" "}
-          {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
+          {new Date(date as string).toDateString().slice(4).toLocaleUpperCase()}
         </span>
       </div>
     </Link>
@@ -79,7 +82,7 @@ const PhotoCard = ({
   date,
   total_comments,
   views,
-}) => {
+}: post) => {
   return (
     <Link to={`/post/${category}/${id}`} className="photo-card p-rel">
       <img data-src={image} src={LazyImage} alt="cardimg" className="lazyimg" />
@@ -90,7 +93,10 @@ const PhotoCard = ({
           <div className="info d-flex">
             <span>
               <FaRegClock />{" "}
-              {new Date(date).toDateString().slice(4).toLocaleUpperCase()}
+              {new Date(date as string)
+                .toDateString()
+                .slice(4)
+                .toLocaleUpperCase()}
             </span>
             <span>
               <FaRegComment /> {total_comments}
