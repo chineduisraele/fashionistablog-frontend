@@ -15,27 +15,27 @@
       "type": "image/x-icon"
     },
     {
-      "src": "./manifest-icon-192.maskable.webp",
+      "src": "./manifest-icon-192.maskable.png",
       "sizes": "192x192",
-      "type": "image/webp",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./manifest-icon-192.maskable.webp",
+      "src": "./manifest-icon-192.maskable.png",
       "sizes": "192x192",
-      "type": "image/webp",
+      "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "./manifest-icon-512.maskable.webp",
+      "src": "./manifest-icon-512.maskable.png",
       "sizes": "512x512",
-      "type": "image/webp",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./manifest-icon-512.maskable.webp",
+      "src": "./manifest-icon-512.maskable.png",
       "sizes": "512x512",
-      "type": "image/webp",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]

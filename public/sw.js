@@ -22,6 +22,8 @@ const STATIC_CACHE = "static-v1",
     "/static/media/logo.96ef8823ad8e83f4f096.webp",
     "/static/media/noprofile.680ad093e6a33700cf4b.webp",
     "/static/media/purchase.fc1b8688703853f5a41d.webp",
+    "/static/manifest-icon-192.maskable.png",
+    "/static/manifest-icon-512.maskable.png",
     "/svg.svg",
   ],
   self = this;
